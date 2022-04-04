@@ -5,7 +5,7 @@ const TransportationType = () => {
   return (
     <div>
       <h3>TransportationType</h3>
-      <select >
+      <select className="w-full" >
           {["Full container Load","Less container Load","Bulk"].map((item)=>{
               return ( <option  key={item} value={item}>{item}</option>)
           })}
