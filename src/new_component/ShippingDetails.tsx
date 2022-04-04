@@ -19,19 +19,28 @@ const ShipingDetails = () => {
   const [gWeight, setGWeight] = useState(1);
   const [transType, setTransType] = useState("FCL");
   const [contDetails, setContDetails] = useState("20'Standard");
+  const [showPopover, setShowPopover] = useState(false);
 
   const selectHandler = () => {
-    if(transType === "LCL"){
-      setContDetails(vol+" M3/"+weight+" MT");
-    } else if(transType === "Bulk"){
+    if (transType === "LCL") {
+      setContDetails(vol + " M3/" + weight + " MT");
+    } else if (transType === "Bulk") {
       setContDetails(gWeight + " MT");
     }
     setInputValue(transType + "," + contDetails);
     console.log(inputValue);
+    setShowPopover(!showPopover);
+    defaultV();
   };
-  useEffect(()=>{
+  useEffect(() => {
     setInputValue(transType + "," + contDetails);
-  },[contDetails])
+  }, [contDetails]);
+  const defaultV = () => {
+    setIsFActive(true);
+    setIsLActive(false);
+    setIsBActive(false);
+
+  };
 
   return (
     <div>
@@ -39,7 +48,6 @@ const ShipingDetails = () => {
         {({ open }) => (
           <>
             <Popover.Button
-              onChange={() => console.log("button clicked")}
               className={`
                 ${open ? "" : "text-opacity-90"}
                 text-white bg-[white] group my-5 rounded-md inline-flex items-center text-base font-medium hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
@@ -50,12 +58,17 @@ const ShipingDetails = () => {
                 style={{ color: "black" }}
               />
               <ChevronDownIcon
+                onClick={() => {
+                  setShowPopover(!showPopover);
+                }}
                 className={`${open ? "" : "text-opacity-70"}
                   ml-2 h-5 w-5 text-black group-hover:text-opacity-80 transition ease-in-out duration-150`}
                 aria-hidden="true"
               />
             </Popover.Button>
+
             <Transition
+              show={showPopover}
               as={Fragment}
               enter="transition ease-out duration-200"
               enterFrom="opacity-0 translate-y-1"
@@ -99,6 +112,7 @@ const ShipingDetails = () => {
                         ].map((item) => {
                           return (
                             <option
+                              defaultValue={transType}
                               key={item}
                               value={
                                 item === "Bulk"
@@ -116,19 +130,37 @@ const ShipingDetails = () => {
                     {isLActive && (
                       <div>
                         <h3>WEIGHT, MT</h3>
-                        <input className="w-full" type="number" min="0" value={weight} onChange={(e) => setWeight(parseInt(e.target.value))}/>
+                        <input
+                          className="w-full"
+                          type="number"
+                          min="0"
+                          value={weight}
+                          onChange={(e) => setWeight(parseInt(e.target.value))}
+                        />
                         <div className="mt-5">
                           <h3>
                             VOLUME, M<sup>3</sup>
                           </h3>
-                          <input className="w-full" type="number" min="0" value={vol} onChange={(e) => setVol(parseInt(e.target.value))}/>
+                          <input
+                            className="w-full"
+                            type="number"
+                            min="0"
+                            value={vol}
+                            onChange={(e) => setVol(parseInt(e.target.value))}
+                          />
                         </div>
                       </div>
                     )}
                     {isBActive && (
                       <div>
                         <h3>GROSS WEIGHT, MT</h3>
-                        <input className="w-full" type="number" min="0" onChange={(e) => setGWeight(parseInt(e.target.value))} value={gWeight}/>
+                        <input
+                          className="w-full"
+                          type="number"
+                          min="0"
+                          onChange={(e) => setGWeight(parseInt(e.target.value))}
+                          value={gWeight}
+                        />
                       </div>
                     )}
                     {isFActive && (
