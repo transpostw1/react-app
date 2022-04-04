@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { Fragment } from "react";
@@ -6,8 +6,8 @@ import { Fragment } from "react";
 // import TransportationType from "./TransportationType";
 
 // 1 => WHEN SELECTED POPOVER SHOULD CLOSE
-// 2 => CHAGNING INPUT FIELD ACCORDINGLY/CHANGING CONTAINERTYPE
-// 3 => SETTING DEFAULT VALUE
+// 2 => setting up default value
+// 3 => delyaed changes
 
 const ShipingDetails = () => {
   const [inputValue, setInputValue] = useState("FCL,20'Standard");
@@ -18,18 +18,20 @@ const ShipingDetails = () => {
   const [weight, setWeight] = useState(1);
   const [gWeight, setGWeight] = useState(1);
   const [transType, setTransType] = useState("FCL");
-  const [contType, setContType] = useState("20'Standard");
-
-  const defaultValue = () => {
-    setIsLActive(false);
-    setIsBActive(false);
-    setIsFActive(true);
-  };
+  const [contDetails, setContDetails] = useState("20'Standard");
 
   const selectHandler = () => {
-    setInputValue(transType + "," + contType);
+    if(transType === "LCL"){
+      setContDetails(vol+" M3/"+weight+" MT");
+    } else if(transType === "Bulk"){
+      setContDetails(gWeight + " MT");
+    }
+    setInputValue(transType + "," + contDetails);
     console.log(inputValue);
   };
+  useEffect(()=>{
+    setInputValue(transType + "," + contDetails);
+  },[contDetails])
 
   return (
     <div>
@@ -73,17 +75,17 @@ const ShipingDetails = () => {
                         onChange={(e) => {
                           let Ttype = e.target.value;
                           setTransType(Ttype);
-                          if (Ttype == "LCL") {
+                          if (Ttype === "LCL") {
                             setIsLActive(true);
                             setIsBActive(false);
                             setIsFActive(false);
                             console.log("in LCL");
-                          } else if (Ttype == "Bulk") {
+                          } else if (Ttype === "Bulk") {
                             setIsBActive(true);
                             setIsLActive(false);
                             setIsFActive(false);
                             console.log("in Bulk");
-                          } else if (Ttype == "FCL") {
+                          } else if (Ttype === "FCL") {
                             setIsFActive(true);
                             setIsLActive(false);
                             setIsBActive(false);
@@ -99,7 +101,7 @@ const ShipingDetails = () => {
                             <option
                               key={item}
                               value={
-                                item == "Bulk"
+                                item === "Bulk"
                                   ? "Bulk"
                                   : item.match(/[A-Z]/g)?.join("")
                               }
@@ -114,19 +116,19 @@ const ShipingDetails = () => {
                     {isLActive && (
                       <div>
                         <h3>WEIGHT, MT</h3>
-                        <input className="w-full" type="number" min="0" value={weight}/>
+                        <input className="w-full" type="number" min="0" value={weight} onChange={(e) => setWeight(parseInt(e.target.value))}/>
                         <div className="mt-5">
                           <h3>
                             VOLUME, M<sup>3</sup>
                           </h3>
-                          <input className="w-full" type="number" min="0" value={vol}/>
+                          <input className="w-full" type="number" min="0" value={vol} onChange={(e) => setVol(parseInt(e.target.value))}/>
                         </div>
                       </div>
                     )}
                     {isBActive && (
                       <div>
                         <h3>GROSS WEIGHT, MT</h3>
-                        <input className="w-full" type="number" min="0" value={gWeight}/>
+                        <input className="w-full" type="number" min="0" onChange={(e) => setGWeight(parseInt(e.target.value))} value={gWeight}/>
                       </div>
                     )}
                     {isFActive && (
@@ -134,7 +136,7 @@ const ShipingDetails = () => {
                         <h3>Type</h3>
                         <select
                           className="w-full"
-                          onChange={(e) => setContType(e.target.value)}
+                          onChange={(e) => setContDetails(e.target.value)}
                         >
                           {[
                             "20'Standard",
