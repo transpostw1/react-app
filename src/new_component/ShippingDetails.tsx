@@ -9,7 +9,7 @@ import { Fragment } from "react";
 // 2 => setting up default value
 // 3 => delyaed changes
 
-const ShipingDetails = () => {
+const ShipingDetails = (props: any) => {
   const [inputValue, setInputValue] = useState("FCL,20'Standard");
   const [isLActive, setIsLActive] = useState(false);
   const [isBActive, setIsBActive] = useState(false);
@@ -20,6 +20,9 @@ const ShipingDetails = () => {
   const [transType, setTransType] = useState("FCL");
   const [contDetails, setContDetails] = useState("20'Standard");
   const [showPopover, setShowPopover] = useState(false);
+
+// console.log(props.name._d);
+
 
   const selectHandler = () => {
     if (transType === "LCL") {
@@ -42,6 +45,8 @@ const ShipingDetails = () => {
   useEffect(() => {
     defaultV();
   },[showPopover]);
+
+  
 
   return (
     <div>
