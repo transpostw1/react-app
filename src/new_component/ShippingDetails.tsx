@@ -30,7 +30,6 @@ const ShipingDetails = () => {
     setInputValue(transType + "," + contDetails);
     console.log(inputValue);
     setShowPopover(!showPopover);
-    defaultV();
   };
   useEffect(() => {
     setInputValue(transType + "," + contDetails);
@@ -39,8 +38,10 @@ const ShipingDetails = () => {
     setIsFActive(true);
     setIsLActive(false);
     setIsBActive(false);
-
   };
+  useEffect(() => {
+    defaultV();
+  },[showPopover]);
 
   return (
     <div>
@@ -60,6 +61,8 @@ const ShipingDetails = () => {
               <ChevronDownIcon
                 onClick={() => {
                   setShowPopover(!showPopover);
+                  setTransType("FCL");
+                  setContDetails("20'Standard");
                 }}
                 className={`${open ? "" : "text-opacity-70"}
                   ml-2 h-5 w-5 text-black group-hover:text-opacity-80 transition ease-in-out duration-150`}
@@ -92,11 +95,14 @@ const ShipingDetails = () => {
                             setIsLActive(true);
                             setIsBActive(false);
                             setIsFActive(false);
+                            setVol(1);
+                            setWeight(1);
                             console.log("in LCL");
                           } else if (Ttype === "Bulk") {
                             setIsBActive(true);
                             setIsLActive(false);
                             setIsFActive(false);
+                            setGWeight(1);
                             console.log("in Bulk");
                           } else if (Ttype === "FCL") {
                             setIsFActive(true);
