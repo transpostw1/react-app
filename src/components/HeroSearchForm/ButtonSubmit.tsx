@@ -1,11 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 const ButtonSubmit = () => {
+  const submitHandler = () => {
+    
+  }
   return (
-    <Link
-      to="/listing-stay-map"
-      type="button"
+    <button
+      onSubmit={submitHandler}
+      type="submit"
       className="h-14 md:h-16 w-full md:w-16 rounded-full bg-[#2AA996] hover:bg-[#218778] flex items-center justify-center text-neutral-50 focus:outline-none"
     >
       <span className="mr-3 md:hidden">Search</span>
@@ -23,7 +25,7 @@ const ButtonSubmit = () => {
           d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
         />
       </svg>
-    </Link>
+    </button>
   );
 };
 
