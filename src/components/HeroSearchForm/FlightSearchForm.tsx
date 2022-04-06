@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from "react";
 import LocationInput from "./LocationInput";
 import { FocusedInputShape } from "react-dates";
@@ -66,7 +64,6 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({ haveDefaultValue }) => {
   //
 
   const submitHandler = () => {
-    console.log(locationInputValue);
     console.log(pickUpInputValue);
     console.log(dropOffInputValue);
     console.log(dateValue);
@@ -116,7 +113,6 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({ haveDefaultValue }) => {
       setDropOffInputValue(defaultDropOffInputValue);
     }
   }, []);
-  //
 
   const renderGuest = () => {
     return (
