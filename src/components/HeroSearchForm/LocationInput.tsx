@@ -111,7 +111,7 @@ const LocationInput: FC<LocationInputProps> = ({
                 {item}
               </span>
             </span>
-          ))}
+          ))} 
         </div>
       </>
     );

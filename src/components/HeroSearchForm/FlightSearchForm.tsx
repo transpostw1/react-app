@@ -12,9 +12,10 @@ import NcInputNumber from "components/NcInputNumber/NcInputNumber";
 import ExperiencesDateSingleInput from "./ExperiencesDateSingleInput";
 import GuestsInput, { GuestsInputProps } from "./GuestsInput";
 import ShippingDetails from "new_component/ShippingDetails";
+import { url } from "inspector";
 
 // DEFAULT DATA FOR ARCHIVE PAGE
-const defaultLocationValue = "Tokyo, Jappan";
+const defaultLocationValue = "Tokyo, Japan";
 const defaultDate = moment();
 const defaultGuestValue: GuestsInputProps["defaultValue"] = {
   guestAdults: 2,
@@ -59,15 +60,26 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({ haveDefaultValue }) => {
   const [dateValue, setdateValue] = useState<moment.Moment | null>(null);
   const [locationInputValue, setLocationInputValue] = useState("");
   const [guestValue, setGuestValue] = useState({});
+  const [contDetails, setContDetails] = useState("");
+  const [apiData, setApiData] = useState(null);
 
   const [dateFocused, setDateFocused] = useState<boolean>(false);
-  //
+
+  const selectedType = (value: React.SetStateAction<string>) => {
+    setContDetails(value);
+  };
 
   const submitHandler = () => {
-    console.log(pickUpInputValue);
-    console.log(dropOffInputValue);
-    console.log(dateValue);
-  }
+    fetch("https://launchindia.org/transpost/rates.php", {
+      method: "GET",
+      redirect: "follow",
+    })
+      .then((response) => response.json())
+      .then((result) => setApiData(result))
+      .catch((error) => console.log("error", error));
+      console.log(apiData);
+      
+  };
 
   useEffect(() => {
     if (haveDefaultValue) {
@@ -284,7 +296,7 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({ haveDefaultValue }) => {
               }}
             />
             {/* shipping details - new component */}
-            <ShippingDetails name={dateValue} />
+            <ShippingDetails selectedType={selectedType} />
             {/* BUTTON SUBMIT OF FORM */}
             <div className="px-4 py-3 flex items-center justify-center">
               {/* <ButtonSubmit  /> */}
@@ -310,7 +322,7 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({ haveDefaultValue }) => {
                 </svg>
               </button>
             </div>
-          </div>  
+          </div>
         </form>
       </div>
     );
@@ -321,8 +333,9 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({ haveDefaultValue }) => {
 
 export default FlightSearchForm;
 
-
-
+function value(value: any) {
+  throw new Error("Function not implemented.");
+}
 // import React, { useEffect, useState } from "react";
 // import LocationInput from "./LocationInput";
 // import { FocusedInputShape } from "react-dates";

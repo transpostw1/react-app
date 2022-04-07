@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { Fragment } from "react";
-// import ConatainerType from "./ConatainerType";
-// import TransportationType from "./TransportationType";
 
 // 1 => WHEN SELECTED POPOVER SHOULD CLOSE
 // 2 => setting up default value
 // 3 => delyaed changes
 
-const ShipingDetails = (props: any) => {
+export 
+
+const ShipingDetails = (props:any) => {
   const [inputValue, setInputValue] = useState("FCL,20'Standard");
   const [isLActive, setIsLActive] = useState(false);
   const [isBActive, setIsBActive] = useState(false);
@@ -21,19 +21,34 @@ const ShipingDetails = (props: any) => {
   const [contDetails, setContDetails] = useState("20'Standard");
   const [showPopover, setShowPopover] = useState(false);
 
-// console.log(props.name._d);
-
-
   const selectHandler = () => {
+    if (transType === "LCL") {
+      setContDetails(vol + " M3/" + weight + " MT");
+      // console.log(contDetails);
+      
+    } else if (transType === "Bulk") {
+      setContDetails(gWeight + " MT");
+      // console.log(contDetails);
+
+    }
+    setInputValue(transType + "," + contDetails);
+    setShowPopover(!showPopover);
+    
+  };
+useEffect(() => {
+  props.selectedType(inputValue);
+},[inputValue])  
+
+  useEffect(()=>{
     if (transType === "LCL") {
       setContDetails(vol + " M3/" + weight + " MT");
     } else if (transType === "Bulk") {
       setContDetails(gWeight + " MT");
     }
-    setInputValue(transType + "," + contDetails);
-    console.log(inputValue);
-    setShowPopover(!showPopover);
-  };
+    
+  },[transType,contDetails])
+  
+  
   useEffect(() => {
     setInputValue(transType + "," + contDetails);
   }, [contDetails]);
@@ -44,9 +59,7 @@ const ShipingDetails = (props: any) => {
   };
   useEffect(() => {
     defaultV();
-  },[showPopover]);
-
-  
+  }, [showPopover]);
 
   return (
     <div>
@@ -59,7 +72,7 @@ const ShipingDetails = (props: any) => {
                 text-white bg-[white] group my-5 rounded-md inline-flex items-center text-base font-medium hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
             >
               <input
-                className="py-5 rounded border+-"
+                className="py-5 rounded border+- block font-bold text-neutral-700 dark:text-neutral-500"
                 value={inputValue}
                 style={{ color: "black" }}
               />
