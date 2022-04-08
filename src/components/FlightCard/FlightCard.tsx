@@ -205,7 +205,8 @@ const FlightCard: FC<FlightCardProps> = ({ className = "", data }) => {
               {data.from_port}- {data.to_port}
             </div>
             <div className="text-sm text-neutral-500 font-normal mt-0.5">
-              {data.SL_name}SL name
+              {/* {data.SL_name} */}
+              COSCO Shipping 
             </div>
           </div>
 
