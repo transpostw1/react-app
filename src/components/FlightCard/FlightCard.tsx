@@ -1,4 +1,5 @@
 import React, { FC, useState } from "react";
+import { Link } from "react-router-dom";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import imgpng from "../../images/coscoLogo.jpg";
 
@@ -108,13 +109,15 @@ const FlightCard: FC<FlightCardProps> = ({ className = "", data }) => {
           <div className="border-l border-neutral-200 dark:border-neutral-700 md:mx-6 lg:mx-10"></div>
           <div className="flex-[4] whitespace-nowrap sm:text-center">
               <span className="text-xl font-semibold text-secondary-6000">
-                USD {data.freight_cost}
+                {/* USD {data.freight_cost} */}
+                USD ****
               </span>
             <div className="text-xs sm:text-sm text-neutral-500 font-normal mt-0.5">
               Total Cost
             </div>
-            <div className="mt-5">
-              <ButtonPrimary>+ Get Quote</ButtonPrimary>
+            <div className="mt-5 font-medium underline underline-offset-1">
+              {/* <ButtonPrimary>+ Get Quote</ButtonPrimary> */}
+              <Link to='/signup'>Sign up to know the rates</Link>
             </div>
           </div>
         </div>
@@ -149,7 +152,7 @@ const FlightCard: FC<FlightCardProps> = ({ className = "", data }) => {
         data-nc-id="FlightCard"
       >
         {/*  eslint-disable-next-line jsx-a11y/anchor-has-content */}
-        <a href="##" className="absolute inset-0" />
+        {/* <Link to="/signup" className="absolute inset-0" /> */}
 
         <span
           className={`absolute right-0 bottom-0 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 w-10 h-10 bg-neutral-50 dark:bg-neutral-800 rounded-full flex items-center justify-center cursor-pointer ${
@@ -226,11 +229,15 @@ const FlightCard: FC<FlightCardProps> = ({ className = "", data }) => {
           <div className="flex-[4] whitespace-nowrap sm:text-right">
             <div>
               <span className="text-xl font-semibold text-secondary-6000">
-                USD {data.freight_cost}
+                {/* USD {data.freight_cost} */}
+                USD ****
               </span>
             </div>
-            <div className="text-xs sm:text-sm text-neutral-500 font-normal mt-0.5">
+            {/* <div className="text-xs sm:text-sm text-neutral-500 font-normal mt-0.5">
               Freight Forwarder Cost
+            </div> */}
+            <div className="text-xs font-medium underline underline-offset-1 sm:text-sm text-neutral-500 font-medium mt-0.5 ">
+            <Link to='/signup'>Sign up to know the rates</Link>
             </div>
           </div>
         </div>

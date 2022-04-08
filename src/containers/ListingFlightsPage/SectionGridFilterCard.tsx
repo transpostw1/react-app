@@ -136,9 +136,9 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
       className={`nc-SectionGridFilterCard ${className}`}
       data-nc-id="SectionGridFilterCard"
     >
-      <Heading2
+      {/* <Heading2
         heading="Search Results"
-      />
+      /> */}
       {/* <div className="mb-8 lg:mb-11">
         <TabFilters />
       </div> */}

@@ -15,7 +15,7 @@ import ShippingDetails from "new_component/ShippingDetails";
 import { url } from "inspector";
 
 // DEFAULT DATA FOR ARCHIVE PAGE
-const defaultLocationValue = "Tokyo, Japan";
+const defaultLocationValue = "Nava Sheva";
 const defaultDate = moment();
 const defaultGuestValue: GuestsInputProps["defaultValue"] = {
   guestAdults: 2,
@@ -90,8 +90,8 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({ haveDefaultValue }) => {
   }, []);
 
   // DEFAULT DATA FOR ARCHIVE PAGE
-  const defaultPickUpInputValue = "Tokyo, Jappan";
-  const defaultDropOffInputValue = "Paris, France";
+  const defaultPickUpInputValue = "Nhava Sheva, India";
+  const defaultDropOffInputValue = "Fos-sur-Mer, France";
 
   // USE STATE
   const [dateRangeValue, setDateRangeValue] = useState<DateRage>({

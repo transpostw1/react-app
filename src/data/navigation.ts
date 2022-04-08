@@ -122,8 +122,8 @@ const templatesChildrenMenus: NavItemType[] = [
   {
     id: ncNanoId(),
     href: "/add-listing-1",
-    name: "Add Listings",
-    type: "dropdown",
+    name: "Ship Schedules",
+    // type: "dropdown",
     children: [
       {
         id: ncNanoId(),
@@ -178,11 +178,11 @@ const templatesChildrenMenus: NavItemType[] = [
     ],
   },
   //
-  { id: ncNanoId(), href: "/checkout", name: "Checkout" },
-  { id: ncNanoId(), href: "/pay-done", name: "Pay done" },
+  { id: ncNanoId(), href: "/checkout", name: "Load Calculator" },
+  // { id: ncNanoId(), href: "/pay-done", name: "Pay done" },
   //
-  { id: ncNanoId(), href: "/author", name: "Author Page" },
-  { id: ncNanoId(), href: "/account", name: "Account Page" },
+  // { id: ncNanoId(), href: "/author", name: "Author Page" },
+  // { id: ncNanoId(), href: "/account", name: "Account Page" },
 ];
 
 export const NAVIGATION_DEMO: NavItemType[] = [
@@ -190,22 +190,22 @@ export const NAVIGATION_DEMO: NavItemType[] = [
     id: ncNanoId(),
     href: "/",
     name: "Home",
-    type: "dropdown",
+    // type: "dropdown",
     children: demoChildMenus,
     isNew: true,
   },
+  // {
+  //   id: ncNanoId(),
+  //   href: "#",
+  //   name: "Five columns",
+  //   type: "megaMenu",
+  //   megaMenu: megaMenuDemo,
+  // },
   {
-    id: ncNanoId(),
+  id: ncNanoId(),
     href: "#",
-    name: "Five columns",
-    type: "megaMenu",
-    megaMenu: megaMenuDemo,
-  },
-  {
-    id: ncNanoId(),
-    href: "#",
-    name: "Listing Page",
-    type: "dropdown",
+    name: "Request a Quote",
+    // type: "dropdown",
     isNew: true,
     children: [
       {
@@ -296,7 +296,7 @@ export const NAVIGATION_DEMO: NavItemType[] = [
   {
     id: ncNanoId(),
     href: "#",
-    name: "Templates",
+    name: "Tools",
     type: "dropdown",
     children: templatesChildrenMenus,
   },
@@ -304,8 +304,8 @@ export const NAVIGATION_DEMO: NavItemType[] = [
   {
     id: ncNanoId(),
     href: "#",
-    name: "Other pages",
-    type: "dropdown",
+    name: "About Us",
+    // type: "dropdown",
     children: otherPageChildMenus,
   },
 ];
