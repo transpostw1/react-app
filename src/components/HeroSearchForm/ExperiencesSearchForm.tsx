@@ -6,6 +6,8 @@ import ButtonSubmit from "./ButtonSubmit";
 import moment from "moment";
 import { FC } from "react";
 
+
+
 // DEFAULT DATA FOR ARCHIVE PAGE
 const defaultLocationValue = "Tokyo, Jappan";
 const defaultDate = moment();
@@ -27,7 +29,16 @@ const ExperiencesSearchForm: FC<ExperiencesSearchFormProps> = ({
   const [guestValue, setGuestValue] = useState({});
 
   const [dateFocused, setDateFocused] = useState<boolean>(false);
-  //
+  // states for cargo tracking
+
+  const [contDetail, setContainerDetail] = useState("");
+  const [shippingLine, setShippingLine] = useState("");
+
+  // const trackerHandler = (e: any) =>{
+  //   e.preventDefault();
+  //   console.log("in submit");
+    
+  // }
 
   useEffect(() => {
     if (haveDefaultValue) {
@@ -41,26 +52,55 @@ const ExperiencesSearchForm: FC<ExperiencesSearchFormProps> = ({
 
   const renderForm = () => {
     return (
-      <form className="w-full relative mt-8 flex flex-col md:flex-row  rounded-3xl md:rounded-full shadow-xl dark:shadow-2xl bg-white dark:bg-neutral-800 divide-y divide-neutral-200 dark:divide-neutral-700  md:divide-y-0">
-        <LocationInput
+      <form className=" w-full relative mt-8 flex flex-col md:flex-row  rounded-3xl md:rounded-full shadow-xl dark:shadow-2xl bg-white dark:bg-neutral-800 divide-y divide-neutral-200 dark:divide-neutral-700  md:divide-y-0"
+      >
+        {/* <LocationInput
           defaultValue={locationInputValue}
           onChange={(e) => setLocationInputValue(e)}
           onInputDone={() => setDateFocused(true)}
-        />
+        /> */}
+        <div className="flex w-full">
+          <input
+            className="border-2 w-[60%]"
+            type="text"
+            placeholder="Container"
+            value={contDetail}
+            onChange={(e) => setContainerDetail(e.target.value)}
+          />
+          {/* <FontAwesomeIcon icon="fa-light fa-ship" /> */}
+          <div className="border-5 border-neutral-200 dark:border-neutral-700"></div>
 
-        <ExperiencesDateSingleInput
+          <input
+            className="border-2 w-[40%]"
+            type="text"
+            list="shipping_lines"
+            placeholder="Shipping Line"
+            value={shippingLine}
+            onChange={(e) => setShippingLine(e.target.value)}
+          />
+          <datalist id="shipping_lines">
+            <option>Auto Detect</option>
+            <option>AC Container Line</option>
+            <option>Alianca</option>
+            <option>Maersk</option>
+            <option>Maersk Line Limited</option>
+            <option>Maritime Marfret</option>
+          </datalist>
+        </div>
+
+        {/* <ExperiencesDateSingleInput
           defaultValue={dateValue}
           onChange={(date) => setdateValue(date)}
           defaultFocus={dateFocused}
           onFocusChange={(focus: boolean) => {
             setDateFocused(focus);
           }}
-        />
-
+        /> */}
+        {/* 
         <GuestsInput
           defaultValue={guestValue}
           onChange={(data) => setGuestValue(data)}
-        />
+        /> */}
         {/* BUTTON SUBMIT OF FORM */}
         <div className="px-4 py-4 lg:py-0 flex items-center justify-center">
           <ButtonSubmit />

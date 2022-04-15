@@ -82,8 +82,8 @@ const ListingFlightsPage: FC<ListingFlightsPageProps> = ({
       <div className="container relative">
         {/* SECTION HERO */}
         <SectionHeroArchivePage
-          currentPage="Flights"
-          currentTab="Flights"
+          currentPage="Rate Search"
+          currentTab="Rate Search"
           listingType={
             <>
               {/* <span className="ml-2.5">1599 flights</span> */}

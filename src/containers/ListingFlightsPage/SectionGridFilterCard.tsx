@@ -4,9 +4,13 @@ import Heading2 from "components/Heading/Heading2";
 import FlightCard, { FlightCardProps } from "components/FlightCard/FlightCard";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import { ChevronDoubleLeftIcon } from "@heroicons/react/outline";
+import { fetchData } from "redux";
+import { connect } from "react-redux";
 
 export interface SectionGridFilterCardProps {
   className?: string;
+  fetchData?: () => void;    // check
+  shippingData?: []
 }
 
 // const DEMO_DATA: FlightCardProps["data"][] = [
@@ -110,24 +114,26 @@ export interface Details {
   
 }
 
-const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
+const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({ 
   className = "",
+  fetchData,
+  shippingData
 }) => {
 
   const [apiDetails,setApiDetails] = useState<Details[]>([]);
 
   useEffect(() => {
-    fetch("https://launchindia.org/transpost/rates.php", {
-        method: "GET",
-        redirect: "follow",
-      })
-        .then((response) => response.json())
-        .then((result) =>{
-          setApiDetails(result);
-          console.log(result);
+    fetchData();
+    // fetch("https://launchindia.org/transpost/rates.php", {
+    //     method: "GET",
+    //     redirect: "follow",
+    //   })
+    //     .then((response) => response.json())
+    //     .then((result) =>{
+    //       setApiDetails(result);
           
-        })
-        .catch((error) => console.log("error", error));
+    //     })
+    //     .catch((error) => console.log("error", error));
   },[]);
 
   
@@ -155,4 +161,16 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
   );
 };
 
-export default SectionGridFilterCard;
+const mapStateToProps = (state: { data: any; }) =>{
+  return {
+    shippingData: state.data
+  }
+}
+
+const mapDispatchToProps = (dispatch: (arg0: any) => any) => {
+  return {
+    fetchData: () => dispatch(fetchData())
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(SectionGridFilterCard);

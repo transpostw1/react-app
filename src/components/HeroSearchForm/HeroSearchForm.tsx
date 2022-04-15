@@ -1,24 +1,24 @@
 import React, { FC, useState } from "react";
 import "react-dates/initialize";
-// import ExperiencesSearchForm from "./ExperiencesSearchForm";
+import ExperiencesSearchForm from "./ExperiencesSearchForm";
 // import StaySearchForm from "./StaySearchForm";
 // import RentalCarSearchForm from "./RentalCarSearchForm";
 import FlightSearchForm from "./FlightSearchForm";
 
-export type SearchTab = "Stays" | "Experiences" | "Cars" | "Flights";
+export type SearchTab = "Stays" | "Cargo Tracker" | "Cars" | "Rate Search";
 
 export interface HeroSearchFormProps {
   className?: string;
   currentTab?: SearchTab;
-  currentPage?: "Stays" | "Experiences" | "Cars" | "Flights";
+  currentPage?: "Stays" | "Cargo Tracker" | "Cars" | "Rate Search";
 }
 
 const HeroSearchForm: FC<HeroSearchFormProps> = ({
   className = "",
-  currentTab = "Flights",
+  currentTab = "Rate Search",
   currentPage,
 }) => {
-  const tabs: SearchTab[] = ["Flights"];
+  const tabs: SearchTab[] = ["Rate Search","Cargo Tracker"];
   const [tabActive, setTabActive] = useState<SearchTab>(currentTab);
 
   const renderTab = () => {
@@ -51,12 +51,12 @@ const HeroSearchForm: FC<HeroSearchFormProps> = ({
     const isArchivePage = !!currentPage && !!currentTab;
     switch (tabActive) {
       // case "Stays":
-      //   return <StaySearchForm haveDefaultValue={isArchivePage} />;
-      // case "Experiences":
-      //   return <ExperiencesSearchForm haveDefaultValue={isArchivePage} />;
+        // return <StaySearchForm haveDefaultValue={isArchivePage} />;
+      case "Cargo Tracker":
+        return <ExperiencesSearchForm haveDefaultValue={isArchivePage} />;
       // case "Cars":
-      //   return <RentalCarSearchForm haveDefaultValue={isArchivePage} />;
-      case "Flights":
+        // return <RentalCarSearchForm haveDefaultValue={isArchivePage} />;
+      case "Rate Search":
         return <FlightSearchForm haveDefaultValue={isArchivePage} />;
 
       default:
@@ -69,7 +69,7 @@ const HeroSearchForm: FC<HeroSearchFormProps> = ({
       className={`nc-HeroSearchForm w-full max-w-6xl py lg:py-0 ${className}`}
       data-nc-id="HeroSearchForm"
     >
-      {/* {renderTab()} */}
+      {renderTab()}
       {renderForm()}
     </div>
   );
