@@ -24,7 +24,7 @@ const Button: FC<ButtonProps> = ({
   fontSize = "text-sm sm:text-base font-medium",
   disabled = false,
   href,
-  children,
+  children, 
   targetBlank,
   type,
   loading,
