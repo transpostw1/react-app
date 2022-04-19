@@ -4,94 +4,15 @@ import Heading2 from "components/Heading/Heading2";
 import FlightCard, { FlightCardProps } from "components/FlightCard/FlightCard";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import { ChevronDoubleLeftIcon } from "@heroicons/react/outline";
-import { fetchData } from "redux";
+import { fetchData } from "../../redux";
 import { connect } from "react-redux";
+import { ThunkDispatch } from "redux-thunk";
 
 export interface SectionGridFilterCardProps {
   className?: string;
-  fetchData?: () => void;    // check
-  shippingData?: []
+  fetchData: () => {} | any; // check
+  shippingData: { data: [] };
 }
-
-// const DEMO_DATA: FlightCardProps["data"][] = [
-//   {
-//     id: "1",
-//     price: "$4,100",
-//     airlines: {
-//       logo: "https://www.gstatic.com/flights/airline_logos/70px/KE.png",
-//       name: "Korean Air",
-//     },
-//   },
-//   {
-//     id: "2",
-//     price: "$3,380",
-//     airlines: {
-//       logo: "https://www.gstatic.com/flights/airline_logos/70px/SQ.png",
-//       name: "Singapore Airlines",
-//     },
-//   },
-//   {
-//     id: "3",
-//     price: "$2,380",
-//     airlines: {
-//       logo: "https://www.gstatic.com/flights/airline_logos/70px/multi.png",
-//       name: "Philippine Airlines",
-//     },
-//   },
-//   {
-//     id: "1",
-//     price: "$4,100",
-//     airlines: {
-//       logo: "https://www.gstatic.com/flights/airline_logos/70px/KE.png",
-//       name: "Korean Air",
-//     },
-//   },
-//   {
-//     id: "2",
-//     price: "$3,380",
-//     airlines: {
-//       logo: "https://www.gstatic.com/flights/airline_logos/70px/SQ.png",
-//       name: "Singapore Airlines",
-//     },
-//   },
-//   {
-//     id: "1",
-//     price: "$4,100",
-//     airlines: {
-//       logo: "https://www.gstatic.com/flights/airline_logos/70px/KE.png",
-//       name: "Korean Air",
-//     },
-//   },
-//   {
-//     id: "2",
-//     price: "$3,380",
-//     airlines: {
-//       logo: "https://www.gstatic.com/flights/airline_logos/70px/SQ.png",
-//       name: "Singapore Airlines",
-//     },
-//   },
-// ];
-
-// Api Data for reference
-
-// ID: "6"
-// LoadType: "20'"
-// SL_date: "0000-00-00"
-// SL_name: ""
-// cargo: ""
-// expiry_date: "0000-00-00"
-// free_dates: "0000-00-00"
-// freight_cost: "7192"
-// from_port: "Ex.Nhava Sheva\t"
-// inclusions: ""
-// rates_by_forwarder: "0"
-// remarks: ""
-// service_mode: "IMEX"
-// to_port: "Barcelona"
-// total_cost: "0"
-// transit_port: "Direct"
-// transit_time: "0000-00-00"
-
 
 export interface Details {
   ID: string;
@@ -111,48 +32,26 @@ export interface Details {
   total_cost: number;
   transit_port: string;
   transit_time: string;
-  
 }
 
-const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({ 
+const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
   className = "",
   fetchData,
-  shippingData
+  shippingData,
 }) => {
+  // const [apiDetails, setApiDetails] = useState<Details[]>([]);
 
-  const [apiDetails,setApiDetails] = useState<Details[]>([]);
+ 
 
-  useEffect(() => {
-    fetchData();
-    // fetch("https://launchindia.org/transpost/rates.php", {
-    //     method: "GET",
-    //     redirect: "follow",
-    //   })
-    //     .then((response) => response.json())
-    //     .then((result) =>{
-    //       setApiDetails(result);
-          
-    //     })
-    //     .catch((error) => console.log("error", error));
-  },[]);
-
-  
   return (
     <div
       className={`nc-SectionGridFilterCard ${className}`}
       data-nc-id="SectionGridFilterCard"
     >
-      {/* <Heading2
-        heading="Search Results"
-      /> */}
-      {/* <div className="mb-8 lg:mb-11">
-        <TabFilters />
-      </div> */}
       <div className="lg:p-10 lg:bg-neutral-50 lg:dark:bg-black/20 grid grid-cols-1 gap-6 rounded-3xl">
-        {apiDetails.map((item, index) => {
-         return <FlightCard key={index} data={item} />
+        {shippingData.data.map((item, index) => {
+          return <FlightCard key={index} data={item} />;
         })}
-
         <div className="flex mt-12 justify-center items-center">
           <ButtonPrimary loading>Show more</ButtonPrimary>
         </div>
@@ -161,16 +60,19 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
   );
 };
 
-const mapStateToProps = (state: { data: any; }) =>{
+const mapStateToProps = (state: { data: any }) => {
   return {
-    shippingData: state.data
-  }
-}
+    shippingData: state.data,
+  };
+};
 
-const mapDispatchToProps = (dispatch: (arg0: any) => any) => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => {
   return {
-    fetchData: () => dispatch(fetchData())
-  }
-}
+    fetchData: async () => dispatch(fetchData()),
+  };
+};
 
-export default connect(mapStateToProps,mapDispatchToProps)(SectionGridFilterCard);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SectionGridFilterCard);

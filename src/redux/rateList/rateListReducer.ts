@@ -1,24 +1,22 @@
 import {
-    FETCH_DATA_FAILURE,
-    FETCH_DATA_REQUEST,
-    FETCH_DATA_SUCCESS,
+    RATE_LIST_ACTION_TYPE
   } from "./rateListTypes";
   
 interface fetchDataRequestAction {
-  type: "FETCH_DATA_REQUEST"
+  type: RATE_LIST_ACTION_TYPE.FETCH_DATA_REQUEST
 }
 
 interface fetchDataSuccessAction {
-  type: "FETCH_DATA_SUCCESS"
+  type: RATE_LIST_ACTION_TYPE.FETCH_DATA_SUCCESS
   payload: []
 }
 
 interface fetchDataFailureAction {
-  type: "FETCH_DATA_FAILURE"
+  type: RATE_LIST_ACTION_TYPE.FETCH_DATA_FAILURE
   payload: string
 }
 
-type Action = fetchDataFailureAction | fetchDataRequestAction | fetchDataSuccessAction
+export type Action = fetchDataFailureAction | fetchDataRequestAction | fetchDataSuccessAction
 
 
   const initialState = {
@@ -29,21 +27,21 @@ type Action = fetchDataFailureAction | fetchDataRequestAction | fetchDataSuccess
   
    const rateListReducer = (state = initialState, action: Action) => {
     switch (action.type) {
-      case FETCH_DATA_REQUEST:
+      case RATE_LIST_ACTION_TYPE.FETCH_DATA_REQUEST:
         return {
           ...state,
           loading: true,
         };
-      case FETCH_DATA_SUCCESS:
+      case RATE_LIST_ACTION_TYPE.FETCH_DATA_SUCCESS:
         return {
           loading: false,
-          DATA: action.payload,
+          data: action.payload,
           error: "",
         };
-      case FETCH_DATA_FAILURE:
+      case RATE_LIST_ACTION_TYPE.FETCH_DATA_FAILURE:
         return {
           loading: false,
-          DATA: [],
+          data: [],
           error: action.payload,
         };
       default: return state
