@@ -25,18 +25,17 @@ export const fetchDatafailure = (error: any) => {
 };
 
 // for async action
-export const fetchData = () => {
+export const fetchData = (postData: {}) => {
   return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     // specify by importing the action
     dispatch(fetchDataRequest);
     axios
-      .get(
-        "https://launchindia.org/transpost/rates.php"
-        // method: "GET",
+      .post(
+        "https://tesseract.transpost.co/api/rates_search.php",
+        postData
       )
       .then((response) => {
-        const  fetchedData =  response.data;
-
+        const fetchedData = response.data;
         dispatch(fetchDataSuccess(fetchedData)); // dispatching the action
         console.log(fetchedData);
       })

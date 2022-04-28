@@ -42,6 +42,7 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
     formData.append("password", password);
 
     fetch("https://tesseract.transpost.co/api/signin_api.php", {
+      mode: "no-cors",
       method: "POST",
       body: formData,
       redirect: "follow",

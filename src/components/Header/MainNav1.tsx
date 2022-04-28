@@ -24,7 +24,7 @@ const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
         </div>
         <div className="flex-shrink-0 flex items-center justify-end text-neutral-700 dark:text-neutral-100 space-x-1">
           <div className="hidden items-center xl:flex space-x-1">
-            <SwitchDarkMode />
+            {/* <SwitchDarkMode /> */}
             {/* <SearchDropdown /> */}
             <div className="px-1" />
             <ButtonPrimary href="/signup">Sign up</ButtonPrimary>

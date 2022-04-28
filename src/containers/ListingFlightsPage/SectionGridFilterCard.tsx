@@ -39,10 +39,6 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
   fetchData,
   shippingData,
 }) => {
-  // const [apiDetails, setApiDetails] = useState<Details[]>([]);
-
- 
-
   return (
     <div
       className={`nc-SectionGridFilterCard ${className}`}
@@ -66,9 +62,14 @@ const mapStateToProps = (state: { data: any }) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => {
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<{}, {}, any>,
+  postData: {}
+) => {
+  console.log(postData);
+
   return {
-    fetchData: async () => dispatch(fetchData()),
+    fetchData: async () => dispatch(fetchData(postData)),
   };
 };
 
