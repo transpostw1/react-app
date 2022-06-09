@@ -1,60 +1,24 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
+import { fetchData } from "..//../redux";
+import ButtonSecondary from "shared/Button/ButtonSecondary";
 import imgpng from "../../images/coscoLogo.jpg";
-
-// export interface FlightCardProps {
-//   className?: string;
-//   data: {
-//     id: string;
-//     airlines: {
-//       logo: string;
-//       name: string;
-//     };
-//     price: string;
-//   };
-// }
-
-// Api Data for reference
-
-// ID: "6"
-// LoadType: "20'"    =>
-// SL_date: "0000-00-00"  sailing date
-// SL_name: ""    shiiping line
-// cargo: ""      cargo type
-// expiry_date: "0000-00-00"
-// free_dates: "0000-00-00"
-// freight_cost: "7192"
-// from_port: "Ex.Nhava Sheva\t"
-// inclusions: ""
-// rates_by_forwarder: "0"
-// remarks: ""
-// service_mode: "IMEX"
-// to_port: "Barcelona"
-// total_cost: "0"
-// transit_port: "Direct"
-// transit_time: "0000-00-00"
 
 export interface FlightCardProps {
   className?: string;
   data: {
-    ID: string;
-    LoadType: string;
-    SL_date: string;
-    SL_name: string;
-    cargo: string;
-    expiry_date: string;
-    free_dates: string;
-    freight_cost: number;
-    from_port: string;
-    inclusions: string;
-    rates_by_forwarder: number;
-    remarks: string;
-    service_mode: string;
-    to_port: string;
-    total_cost: number;
-    transit_port: string;
-    transit_time: string;
+    ID?: string;
+    _20gp?: string;
+    _40gp?: string;
+    _40hc?: string;
+    sl_name?: string;
+    expiry_date?: string;
+    from_port?: string;
+    service_mode?: string;
+    to_port?: string;
+    via?: string;
+    sl_logo?: string;
   };
 }
 
@@ -63,13 +27,30 @@ export interface FlightCardProps {
 
 const FlightCard: FC<FlightCardProps> = ({ className = "", data }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLogin, setIsLogin] = useState(false); // temporary for testing purpose
+  const [rate, setRate] = useState<string | undefined>("");
+  const [cargo, setCargo] = useState<string>("");
+
+  // for Selecting rates
+  useEffect(() => {
+    if (!!data._20gp) {
+      setRate(data._20gp);
+      setCargo("20'Standard");
+    } else if (!!data._40gp) {
+      setRate(data._40gp);
+      setCargo("40'Standard");
+    } else if (data._40hc) {
+      setRate(data._40hc);
+      setCargo("40'High Cube");
+    }
+  }, [data]);
 
   const renderDetailTop = () => {
     return (
       <div>
         <div className="flex flex-col md:flex-row ">
-          <div className="w-24 mt-8 md:w-20 lg:w-24 flex-shrink-0 md:pt-7">
-            <img src={imgpng} className="w-12" alt="" />
+          <div className="w-12 mt-8 md:w-20 lg:w-24 flex-shrink-0 md:pt-7">
+            <img src={data.sl_logo} className="w-[90%] h-15" alt="" />
           </div>
           <div className="flex my-5 md:my-0">
             <div className="flex-shrink-0 flex flex-col items-center py-2">
@@ -86,6 +67,11 @@ const FlightCard: FC<FlightCardProps> = ({ className = "", data }) => {
               </div>
               <div className="flex flex-col space-y-1">
                 <span className=" text-neutral-500 dark:text-neutral-400">
+                  {data.via}
+                </span>
+              </div>
+              <div className="flex flex-col space-y-1">
+                <span className=" text-neutral-500 dark:text-neutral-400">
                   To
                 </span>
                 <span className=" font-semibold">{data.to_port}</span>
@@ -94,30 +80,40 @@ const FlightCard: FC<FlightCardProps> = ({ className = "", data }) => {
           </div>
           <div className="border-l border-neutral-200 dark:border-neutral-700 md:mx-6 lg:mx-10"></div>
           <ul className="text-sm text-neutral-500 dark:text-neutral-400 space-y-1 md:space-y-2">
-            <li >Expiry date: {data.expiry_date}</li>
-            <li>Transit Port: {data.transit_port}</li>
-            <li>Transit Time: {data.transit_time}</li>
+            <li>Rate Validity : {data.expiry_date?.split(" ").shift()}</li>
+            {/* <li>Transit Port: {data.transit_port}</li> */}
+            {/* <li>Transit Time: {data.transit_time}</li> */}
           </ul>
           <div className="border-l border-neutral-200 dark:border-neutral-700 md:mx-6 lg:mx-10"></div>
           <ul className="text-sm text-neutral-500 dark:text-neutral-400 space-y-1 md:space-y-2">
+            <li>
+              Service mode: {data.service_mode ? data.service_mode : "N/A"}
+            </li>
 
-            <li>Free Days: {data.free_dates}</li>
-            <li>Cargo: {data.cargo}</li>
-            <li>Rates for Forwarder: {data.rates_by_forwarder}</li>
+            {/* <li>Free Days: {data.free_dates}</li> */}
+            {/* <li>Cargo: {data.cargo}</li> */}
+            {/* <li>Rates for Forwarder: {data.rates_by_forwarder}</li> */}
           </ul>
           {/* verticle line */}
           <div className="border-l border-neutral-200 dark:border-neutral-700 md:mx-6 lg:mx-10"></div>
           <div className="flex-[4] whitespace-nowrap sm:text-center">
-              <span className="text-xl font-semibold text-secondary-6000">
-                {/* USD {data.freight_cost} */}
-                USD ****
-              </span>
-            <div className="text-xs sm:text-sm text-neutral-500 font-normal mt-0.5">
+            <span className="text-xl font-semibold text-secondary-6000">
+              USD {isLogin ? rate : "****"}
+            </span>
+            {/* <div className="text-xs sm:text-sm text-neutral-500 font-normal mt-0.5">
               Total Cost
-            </div>
-            <div className="mt-5 font-medium underline underline-offset-1">
-              {/* <ButtonPrimary>+ Get Quote</ButtonPrimary> */}
-              <Link to='/signup'>Sign up to know the rates</Link>
+            </div> */}
+            <div className="mt-5 font-medium">
+              {isLogin ? (
+                <ButtonPrimary href="/bookings">Book Now</ButtonPrimary>
+              ) : (
+                <Link
+                  className="mt-5 font-medium underline underline-offset-1"
+                  to="/signup"
+                >
+                  Sign up to know the rates
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -165,16 +161,16 @@ const FlightCard: FC<FlightCardProps> = ({ className = "", data }) => {
 
         <div className="flex  flex-col sm:flex-row sm:items-center space-y-6 sm:space-y-0">
           {/* LOGO IMG */}
-          <div className="w-24 lg:w-32 flex-shrink-0">
+          <div className="w-12 lg:w-32 flex-shrink-0">
             {/* <div >Expiry date: {data.expiry_date}</div> */}
-            <img src={imgpng} className="w-12" alt="" />
+            <img src={data.sl_logo} className="w-[80%] h-[80%]" alt="" />
           </div>
 
           {/* FOR MOBILE RESPONSIVE */}
           <div className="block lg:hidden space-y-1">
             <div className="flex font-semibold">
               <div>
-                <span>{data.from_port}</span>
+                {/* <span>{data.from_port}</span> */}
                 <span className="flex items-center text-sm text-neutral-500 font-normal mt-0.5">
                   {data.from_port}
                 </span>
@@ -183,7 +179,7 @@ const FlightCard: FC<FlightCardProps> = ({ className = "", data }) => {
                 <i className=" text-2xl las la-long-arrow-alt-right"></i>
               </span>
               <div>
-                <span>{data.to_port}</span>
+                {/* <span>{data.to_port}</span> */}
                 <span className="flex items-center text-sm text-neutral-500 font-normal mt-0.5">
                   {data.to_port}
                 </span>
@@ -191,55 +187,72 @@ const FlightCard: FC<FlightCardProps> = ({ className = "", data }) => {
             </div>
 
             <div className="text-sm text-neutral-500 font-normal mt-0.5">
-              <span className="VG3hNb">{data.transit_port}</span>
+              <span className="VG3hNb">{data.via}</span>
               <span className="mx-2">·</span>
-              <span>{data.transit_time}</span>
+              {/* <span>{data.transit_time}</span> */}
               <span className="mx-2">·</span>
-              <span>HAN</span>
+              <span>{data.sl_name}</span>
             </div>
           </div>
 
           {/* TIME - NAME */}
           <div className="hidden lg:block  min-w-[150px] flex-[4] ">
             <div className="font-medium text-lg">
-              {data.from_port}- {data.to_port}
+              {data.from_port} - {data.to_port}
             </div>
             <div className="text-sm text-neutral-500 font-normal mt-0.5">
-              {/* {data.SL_name} */}
-              COSCO Shipping 
+              {data.sl_name}
             </div>
           </div>
 
-          {/* TIMME */}
+          {/* TIME */}
           <div className="hidden lg:block flex-[4] whitespace-nowrap">
-            <div className="font-medium text-lg"> Sailing Date:</div>
+            <div className="font-medium text-lg"> Validity:</div>
             <div className="text-sm text-neutral-500 font-normal mt-0.5">
-              {data.SL_date}
+              {data.expiry_date?.split(" ").shift()}
             </div>
           </div>
 
           {/* TYPE */}
           <div className="hidden lg:block flex-[4] whitespace-nowrap">
-            <div className="font-medium text-lg">Load Type: </div>
+            <div className="font-medium text-lg">Cargo Type: </div>
             <div className="text-sm text-neutral-500 font-normal mt-0.5">
-              {data.LoadType} - FCL
+              FCL - {cargo}
             </div>
           </div>
 
           {/* PRICE */}
-          <div className="flex-[4] whitespace-nowrap sm:text-right">
-            <div>
-              <span className="text-xl font-semibold text-secondary-6000">
-                {/* USD {data.freight_cost} */}
-                USD ****
-              </span>
-            </div>
-            {/* <div className="text-xs sm:text-sm text-neutral-500 font-normal mt-0.5">
-              Freight Forwarder Cost
+          <div className="flex-col whitespace-nowrap sm:text-right">
+            <span className="text-xl font-semibold text-secondary-6000">
+              <div className="font text-center"> USD {isLogin ? rate : "****"} </div>
+              {isLogin ? (
+                <div className="mt-5">
+                  <ButtonPrimary  href="/bookings">Book Now</ButtonPrimary>
+                </div>
+              ) : (
+                <div className=" mt-5 font-medium underline underline-offset-1">
+                  <Link
+                    to="/signup"
+                  >
+                    Sign up to know the rates
+                  </Link>
+                </div>
+              )}
+            </span>
+
+            {/* <div className="text-xs font-medium underline underline-offset-1 sm:text-sm text-neutral-500 font-medium mt-0.5 ">
+              {isLogin ? (
+                ""
+              ) : (
+             
+                <Link
+                  className="mt-5 font-medium underline underline-offset-1"
+                  to="/signup"
+                >
+                  Sign up to know the rates
+                </Link>
+              )}
             </div> */}
-            <div className="text-xs font-medium underline underline-offset-1 sm:text-sm text-neutral-500 font-medium mt-0.5 ">
-            <Link to='/signup'>Sign up to know the rates</Link>
-            </div>
           </div>
         </div>
       </div>
@@ -251,3 +264,9 @@ const FlightCard: FC<FlightCardProps> = ({ className = "", data }) => {
 };
 
 export default FlightCard;
+function elseif(_40gp: string | undefined) {
+  throw new Error("Function not implemented.");
+}
+function postData(postData: any) {
+  throw new Error("Function not implemented.");
+}

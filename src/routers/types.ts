@@ -55,6 +55,9 @@ export interface LocationStates {
   "/forgot-pass"?: {};
   "/page404"?: {};
   "/subscription"?: {};
+  // added along with router
+  "/dashboard"?: {};       
+  "/bookings"?: {};      
 }
 
 export type PathName = keyof LocationStates;

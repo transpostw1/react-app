@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import facebookSvg from "images/Facebook.svg";
 import twitterSvg from "images/Twitter.svg";
 import googleSvg from "images/Google.svg";
@@ -30,6 +30,12 @@ const loginSocials = [
 ];
 
 const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
+ const [fullName,setFullName] = useState("")
+ const [phoneNumber,setPhoneNumber] = useState("")
+ const [gstNumber,setGstNumber] = useState("")
+ const [companyName,setCompanyName] = useState("")
+ const [email,setEmail] = useState("")
+ 
   return (
     <div className={`nc-PageSignUp  ${className}`} data-nc-id="PageSignUp">
       <Helmet>

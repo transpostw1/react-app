@@ -43,6 +43,8 @@ import ListingRealEstateMapPage from "containers/ListingRealEstatePage/ListingRe
 import ListingRealEstatePage from "containers/ListingRealEstatePage/ListingRealEstatePage";
 import SiteHeader from "containers/SiteHeader";
 import ListingFlightsPage from "containers/ListingFlightsPage/ListingFlightsPage";
+import Dashboard from "new_component/Dashboard";
+import Bookings from "new_component/Bookings";
 
 export const pages: Page[] = [
   // { path: "/", exact: true, component: PageHome },
@@ -106,12 +108,14 @@ export const pages: Page[] = [
   { path: "/signup", component: PageSignUp },
   { path: "/login", component: PageLogin },
   { path: "/subscription", component: PageSubcription },
+  { path: "/dashboard", component: Dashboard },   // newly added 
+  { path: "/bookings", component: Bookings },   // newly added 
   //
 ];
 
 const Routes = () => {
   return (
-    <BrowserRouter >
+    <BrowserRouter>
       <ScrollToTop />
       <SiteHeader />
 
@@ -121,7 +125,7 @@ const Routes = () => {
             <Route
               key={path}
               component={component}
-              exact={!!exact}  // double not operator 
+              exact={!!exact} // double not operator
               path={path}
             />
           );

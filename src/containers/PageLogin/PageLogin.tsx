@@ -6,7 +6,6 @@ import { Helmet } from "react-helmet";
 import Input from "shared/Input/Input";
 import { Link } from "react-router-dom";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
-import axios from "axios";
 
 export interface PageLoginProps {
   className?: string;
@@ -115,7 +114,9 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </label>
-            <ButtonPrimary type="submit">Continue</ButtonPrimary>
+            <ButtonPrimary type="submit">Continue
+            {/* temporaly added for veiwing dashboard */}
+            </ButtonPrimary>
           </form>
 
           {/* ==== */}

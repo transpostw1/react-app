@@ -18,7 +18,7 @@ import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
 
 // DEFAULT DATA FOR ARCHIVE PAGE
-const defaultLocationValue = "Nava Sheva";
+const defaultLocationValue = "Nhava Sheva";
 const defaultDate = moment();
 const defaultGuestValue: GuestsInputProps["defaultValue"] = {
   guestAdults: 2,
@@ -29,7 +29,8 @@ const defaultGuestValue: GuestsInputProps["defaultValue"] = {
 export interface Data {
   from_port: string;
   to_port: string;
-  sl_date: moment.Moment | null;
+  sl_date: moment.Moment | string | null ;
+  cargoType: string;
 }
 
 export interface ExperiencesSearchFormProps {
@@ -70,10 +71,11 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({
   haveDefaultValue,
   fetchData,
 }) => {
-  const [dateValue, setdateValue] = useState<moment.Moment | null>(null);
+  const [dateValue, setdateValue] = useState<moment.Moment | null >(null);
   const [locationInputValue, setLocationInputValue] = useState("");
   const [guestValue, setGuestValue] = useState({});
-  const [contDetails, setContDetails] = useState("");
+  const [contDetails, setContDetails] = useState("FCL,20'Standard");
+  const [convDate, setConvDate] = useState<null | string | undefined>(null);
 
   const [dateFocused, setDateFocused] = useState<boolean>(false);
 
@@ -86,6 +88,7 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({
       setdateValue(defaultDate);
       setLocationInputValue(defaultLocationValue);
       setGuestValue(defaultGuestValue);
+      setConvDate(defaultDate.format());
     }
   }, []);
 
@@ -115,12 +118,18 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({
   const [postData, setPostData] = useState({
     from_port: pickUpInputValue,
     to_port: dropOffInputValue,
-    sl_date: dateValue,
+    sl_date: convDate, // converted date in string format
+    cargoType: contDetails,
   });
+
 
   const submitHandler = () => {
     fetchData(postData);
   };
+  // useEffect(() => {
+  //     setConvDate();
+  //     console.log(convDate);
+  //   }, [dateValue]);
 
   // USER EFFECT
   useEffect(() => {
@@ -130,9 +139,14 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({
   useEffect(() => {
     setPostData({ ...postData, to_port: dropOffInputValue });
   }, [dropOffInputValue]);
+
   useEffect(() => {
-    setPostData({ ...postData, sl_date: dateValue });
+    setPostData({ ...postData, sl_date: dateValue?.format("YYYY-MM-DD")});
   }, [dateValue]);
+
+  useEffect(() => {
+    setPostData({ ...postData, cargoType: contDetails });
+  }, [contDetails]);
 
   const renderGuest = () => {
     return (
@@ -297,8 +311,8 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({
                 desc="To"
                 autoFocus={fieldFocused === "dropOffInput"}
               />
-            </div>
             {/* for single date selector */}
+            
             <ExperiencesDateSingleInput
               defaultValue={dateValue}
               onChange={(date) => {
@@ -308,10 +322,13 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({
               onFocusChange={(focus: boolean) => {
                 setDateFocused(focus);
               }}
-            />
+              />
+              
+           
             {/* shipping details - new component */}
             <ShippingDetails selectedType={selectedType} />
             {/* BUTTON SUBMIT OF FORM */}
+              </div>
             <div className="px-4 py-3 flex items-center justify-center">
               {/* <ButtonSubmit  /> */}
               <button
@@ -353,12 +370,10 @@ const mapStateToProps = (state: { data: any }) => {
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<{}, {}, any>,
-  postData: {}
 ) => {
   return {
     fetchData: async (postData: {}) => {
       dispatch(fetchData(postData));
-      console.log(postData);
     },
   };
 };

@@ -303,7 +303,7 @@ export const NAVIGATION_DEMO: NavItemType[] = [
 
   {
     id: ncNanoId(),
-    href: "#",
+    href: "/about",
     name: "About Us",
     // type: "dropdown",
     children: otherPageChildMenus,

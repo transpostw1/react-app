@@ -1,6 +1,10 @@
 import Heading from "components/Heading/Heading";
 import React from "react";
 import NcImage from "shared/NcImage/NcImage";
+// import {satyaueImg} from "../../images/transpost images/about-page/satyaue.jpg"
+// import {satyaueImg} from "../../images/transpost images/about-page/satyaue.jpg"
+// import {satyaueImg} from "../../images/transpost images/about-page/satyaue.jpg"
+// import {satyaueImg} from "../../images/transpost images/about-page/satyaue.jpg"
 
 export interface People {
   id: string;
@@ -12,29 +16,50 @@ export interface People {
 const FOUNDER_DEMO: People[] = [
   {
     id: "1",
-    name: `Niamh O'Shea`,
-    job: "Co-founder and Chief Executive",
+    name: `Satyaue Paul`,
+    job: "CEO | Co-founder",
     avatar:
       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
   },
   {
-    id: "4",
-    name: `Danien Jame`,
-    job: "Co-founder and Chief Executive",
+    id: "2",
+    name: `Neelam Choudhary`,
+    job: "Director | Co-founder",
     avatar:
       "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
   },
   {
     id: "3",
-    name: `Orla Dwyer`,
-    job: "Co-founder, Chairman",
+    name: `Amtulla Kagalwala`,
+    job: "Process Manager",
     avatar:
       "https://images.unsplash.com/photo-1560365163-3e8d64e762ef?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
   },
   {
-    id: "2",
-    name: `Dara Frazier`,
-    job: "Co-Founder, Chief Strategy Officer",
+    id: "4",
+    name: `Pratiksha Hegde`,
+    job: "Onboarding Specialist",
+    avatar:
+      "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
+  },
+  {
+    id: "5",
+    name: `Rim Jana`,
+    job: "Process Expert",
+    avatar:
+      "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
+  },
+  {
+    id: "6",
+    name: `Bertha Bhatti`,
+    job: "Onboarding Specialist",
+    avatar:
+      "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
+  },
+  {
+    id: "7",
+    name: `Bhavana Choudhary`,
+    job: "Process Expert",
     avatar:
       "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
   },
@@ -44,10 +69,10 @@ const SectionFounder = () => {
   return (
     <div className="nc-SectionFounder relative">
       <Heading
-        desc="We’re impartial and independent, and every day we create distinctive,
-          world-class programmes and content"
+        desc="Our leadership team brings together industry experts with years of expertise.
+        They cultivate our strong culture, and work tirelessly."
       >
-        ⛱ Founder
+        Our Passionate Team
       </Heading>
       <div className="grid sm:grid-cols-2 gap-x-5 gap-y-8 lg:grid-cols-4 xl:gap-x-8">
         {FOUNDER_DEMO.map((item) => (

@@ -81,10 +81,11 @@ const LocationInput: FC<LocationInputProps> = ({
         </h3>
         <div className="mt-2">
           {[
-            "Nava Sheva, India",
-            "Hamburg, Germany",
-            "Barcelona, Spain",
-            "Jeddah, Saudi Arabia",
+            "Nhava Sheva",
+            "Jakarta",
+            "Singapore",
+            "Male",
+            "Hong Kong"
           ].map((item) => (
             <span
               onClick={() => handleSelectLocation(item)}
@@ -99,6 +100,7 @@ const LocationInput: FC<LocationInputProps> = ({
                   viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
+                  
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"

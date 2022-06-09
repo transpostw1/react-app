@@ -3,6 +3,7 @@ import axios from "axios";
 import { AnyAction, Dispatch } from "redux";
 import { Action } from "./rateListReducer";
 import { ThunkDispatch } from "redux-thunk";
+import { config } from "process";
 
 export const fetchDataRequest = () => {
   return {
@@ -28,12 +29,15 @@ export const fetchDatafailure = (error: any) => {
 export const fetchData = (postData: {}) => {
   return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     // specify by importing the action
+    console.log(postData);
+    let config = {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    };
     dispatch(fetchDataRequest);
     axios
-      .post(
-        "https://tesseract.transpost.co/api/rates_search.php",
-        postData
-      )
+      .post("https://launchindia.org/transpost/rates.php", postData, config)
       .then((response) => {
         const fetchedData = response.data;
         dispatch(fetchDataSuccess(fetchedData)); // dispatching the action
@@ -45,3 +49,6 @@ export const fetchData = (postData: {}) => {
       });
   };
 };
+function data(arg0: string, data: any, arg2: { key: string }) {
+  throw new Error("Function not implemented.");
+}

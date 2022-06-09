@@ -16,12 +16,11 @@ const SectionSubscribe2: FC<SectionSubscribe2Props> = ({ className = "" }) => {
       data-nc-id="SectionSubscribe2"
     >
       <div className="flex-shrink-0 mb-10 lg:mb-0 lg:mr-10 lg:w-2/5">
-        <h2 className="font-semibold text-4xl">Join our newsletter 🎉</h2>
+        <h2 className="font-semibold text-4xl">Ready to get started 🎉</h2>
         <span className="block mt-5 text-neutral-500 dark:text-neutral-400">
-          Read and share new perspectives on just about any topic. Everyone’s
-          welcome.
+        You can consult with us on the journey to deliver your product to the buyer, along with assistance in insuring and financing your trade.
         </span>
-        <ul className="space-y-4 mt-10">
+        {/* <ul className="space-y-4 mt-10">
           <li className="flex items-center space-x-4">
             <Badge name="01" />
             <span className="font-medium text-neutral-700 dark:text-neutral-300">
@@ -34,7 +33,7 @@ const SectionSubscribe2: FC<SectionSubscribe2Props> = ({ className = "" }) => {
               Get premium magazines
             </span>
           </li>
-        </ul>
+        </ul> */}
         <form className="mt-10 relative max-w-sm">
           <Input
             required
