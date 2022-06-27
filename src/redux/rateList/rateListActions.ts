@@ -3,7 +3,8 @@ import axios from "axios";
 import { AnyAction, Dispatch } from "redux";
 import { Action } from "./rateListReducer";
 import { ThunkDispatch } from "redux-thunk";
-import { config } from "process";
+
+
 
 export const fetchDataRequest = () => {
   return {

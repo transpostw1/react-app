@@ -63,7 +63,7 @@ export const ShipingDetails = (props: any) => {
               <svg
                 viewBox="0 0 18 18"
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 ml-3 sm:h-8 w-6 sm:w-8 mr-3"
+                className="nc-icon-field  h-6 ml-3 sm:h-8 w-6 sm:w-8 mr-3"
                 fill="#C9CFDB"
               >
                 <path d="M14.7229 5.89836V9.48968L13.1479 8.96239V6.71865H6.84814V8.96239L5.27319 9.48968V5.89836C5.27319 5.68081 5.35616 5.47216 5.50384 5.31833C5.65152 5.1645 5.85182 5.07807 6.06067 5.07807H7.63562V4.05272C7.63562 3.88955 7.69784 3.73307 7.8086 3.61769C7.91937 3.50232 8.06959 3.4375 8.22623 3.4375H11.7699C11.9265 3.4375 12.0767 3.50232 12.1875 3.61769C12.2982 3.73307 12.3605 3.88955 12.3605 4.05272V5.07807H13.9354C14.1443 5.07807 14.3446 5.1645 14.4923 5.31833C14.6399 5.47216 14.7229 5.68081 14.7229 5.89836Z"></path>
@@ -71,7 +71,7 @@ export const ShipingDetails = (props: any) => {
               </svg>
 
               <input
-                className="py-5 rounded border+- block font-bold text-neutral-700 dark:text-neutral-500"
+                className="py-5 bg-transparent rounded border+- block font-bold text-neutral-700 dark:text-neutral-500"
                 value={inputValue}
                 style={{ color: "black" }}
                 onClick={() => {
@@ -79,9 +79,7 @@ export const ShipingDetails = (props: any) => {
                   setTransType("FCL");
                   setContDetails("20'Standard");
                 }}
-              >
-            
-              </input>
+              ></input>
               <ChevronDownIcon
                 onClick={() => {
                   setShowPopover(!showPopover);
@@ -214,12 +212,6 @@ export const ShipingDetails = (props: any) => {
                               </option>
                             );
                           })}
-                          {/* <option value="20S">20'Standard</option>
-                          <option value="40S">40'Standard</option>
-                          <option value="40HC">40'High Cube</option>
-                          <option value="20R">20'Refrigerated</option>
-                          <option value="40R">40'Refrigerated</option>
-                          <option value="45HC">45'High Cube</option> */}
                         </select>
                       </div>
                     )}

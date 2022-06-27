@@ -47,7 +47,6 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
   const [isOpen, setIsOpen] = useState(false);
 
   const myRef = useRef<null | HTMLDivElement>(null);
-  console.log(shippingData.data);
 
   useEffect(() => {
     if (!Array.isArray(shippingData.data)) {
@@ -55,7 +54,12 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
     } else {
       setIsOpen(false);
     }
-    myRef.current?.scrollIntoView({ block: "center", behavior: "smooth" });
+    if (
+      (Array.isArray(shippingData.data) && shippingData.data.length > 0) ||
+      typeof shippingData.data == "object"
+    ) {
+      myRef.current?.scrollIntoView({ block: "center", behavior: "smooth" });
+    }
   }, [shippingData.data]);
 
   return (
@@ -66,7 +70,7 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
     >
       <div className="lg:p-10 lg:bg-neutral-50 lg:dark:bg-black/20 grid grid-cols-1 gap-6 rounded-3xl">
         {Array.isArray(shippingData.data) && shippingData.data.length > 0
-          ? shippingData.data.map((item, index) => {
+          ? shippingData?.data?.map((item, index) => {
               return <FlightCard key={index} data={item} />;
             })
           : isOpen && <QuickRequest />}

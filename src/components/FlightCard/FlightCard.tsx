@@ -1,9 +1,16 @@
 import React, { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import { fetchData } from "..//../redux";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
 import imgpng from "../../images/coscoLogo.jpg";
+import {
+  onAuthStateChangedListener,
+  createUserDocumentFromAuth,
+  signOutUser,
+} from "../../utils/firebase/firebase-config";
+import { useHistory } from "react-router-dom";
 
 export interface FlightCardProps {
   className?: string;
@@ -27,9 +34,31 @@ export interface FlightCardProps {
 
 const FlightCard: FC<FlightCardProps> = ({ className = "", data }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isLogin, setIsLogin] = useState(false); // temporary for testing purpose
+  const [isLogin, setIsLogin] = useState(true); // temporary for testing purpose
+  const [currentUser, setCurrentUser] = useState(null);
+  const [email, setEmail] = useState("");
   const [rate, setRate] = useState<string | undefined>("");
   const [cargo, setCargo] = useState<string>("");
+
+  // signout should effect here
+  useEffect(() => {
+    const unsubscribe = onAuthStateChangedListener((user: any) => {
+      if (user) {
+        createUserDocumentFromAuth(user);
+        setIsLogin(false);
+      }
+      setCurrentUser(user);
+      setEmail(user.email);
+      console.log(user);
+    });
+
+    return unsubscribe;
+  }, []);
+
+  const signOuthandler = () => {
+    setIsLogin(!isLogin);
+    signOutUser();
+  };
 
   // for Selecting rates
   useEffect(() => {
@@ -44,6 +73,35 @@ const FlightCard: FC<FlightCardProps> = ({ className = "", data }) => {
       setCargo("40'High Cube");
     }
   }, [data]);
+
+  const history = useHistory();
+  const bookNowHandler = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    data: {}
+  ) => {
+    const postData = { ...data, email };
+    console.log(postData);
+
+    //  let config = {
+    //   headers: {
+    //     "Content-Type": "application/x-www-form-urlencoded",
+    //   },
+    axios
+      .post("https://tsr.transpost.co/bookings/newbooking", postData)
+      .then((response) => {
+        const fetchedData = response.data;
+        console.log(fetchedData);
+        history.push({
+          pathname: "/bookings",
+          state: { bId: fetchedData?.BookingID,
+                    bookedData: data,
+                  cargoType: cargo} ,
+        });
+      })
+      .catch((error) => {
+        const errorMsg = error.message;
+      });
+  };
 
   const renderDetailTop = () => {
     return (
@@ -98,14 +156,17 @@ const FlightCard: FC<FlightCardProps> = ({ className = "", data }) => {
           <div className="border-l border-neutral-200 dark:border-neutral-700 md:mx-6 lg:mx-10"></div>
           <div className="flex-[4] whitespace-nowrap sm:text-center">
             <span className="text-xl font-semibold text-secondary-6000">
-              USD {isLogin ? rate : "****"}
+              USD {!isLogin ? rate : "****"}
             </span>
             {/* <div className="text-xs sm:text-sm text-neutral-500 font-normal mt-0.5">
               Total Cost
             </div> */}
             <div className="mt-5 font-medium">
-              {isLogin ? (
-                <ButtonPrimary href="/bookings">Book Now</ButtonPrimary>
+              {!isLogin ? (
+                // <ButtonPrimary onClick={(e) => bookNowHandler(e, data.ID)} href="/bookings">Book Now</ButtonPrimary>
+                <button onClick={(e) => bookNowHandler(e, data)}>
+                  Book Now
+                </button>
               ) : (
                 <Link
                   className="mt-5 font-medium underline underline-offset-1"
@@ -224,18 +285,20 @@ const FlightCard: FC<FlightCardProps> = ({ className = "", data }) => {
           {/* PRICE */}
           <div className="flex-col whitespace-nowrap sm:text-right">
             <span className="text-xl font-semibold text-secondary-6000">
-              <div className="font text-center"> USD {isLogin ? rate : "****"} </div>
-              {isLogin ? (
+              <div className="font text-center">
+                {" "}
+                USD {!isLogin ? rate : "****"}{" "}
+              </div>
+              {!isLogin ? (
                 <div className="mt-5">
-                  <ButtonPrimary  href="/bookings">Book Now</ButtonPrimary>
+                  {/* <ButtonPrimary href="/bookings">Book Now</ButtonPrimary> */}
+                  <button onClick={(e) => bookNowHandler(e, data)}>
+                    Book Now
+                  </button>
                 </div>
               ) : (
                 <div className=" mt-5 font-medium underline underline-offset-1">
-                  <Link
-                    to="/signup"
-                  >
-                    Sign up to know the rates
-                  </Link>
+                  <Link to="/signup">Sign up to know the rates</Link>
                 </div>
               )}
             </span>

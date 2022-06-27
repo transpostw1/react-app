@@ -1,5 +1,5 @@
 import Label from "components/Label/Label";
-import React, { FC } from "react";
+import React, { FC, useState, useEffect } from "react";
 import Avatar from "shared/Avatar/Avatar";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Input from "shared/Input/Input";
@@ -7,19 +7,48 @@ import Select from "shared/Select/Select";
 import Textarea from "shared/Textarea/Textarea";
 import CommonLayout from "./CommonLayout";
 import { Helmet } from "react-helmet";
+import {
+  onAuthStateChangedListener,
+  createUserDocumentFromAuth,
+  signOutUser,
+} from "utils/firebase/firebase-config";
+
+import { User } from "firebase/auth";
 
 export interface AccountPageProps {
   className?: string;
 }
 
 const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
+  const [isLogin, setIsLogin] = useState(true);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [fullName, setFullName] = useState<string | null>("");
+  const [email, setEmail] = useState<string | null>("");
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChangedListener((user: User) => {
+      if (user) {
+        createUserDocumentFromAuth(user);
+        setIsLogin(false);
+      }
+      setCurrentUser(user);
+      setFullName(user.displayName);
+      setEmail(user.email);
+    });
+
+    return unsubscribe;
+  }, []);
+
+  console.log(currentUser?.displayName);
+  console.log(currentUser?.email);
+
   return (
     <div className={`nc-AccountPage ${className}`} data-nc-id="AccountPage">
       <Helmet>
-        <title>Account || Booking React Template</title>
+        <title>Account || Transpost</title>
       </Helmet>
       <CommonLayout>
-        <div className="space-y-6 sm:space-y-8">
+        <div className="space-y-4 sm:space-y-4">
           {/* HEADING */}
           <h2 className="text-3xl font-semibold">Account infomation</h2>
           <div className="w-14 border-b border-neutral-200 dark:border-neutral-700"></div>
@@ -54,46 +83,60 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
             </div>
             <div className="flex-grow mt-10 md:mt-0 md:pl-16 max-w-3xl space-y-6">
               <div>
-                <Label>Name</Label>
-                <Input className="mt-1.5" defaultValue="Eden Tuan" />
+                <Label> Company Name : </Label> XYZ
+                {/* {typeof fullName === "string" ? (
+                  <Input className="mt-1.5" value={fullName} />
+                ) : (
+                  ""
+                )} */}
+              </div>
+              <div>
+                <Label>Full Name</Label>
+                {typeof fullName === "string" ? (
+                  <Input className="mt-1.5" value={fullName} />
+                ) : (
+                  ""
+                )}
               </div>
               {/* ---- */}
               <div>
-                <Label>Gender</Label>
+                <Label>Business Type</Label>
                 <Select className="mt-1.5">
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
+                  <option value="Shipper">Shipper</option>
+                  <option value="Freight Forwarder">Freight Forwarder</option>
                 </Select>
               </div>
-              {/* ---- */}
-              <div>
-                <Label>Username</Label>
-                <Input className="mt-1.5" defaultValue="@eden_tuan" />
-              </div>
+
               {/* ---- */}
               <div>
                 <Label>Email</Label>
-                <Input className="mt-1.5" defaultValue="example@email.com" />
-              </div>
-              {/* ---- */}
-              <div className="max-w-lg">
-                <Label>Date of birth</Label>
-                <Input
-                  className="mt-1.5"
-                  type="date"
-                  defaultValue="1990-07-22"
-                />
+                {typeof email === "string" ? (
+                  <Input className="mt-1.5" value={email} />
+                ) : (
+                  ""
+                )}
               </div>
               {/* ---- */}
               <div>
-                <Label>Addess</Label>
-                <Input className="mt-1.5" defaultValue="New york, USA" />
+                <Label>Currency</Label>
+                <Select className="mt-1.5">
+                  <option value="USD">USD</option>
+                  <option value="Indian Rupee">Indian Rupee</option>
+                </Select>
               </div>
+
+              {/* ---- */}
+              {/* <div>
+                <Label>Addess</Label>
+                <Input className="mt-1.5" defaultValue="Address Info" />
+              </div> */}
               {/* ---- */}
               <div>
                 <Label>Phone number</Label>
-                <Input className="mt-1.5" defaultValue="003 888 232" />
+                <Input
+                  className="mt-1.5"
+                  defaultValue="Enter your Phone Number"
+                />
               </div>
               {/* ---- */}
               <div>

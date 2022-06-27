@@ -5,7 +5,14 @@ import googleSvg from "images/Google.svg";
 import { Helmet } from "react-helmet";
 import Input from "shared/Input/Input";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import {
+  signInWithGooglePopup,
+  createUserDocumentFromAuth,
+  createAuthUserWithEmailAndPassword,
+} from "utils/firebase/firebase-config";
+// import { signUpStart } from "redux/user/userAction";
+import { useDispatch } from "react-redux";
 
 export interface PageSignUpProps {
   className?: string;
@@ -30,12 +37,72 @@ const loginSocials = [
 ];
 
 const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
- const [fullName,setFullName] = useState("")
- const [phoneNumber,setPhoneNumber] = useState("")
- const [gstNumber,setGstNumber] = useState("")
- const [companyName,setCompanyName] = useState("")
- const [email,setEmail] = useState("")
- 
+  const [fullName, setFullName] = useState("");
+  const [password, setPassword] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [gstNumber, setGstNumber] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [email, setEmail] = useState("");
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const logGoogleUser = async () => {
+    // const response = await signInWithGooglePopup();
+    const { user } = await signInWithGooglePopup();
+    const userDocRef = await createUserDocumentFromAuth(user);
+    console.log(userDocRef?.exists());
+    if (userDocRef?.exists()) {
+      console.log("User Already Exist");
+      // return;
+    }
+
+    history.push("./");
+  };
+
+  const submitHandler = async (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+    // if (password !== confirmPassword) {
+    //   alert('passwords do not match');
+    //   return;
+    // }
+
+    try {
+      const response = await createAuthUserWithEmailAndPassword(
+        email,
+        password
+      );
+
+      await createUserDocumentFromAuth(response?.user, {
+        fullName,
+        phoneNumber,
+        gstNumber,
+        companyName,
+      });
+
+      history.push("./");
+    } catch (error) {
+      console.log("user creation encountered an error", error);
+    }
+  };
+
+  // try {
+  //   dispatch(signUpStart(email, password, fullName));
+  //   //    {
+  //   //   displayName
+  //   //   // fullName,
+  //   //   // phoneNumber,
+  //   //   // gstNumber,
+  //   //   // companyName,
+  //   // });
+  // } catch (error: any) {
+  //   if (error.code === "auth/email-already-in-use") {
+  //     alert("Cannot create user, email already in use");
+  //   } else {
+  //     console.log("user creation encountered an error", error);
+  //   }
+  // }
+
   return (
     <div className={`nc-PageSignUp  ${className}`} data-nc-id="PageSignUp">
       <Helmet>
@@ -48,10 +115,11 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
         <div className="max-w-md mx-auto space-y-6 ">
           <div className="grid gap-3">
             {loginSocials.map((item, index) => (
-              <a
+              <div
                 key={index}
-                href={item.href}
-                className="nc-will-change-transform flex w-full rounded-lg bg-primary-50 dark:bg-neutral-800 px-4 py-3 transform transition-transform sm:px-6 hover:translate-y-[-2px]"
+                // href={item.href}
+                onClick={logGoogleUser}
+                className="nc-will-change-transform flex w-full rounded-lg bg-primary-50 dark:bg-neutral-800 px-4 py-3 transform transition-transform sm:px-6 hover:translate-y-[-2px] cursor-pointer"
               >
                 <img
                   className="flex-shrink-0"
@@ -61,7 +129,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
                 <h3 className="flex-grow text-center text-sm font-medium text-neutral-700 dark:text-neutral-300 sm:text-sm">
                   {item.name}
                 </h3>
-              </a>
+              </div>
             ))}
           </div>
           {/* OR */}
@@ -72,17 +140,18 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
             <div className="absolute left-0 w-full top-1/2 transform -translate-y-1/2 border border-neutral-100 dark:border-neutral-800"></div>
           </div>
           {/* FORM */}
-          <form className="grid grid-cols-1 gap-6" action="#" method="post">
+          <form className="grid grid-cols-1 gap-6" onSubmit={submitHandler}>
             <label className="block">
               <span className="text-neutral-800 dark:text-neutral-200">
                 Full Name
               </span>
               <Input
                 type="text"
-                // placeholder="example@example.com"
                 className="mt-1"
+                onChange={(e) => setFullName(e.target.value)}
               />
             </label>
+
             <label className="block">
               <span className="text-neutral-800 dark:text-neutral-200">
                 Phone number
@@ -91,13 +160,18 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
                 type="text"
                 // placeholder="example@example.com"
                 className="mt-1"
+                onChange={(e) => setPhoneNumber(e.target.value)}
               />
             </label>
             <label className="block">
               <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
                 GST Number
               </span>
-              <Input type="text" className="mt-1" />
+              <Input
+                type="text"
+                className="mt-1"
+                onChange={(e) => setGstNumber(e.target.value)}
+              />
             </label>
             <label className="block">
               <span className="text-neutral-800 dark:text-neutral-200">
@@ -107,6 +181,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
                 type="text"
                 // placeholder="example@example.com"
                 className="mt-1"
+                onChange={(e) => setCompanyName(e.target.value)}
               />
             </label>
             <label className="block">
@@ -117,6 +192,17 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
                 type="email"
                 placeholder="example@example.com"
                 className="mt-1"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </label>
+            <label className="block">
+              <span className="text-neutral-800 dark:text-neutral-200">
+                Password
+              </span>
+              <Input
+                type="password"
+                className="mt-1"
+                onChange={(e) => setPassword(e.target.value)}
               />
             </label>
 

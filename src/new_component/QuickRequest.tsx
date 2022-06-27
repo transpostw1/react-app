@@ -26,7 +26,7 @@ const QuickRequest = () => {
     };
 
     axios
-      .post("https://launchindia.org/transpost/rates.php", postData, config)
+      .post("", postData, config)
       .then((response) => {
         const fetchedData = response.data;
         console.log(fetchedData);

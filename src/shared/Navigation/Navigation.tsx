@@ -1,6 +1,7 @@
 import React from "react";
 import NavigationItem from "./NavigationItem";
 import { NAVIGATION_DEMO } from "data/navigation";
+import ncNanoId from "utils/ncNanoId";
 
 function Navigation() {
   return (

@@ -6,6 +6,16 @@ import { Helmet } from "react-helmet";
 import Input from "shared/Input/Input";
 import { Link } from "react-router-dom";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
+import { useDispatch,useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+
+import { googleSignInStart, emailSignInStart, signInSuccess } from "redux/user/userAction";
+
+import {
+  signInWithGooglePopup,
+  createUserDocumentFromAuth,
+  signInAuthUserWithEmailAndPassword,
+} from "utils/firebase/firebase-config";
 
 export interface PageLoginProps {
   className?: string;
@@ -32,24 +42,42 @@ const loginSocials = [
 const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-  const submitHandler = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
+  const signInWithGoogle = async () => {
+    const { user } = await signInWithGooglePopup();
+    await createUserDocumentFromAuth(user);
 
-    let formData = new FormData();
-    formData.append("username", email);
-    formData.append("password", password);
-
-    fetch("https://tesseract.transpost.co/api/signin_api.php", {
-      mode: "no-cors",
-      method: "POST",
-      body: formData,
-      redirect: "follow",
-    })
-      .then((response) => response.json())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
+    // const user = dispatch(googleSignInStart());
+    console.log(user);
+    history.push("./");
   };
+
+  const submitHandler = async (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+    try {
+
+      const response = await signInAuthUserWithEmailAndPassword(
+        email,
+        password
+      );
+      console.log(response);
+      history.push("./");
+    } catch (error: any) {
+      switch (error.code) {
+        case "auth/wrong-password":
+          alert("incorrect password for email");
+          break;
+        case "auth/user-not-found":
+          alert("no user associated with this email");
+          break;
+        default:
+          console.log(error);
+      }
+    }
+  };
+
   return (
     <div className={`nc-PageLogin ${className}`} data-nc-id="PageLogin">
       <Helmet>
@@ -62,9 +90,10 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
         <div className="max-w-md mx-auto space-y-6">
           <div className="grid gap-3">
             {loginSocials.map((item, index) => (
-              <a
+              <div
                 key={index}
-                href={item.href}
+                // href={item.href}
+                onClick={signInWithGoogle}
                 className="nc-will-change-transform flex w-full rounded-lg bg-primary-50 dark:bg-neutral-800 px-4 py-3 transform transition-transform sm:px-6 hover:translate-y-[-2px]"
               >
                 <img
@@ -75,7 +104,7 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
                 <h3 className="flex-grow text-center text-sm font-medium text-neutral-700 dark:text-neutral-300 sm:text-sm">
                   {item.name}
                 </h3>
-              </a>
+              </div>
             ))}
           </div>
           {/* OR */}
@@ -92,6 +121,7 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
                 Email address
               </span>
               <Input
+                required
                 type="text"
                 placeholder="example@example.com"
                 className="mt-1"
@@ -107,6 +137,7 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
                 </Link>
               </span>
               <Input
+                required
                 type="password"
                 className="mt-1"
                 name="password"
@@ -114,8 +145,9 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </label>
-            <ButtonPrimary type="submit">Continue
-            {/* temporaly added for veiwing dashboard */}
+            <ButtonPrimary type="submit">
+              Continue
+              {/* temporaly added for veiwing dashboard */}
             </ButtonPrimary>
           </form>
 

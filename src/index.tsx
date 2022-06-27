@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+// import { UserProvider } from "utils/contexts/userContext";
 //
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
@@ -13,11 +14,13 @@ import "./fonts/line-awesome-1.3.0/css/line-awesome.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
-import store from '../src/redux/store'
+import store from "../src/redux/store";
 
 ReactDOM.render(
-  <Provider store={store} >
-    <App />
+  <Provider store={store}>
+    {/* <UserProvider> */}
+      <App />
+    {/* </UserProvider> */}
   </Provider>,
   document.getElementById("root")
 );

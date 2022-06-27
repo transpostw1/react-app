@@ -1,5 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MyRouter from "routers/index";
+// import { checkUserSession } from "redux/user/userAction";
+import {
+  onAuthStateChangedListener,
+  createUserDocumentFromAuth,
+} from "./utils/firebase/firebase-config";
 
 function App() {
   return (

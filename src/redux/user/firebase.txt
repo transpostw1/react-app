@@ -1,0 +1,172 @@
+// Firebase App (the core Firebase SDK) is always required and
+// must be listed before other Firebase SDKs
+import * as firebase from "firebase/app";
+
+// Add the Firebase services that you want to use
+// We only want to use Firebase Auth here
+import "firebase/auth";
+
+// Your app's Firebase configuration
+var firebaseConfig = {
+  apiKey: "YOUR_FIREBASE_API_KEY",
+  authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
+  databaseURL: "YOUR_FIREBASE_DB_URL",
+  projectId: "YOUR_FIREBASE_PROJECT_ID",
+  storageBucket: "",
+  messagingSenderId: "YOUR_FIREBASE_MESSAGING_SENDER_ID",
+  appId: "YOUR_FIREBASE_APP_ID"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+// Finally, export it to use it throughout your app
+export default firebase;
+
+
+.............................................................
+
+
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter as Router } from "react-router-dom";
+import "./css/index.css";
+import App from "./components/App";
+
+// SETTING UP REDUX STORE
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware, compose } from "redux";
+import reduxThunk from "redux-thunk";
+import reducers from "./store/reducers";
+
+// ENHANCING STORE WITH FIREBASE
+import { reactReduxFirebase } from "react-redux-firebase";
+import firebase from "./services/firebase";
+const createStoreWithFirebase = compose(reactReduxFirebase(firebase))(
+  createStore
+);
+const store = createStoreWithFirebase(
+  reducers,
+  {},
+  applyMiddleware(reduxThunk)
+);
+
+ReactDOM.render(
+  <Provider store={store}>
+    <Router>
+      <App />
+    </Router>
+  </Provider>,
+  document.getElementById("root")
+);
+
+
+...........................................................
+
+
+import { combineReducers } from "redux";
+import authReducer from "./auth";
+import { firebaseReducer } from "react-redux-firebase";
+export default combineReducers({
+  firebaseReducer,
+  authReducer
+});
+
+
+...........................................................
+
+export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
+export const SIGNUP_ERROR = "SIGNUP_ERROR";
+
+
+import { AUTH_SUCCESS, AUTH_ERROR } from "./actionTypes";
+import firebase from "../../services/firebase";
+// Signing up with Firebase
+export const signup = (email, password) => async dispatch => {
+  try {
+    ...
+  } catch (err) {
+    ...
+  }
+};
+
+.......................................................
+
+
+mport { SIGNUP_SUCCESS, SIGNUP_ERROR } from "./actionTypes";
+import firebase from "../../services/firebase";
+
+// Signing up with Firebase
+export const signup = (email, password) => async dispatch => {
+  try {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(dataBeforeEmail => {
+        firebase.auth().onAuthStateChanged(function(user) {
+          user.sendEmailVerification();
+        });
+      })
+      .then(dataAfterEmail => {
+        firebase.auth().onAuthStateChanged(function(user) {
+          if (user.emailVerified) {
+            // Email is verified
+            dispatch({
+              type: SIGNUP_SUCCESS,
+              payload:
+                "Your account was successfully created! Now you need to verify your e-mail address, please go check your inbox."
+            });
+          } else {
+            // Email is not verified
+            dispatch({
+              type: SIGNUP_ERROR,
+              payload:
+                "Something went wrong, we couldn't create your account. Please try again."
+            });
+          }
+        });
+      })
+      .catch(function(error) {
+        dispatch({
+          type: SIGNUP_ERROR,
+          payload:
+            "Something went wrong, we couldn't create your account. Please try again."
+        });
+      });
+  } catch (err) {
+    dispatch({
+      type: SIGNUP_ERROR,
+      payload:
+        "Something went wrong, we couldn't create your account. Please try again."
+    });
+  }
+};
+
+.....................................................................
+
+
+import React from "react";
+import { connect } from "react-redux";
+import Home from "./Home";
+import Login from "./Login";
+import Loader from "./Loader";
+
+const Main = ({ auth }) => {
+  return (
+    <div>
+      {!auth.isLoaded ? <Loader /> : !auth.isEmpty ? <Home /> : <Login />}
+    </div>
+  );
+};
+
+function mapStateToProps(state) {
+  return {
+    auth: state.firebaseReducer.auth
+  };
+}
+
+export default connect(mapStateToProps)(Main);
+
+
+........................................................
+

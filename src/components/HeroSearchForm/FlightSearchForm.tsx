@@ -12,10 +12,16 @@ import NcInputNumber from "components/NcInputNumber/NcInputNumber";
 import ExperiencesDateSingleInput from "./ExperiencesDateSingleInput";
 import GuestsInput, { GuestsInputProps } from "./GuestsInput";
 import ShippingDetails from "new_component/ShippingDetails";
-import { url } from "inspector";
 import { fetchData } from "../../redux";
 import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
+
+// for Authentication
+import {
+  onAuthStateChangedListener,
+  createUserDocumentFromAuth,
+} from "utils/firebase/firebase-config";
+import { User } from "firebase/auth";
 
 // DEFAULT DATA FOR ARCHIVE PAGE
 const defaultLocationValue = "Nhava Sheva";
@@ -29,7 +35,7 @@ const defaultGuestValue: GuestsInputProps["defaultValue"] = {
 export interface Data {
   from_port: string;
   to_port: string;
-  sl_date: moment.Moment | string | null ;
+  sl_date: moment.Moment | string | null;
   cargoType: string;
 }
 
@@ -71,11 +77,14 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({
   haveDefaultValue,
   fetchData,
 }) => {
-  const [dateValue, setdateValue] = useState<moment.Moment | null >(null);
+  const [dateValue, setdateValue] = useState<moment.Moment | null>(null);
   const [locationInputValue, setLocationInputValue] = useState("");
   const [guestValue, setGuestValue] = useState({});
   const [contDetails, setContDetails] = useState("FCL,20'Standard");
   const [convDate, setConvDate] = useState<null | string | undefined>(null);
+
+  //current user
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   const [dateFocused, setDateFocused] = useState<boolean>(false);
 
@@ -120,8 +129,20 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({
     to_port: dropOffInputValue,
     sl_date: convDate, // converted date in string format
     cargoType: contDetails,
+    user_email: currentUser ? currentUser.email : "",
   });
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChangedListener((user: User) => {
+      if (user) {
+        createUserDocumentFromAuth(user);
+        // setIsLogin(false);
+      }
+      setCurrentUser(user);
+    });
+
+    return unsubscribe;
+  }, []);
 
   const submitHandler = () => {
     fetchData(postData);
@@ -141,12 +162,19 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({
   }, [dropOffInputValue]);
 
   useEffect(() => {
-    setPostData({ ...postData, sl_date: dateValue?.format("YYYY-MM-DD")});
+    setPostData({ ...postData, sl_date: dateValue?.format("YYYY-MM-DD") });
   }, [dateValue]);
 
   useEffect(() => {
     setPostData({ ...postData, cargoType: contDetails });
   }, [contDetails]);
+
+  useEffect(() => {
+    setPostData({
+      ...postData,
+      user_email: currentUser ? currentUser.email : "",
+    });
+  }, [currentUser]);
 
   const renderGuest = () => {
     return (
@@ -311,24 +339,23 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({
                 desc="To"
                 autoFocus={fieldFocused === "dropOffInput"}
               />
-            {/* for single date selector */}
-            
-            <ExperiencesDateSingleInput
-              defaultValue={dateValue}
-              onChange={(date) => {
-                setdateValue(date);
-              }}
-              defaultFocus={dateFocused}
-              onFocusChange={(focus: boolean) => {
-                setDateFocused(focus);
-              }}
+              {/* for single date selector */}
+
+              <ExperiencesDateSingleInput
+                defaultValue={dateValue}
+                onChange={(date) => {
+                  setdateValue(date);
+                }}
+                defaultFocus={dateFocused}
+                onFocusChange={(focus: boolean) => {
+                  setDateFocused(focus);
+                }}
               />
-              
-           
-            {/* shipping details - new component */}
-            <ShippingDetails selectedType={selectedType} />
-            {/* BUTTON SUBMIT OF FORM */}
-              </div>
+
+              {/* shipping details - new component */}
+              <ShippingDetails selectedType={selectedType} />
+              {/* BUTTON SUBMIT OF FORM */}
+            </div>
             <div className="px-4 py-3 flex items-center justify-center">
               {/* <ButtonSubmit  /> */}
               <button
@@ -368,9 +395,7 @@ const mapStateToProps = (state: { data: any }) => {
   };
 };
 
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<{}, {}, any>,
-) => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => {
   return {
     fetchData: async (postData: {}) => {
       dispatch(fetchData(postData));

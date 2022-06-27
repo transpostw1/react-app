@@ -178,7 +178,7 @@ const templatesChildrenMenus: NavItemType[] = [
     ],
   },
   //
-  { id: ncNanoId(), href: "/checkout", name: "Load Calculator" },
+  { id: ncNanoId(), href: "/loadcalculator", name: "Load Calculator" },
   // { id: ncNanoId(), href: "/pay-done", name: "Pay done" },
   //
   // { id: ncNanoId(), href: "/author", name: "Author Page" },
@@ -194,16 +194,10 @@ export const NAVIGATION_DEMO: NavItemType[] = [
     children: demoChildMenus,
     isNew: true,
   },
-  // {
-  //   id: ncNanoId(),
-  //   href: "#",
-  //   name: "Five columns",
-  //   type: "megaMenu",
-  //   megaMenu: megaMenuDemo,
-  // },
+
   {
   id: ncNanoId(),
-    href: "#",
+    href: "/request",
     name: "Request a Quote",
     // type: "dropdown",
     isNew: true,
@@ -308,4 +302,11 @@ export const NAVIGATION_DEMO: NavItemType[] = [
     // type: "dropdown",
     children: otherPageChildMenus,
   },
+  // {
+  //   id: ncNanoId(),
+  //   href: "/account",
+  //   name: "Profile",
+  //   // type: "megaMenu",
+  //   // megaMenu: megaMenuDemo,
+  // },
 ];

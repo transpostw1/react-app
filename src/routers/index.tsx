@@ -45,6 +45,10 @@ import SiteHeader from "containers/SiteHeader";
 import ListingFlightsPage from "containers/ListingFlightsPage/ListingFlightsPage";
 import Dashboard from "new_component/Dashboard";
 import Bookings from "new_component/Bookings";
+import LoadCalculator from "new_component/LoadCalculator";
+import DetailedRequest from "new_component/DetailedRequest";
+import MyRequest from "new_component/MyRequest";
+import BookingDetails from "new_component/BookingDetails";
 
 export const pages: Page[] = [
   // { path: "/", exact: true, component: PageHome },
@@ -110,7 +114,11 @@ export const pages: Page[] = [
   { path: "/subscription", component: PageSubcription },
   { path: "/dashboard", component: Dashboard },   // newly added 
   { path: "/bookings", component: Bookings },   // newly added 
+  { path: "/loadcalculator", component: LoadCalculator },   // newly added 
+  { path: "/request", component: DetailedRequest },   // newly added 
+  { path: "/my-request", component: MyRequest },   // newly added 
   //
+  { path: "/booking-details", component: BookingDetails },   // newly added 
 ];
 
 const Routes = () => {
