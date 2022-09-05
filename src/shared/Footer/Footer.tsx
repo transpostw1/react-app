@@ -34,7 +34,7 @@ const widgetMenus: WidgetFooterMenu[] = [
     id: "2",
     title: "Company",
     menus: [
-      { href: "/blog", label: "Blog" },
+      { href: "https://transpost.co/", label: "Blog" },
       { href: "#", label: "Careers" },
       { href: "#", label: "Copyright" },
       { href: "#", label: "Help" },

@@ -7,7 +7,7 @@ import Input from "shared/Input/Input";
 import { Link } from "react-router-dom";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import { useDispatch,useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory,useLocation } from "react-router-dom";
 
 import { googleSignInStart, emailSignInStart, signInSuccess } from "redux/user/userAction";
 
@@ -40,10 +40,13 @@ const loginSocials = [
 ];
 
 const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
+  const [isLogin,setIsLogin] = useState(true)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
+
 
   const signInWithGoogle = async () => {
     const { user } = await signInWithGooglePopup();
@@ -57,7 +60,6 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
   const submitHandler = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
     try {
-
       const response = await signInAuthUserWithEmailAndPassword(
         email,
         password
@@ -78,7 +80,7 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
     }
   };
 
-  return (
+  return  (
     <div className={`nc-PageLogin ${className}`} data-nc-id="PageLogin">
       <Helmet>
         <title>Login || Transpost</title>

@@ -93,7 +93,7 @@ const ListingFlightsPage: FC<ListingFlightsPageProps> = ({
         />
 
         {/* SECTION */}
-        <SectionGridFilterCard className="pb-24 lg:pb-32" />
+        <SectionGridFilterCard className="pb-24 lg:pb-32" from_port={""} to_port={""} sl_date={undefined} cargo_type={null} />
 
         {/* SECTION 1 */}
         {/* <SectionSliderNewCategories

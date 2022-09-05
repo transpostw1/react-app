@@ -15,13 +15,17 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "../src/redux/store";
+import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
-  <Provider store={store}>
-    {/* <UserProvider> */}
+  <BrowserRouter>
+    <Provider store={store}>
+      {/* <UserProvider> */}
       <App />
-    {/* </UserProvider> */}
-  </Provider>,
+      {/* </UserProvider> */}
+    </Provider>
+  </BrowserRouter>,
+
   document.getElementById("root")
 );
 

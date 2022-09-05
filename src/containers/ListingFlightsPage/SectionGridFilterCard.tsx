@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
 import QuickRequest from "new_component/QuickRequest";
 import Loading from "new_component/Loading";
+import { postDataProps } from "components/HeroSearchForm/FlightSearchForm";
 // import {dummyData} from "../../assets/rates"
 
 // const data = require("../../assets/testing_rates.json");
@@ -19,25 +20,25 @@ export interface SectionGridFilterCardProps {
   shippingData: { data: [] | {}; loading: string; error: string };
 }
 
-export interface Details {
-  ID: string;
-  LoadType: string;
-  SL_date: string;
-  SL_name: string;
-  cargo: string;
-  expiry_date: string;
-  free_dates: string;
-  freight_cost: number;
-  from_port: string;
-  inclusions: string;
-  rates_by_forwarder: number;
-  remarks: string;
-  service_mode: string;
-  to_port: string;
-  total_cost: number;
-  transit_port: string;
-  transit_time: string;
-}
+// export interface Details {
+//   ID: string;
+//   LoadType: string;
+//   SL_date: string;
+//   SL_name: string;
+//   cargo: string;
+//   expiry_date: string;
+//   free_dates: string;
+//   freight_cost: number;
+//   from_port: string;
+//   inclusions: string;
+//   rates_by_forwarder: number;
+//   remarks: string;
+//   service_mode: string;
+//   to_port: string;
+//   total_cost: number;
+//   transit_port: string;
+//   transit_time: string;
+// }
 
 const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
   className = "",
@@ -91,7 +92,7 @@ const mapStateToProps = (state: { data: any }) => {
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<{}, {}, any>,
-  postData: {}
+  postData: postDataProps
 ) => {
   return {
     fetchData: async () => dispatch(fetchData(postData)),

@@ -1,78 +1,107 @@
-import React from "react";
-import DbNavbar from "./dbNavbar/DbNavbar";
+import React, { FC, useEffect, useState } from "react";
 import CommonLayout from "containers/AccountPage/CommonLayout";
-import CommentListing from "components/CommentListing/CommentListing";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
-import { NavLink } from "react-router-dom";
 import emptyicon from "../images/transpost images/dashboard/emptyPng.png";
 
 import BookingCard from "./BookingCard";
+import Loading from "./Loading";
+import CommonSidebar from "./CommonSidebar";
+
+export interface BookingCardProps {
+  data: {
+    ID?: string;
+    DateOfBooking?: string;
+    ContainerType?: string;
+    ShippingLineName?: string;
+    name?: string;
+    ContainerCount?: string;
+    BookingNo?: string;
+    POL?: string;
+    POD?: string;
+    pol: {
+      country: string;
+      port_code: string;
+      port_name: string;
+    };
+    pod: {
+      country: string;
+      port_code: string;
+      port_name: string;
+    };
+    cs_status: {
+      name: string;
+      template: string;
+    };
+  };
+}
 
 const Dashboard = () => {
-  const renderSidebar = () => {
-    return (
-      <div className="bg-white  w-full flex flex-col  sm:rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 space-y-6 sm:space-y-7 px-0 sm:p-6 xl:p-8 xl:h-screen">
-        {/* ---- */}
-        <div className="space-y-3 flex flex-col ">
-          <h2 className="text-2xl font-semibold">Overview</h2>
-        </div>
+  const [bookingList, setBookingList] = useState([]);
+  const [allList, setAllList] = useState([]);
+  const [pendingList, setPendingList] = useState([]);
+  const [completedList, setCompletedList] = useState([]);
+  const [activeTab, setActiveTab] = useState("All");
 
-        {/* ---- */}
-        <div className="border-b border-neutral-200 dark:border-neutral-700 w-14"></div>
-
-        {/* ---- */}
-        <div className="space-y-4">
-          <NavLink
-            to={"/my-request"}
-            className="block py-1 md:py-2 border-b-2 border-transparent flex-shrink-0"
-          >
-            <div className="flex items-center space-x-4 hover:border-b-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-neutral-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
-                />
-              </svg>
-              <span className="text-neutral-6000 dark:text-neutral-300">
-                My Request
-              </span>
-            </div>
-          </NavLink>
-          <NavLink
-            to={"/dashboard"}
-            className="block py-1 md:py-2 border-b-2 border-transparent flex-shrink-0 "
-          >
-            <div className="flex items-center space-x-4 hover:border-b-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-neutral-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
-                />
-              </svg>
-              <span className="text-neutral-6000 dark:text-neutral-300">
-                My Bookings
-              </span>
-            </div>
-          </NavLink>
-        </div>
-      </div>
+  const fetchData = async () => {
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+    const response = await fetch(
+      "http://apis.transpost.co/api/bookings/user/?email=pavan@geminitest.com"
     );
+    const result = await response.json();
+    console.log(result.data);
+
+    setBookingList(result.data);
+    setAllList(result.data);
+    if (result.data.length > 0) {
+      setCompletedList(
+        result.data.filter((v: any) => {
+          const { status } = v;
+          return status === "8";
+        })
+      );
+      setPendingList(
+        result.data.filter((v: any) => {
+          const { status } = v;
+          return status !== "8";
+        })
+      );
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  // for count set all in initial rendering
+
+  const pendingBookings = () => {
+    if (bookingList.length > 0) {
+      setBookingList(
+        allList.filter((v) => {
+          const { status } = v;
+          return status !== "8";
+        })
+      );
+      setActiveTab("Pending");
+    }
+  };
+
+  const completedBookings = () => {
+    if (bookingList.length > 0) {
+      setBookingList(
+        allList.filter((v) => {
+          const { status } = v;
+          return status === "8";
+        })
+      );
+      setActiveTab("Completed");
+    }
+  };
+
+  const renderSidebar = () => {
+    return <CommonSidebar />;
   };
 
   const renderSection1 = () => {
@@ -82,27 +111,38 @@ const Dashboard = () => {
         <div className="border-b border-neutral-200 dark:border-neutral-700  dark:bg-neutral-800">
           <div className="container">
             <div className="flex space-x-8 md:space-x-14 overflow-x-auto hiddenScrollbar">
-              <NavLink
-                activeClassName="!border-primary-500"
-                to="/dashboard"
-                className="block py-1 md:py-2 border-b-2 border-transparent flex-shrink-0"
+              <button
+                onClick={() => {
+                  setBookingList(allList);
+                  setActiveTab("All");
+                }}
+                className={`block py-1 md:py-2 border-b-2 border-transparent flex-shrink-0 ${
+                  activeTab == "All" ? "border-b-2 border-primary-500" : ""
+                }`}
               >
-                All Bookings 0
-              </NavLink>
-              <NavLink
-                // activeClassName="!border-primary-500"
-                to="/dashboard"
-                className="block py-1 md:py-2 border-b-2 border-transparent flex-shrink-0"
+                All Bookings (
+                <span className="font-semibold">{allList.length}</span>)
+              </button>
+              <button
+                onClick={pendingBookings}
+                className={`block py-1 md:py-2 border-b-2 border-transparent flex-shrink-0 ${
+                  activeTab == "Pending" ? "border-b-2 border-primary-500" : ""
+                }`}
               >
-                Pending 0
-              </NavLink>
-              <NavLink
-                // activeClassName="!border-primary-500"
-                to="/#"
-                className="block py-1 md:py-2 border-b-2 border-transparent flex-shrink-0"
+                Pending (
+                <span className="font-semibold">{pendingList.length}</span>)
+              </button>
+              <button
+                onClick={completedBookings}
+                className={`block py-1 md:py-2 border-b-2 border-transparent flex-shrink-0 ${
+                  activeTab == "Completed"
+                    ? "border-b-2 border-primary-500"
+                    : ""
+                }`}
               >
-                Completed 0
-              </NavLink>
+                Completed (
+                <span className="font-semibold">{completedList.length}</span>)
+              </button>
             </div>
           </div>
         </div>
@@ -112,43 +152,34 @@ const Dashboard = () => {
   };
 
   const renderSection2 = () => {
+    if (bookingList.length === 0) {
+      return (
+        <div className="mt-10">
+          <Loading className="m-[100px] w-full h-[100px]"></Loading>
+        </div>
+      );
+    }
     return (
       <div className="listingSection__wrap bg-white   ">
         {/* HEADING */}
-        {true ? (
+        {bookingList.length > 0 ? (
           <>
-            <BookingCard />
-            <BookingCard />
-            <BookingCard />
-            <BookingCard />
-            <BookingCard />
+            {bookingList.map((item, i) => {
+              return <BookingCard data={item} key={i} />;
+            })}
           </>
         ) : (
           <div className="h-screen flex flex-col justify-center items-center">
             <img src={emptyicon} className="h-[4rem] w-[4rem]" alt="" />
+
             <div className="text-2xl text-centre font-semibold">
               You don't have any cargoes booked with you yet.
             </div>
           </div>
         )}
-        {/* <div className="w-14 border-b border-neutral-500 dark:border-neutral-700"></div> */}
-
-        {/* comment */}
-        {/* <div className="divide-y divide-neutral-100 dark:divide-neutral-800"> */}
-        {/* <CommentListing hasListingTitle className="pb-8" />
-          <CommentListing hasListingTitle className="py-8" />
-          <CommentListing hasListingTitle className="py-8" />
-          <CommentListing hasListingTitle className="py-8" />
-          <div className="pt-8">
-            <ButtonSecondary>View more 20 reviews</ButtonSecondary>
-          </div> */}
-        {/* </div> */}
       </div>
     );
   };
-
-
-  
 
   return (
     <CommonLayout>

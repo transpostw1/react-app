@@ -38,7 +38,7 @@ const QuickRequest = () => {
   };
 
   return (
-    <div className="flex flex-col  lg:items-center">
+    <div className="flex flex-col lg:items-center">
       <h1>
         No rates are currently available. But please fill just a few fields and
         get an individual offer!

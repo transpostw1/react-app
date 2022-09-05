@@ -20,8 +20,9 @@ export interface BookingsProps {
     to_port?: string;
     via?: string;
     sl_logo?: string;
-  },
-  cargoType : string
+    total?:string
+  };
+  cargoType: string;
 }
 
 const Bookings = () => {
@@ -34,7 +35,6 @@ const Bookings = () => {
 
   useEffect(() => {
     setBookingsData(state);
-    console.log(bookingsData);
   }, []);
 
   const renderContent = () => {
@@ -66,7 +66,7 @@ const Bookings = () => {
                 </span>
               </div>
               <span className="block  text-sm text-neutral-500 dark:text-neutral-400">
-               {/* { state.bookedData.service_mode ? Service - {state.bookedData.service_mode}: ""} */}
+                {/* { state.bookedData.service_mode ? Service - {state.bookedData.service_mode}: ""} */}
               </span>
               <div className="w-10 border-b border-neutral-200  dark:border-neutral-700"></div>
               {/* <StartRating /> */}
@@ -97,21 +97,7 @@ const Bookings = () => {
               </div>
             </div>
             <div className="flex-1 p-5 flex space-x-4">
-              {/* <svg
-                className="w-8 h-8 text-neutral-300 dark:text-neutral-6000"
-                viewBox="0 0 28 28"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M14 5.07987C14.8551 4.11105 16.1062 3.5 17.5 3.5C20.0773 3.5 22.1667 5.58934 22.1667 8.16667C22.1667 10.744 20.0773 12.8333 17.5 12.8333C16.1062 12.8333 14.8551 12.2223 14 11.2535M17.5 24.5H3.5V23.3333C3.5 19.4673 6.63401 16.3333 10.5 16.3333C14.366 16.3333 17.5 19.4673 17.5 23.3333V24.5ZM17.5 24.5H24.5V23.3333C24.5 19.4673 21.366 16.3333 17.5 16.3333C16.225 16.3333 15.0296 16.6742 14 17.2698M15.1667 8.16667C15.1667 10.744 13.0773 12.8333 10.5 12.8333C7.92267 12.8333 5.83333 10.744 5.83333 8.16667C5.83333 5.58934 7.92267 3.5 10.5 3.5C13.0773 3.5 15.1667 5.58934 15.1667 8.16667Z"
-                  stroke="#D1D5DB"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg> */}
-               <svg
+              <svg
                 viewBox="0 0 18 18"
                 xmlns="http://www.w3.org/2000/svg"
                 className="nc-icon-field  h-6 ml-3 sm:h-8 w-6 sm:w-8 mr-3"
@@ -124,7 +110,7 @@ const Bookings = () => {
               <div className="flex flex-col">
                 <span className="text-sm text-neutral-400">Containers</span>
                 <span className="mt-1.5 text-lg font-semibold">
-               FCL - {state.cargoType}
+                  FCL - {state.cargoType}
                 </span>
               </div>
             </div>
@@ -150,12 +136,13 @@ const Bookings = () => {
             <div className="flex text-neutral-6000 dark:text-neutral-300">
               <span className="flex-1">Total</span>
               <span className="flex-1 font-medium text-neutral-900 dark:text-neutral-100">
-                $
+                {/* $
                 {state.bookedData._20gp
                   ? state.bookedData._20gp
                   : state.bookedData._40gp
                   ? state.bookedData._40gp
-                  : state.bookedData._40hc}
+                  : state.bookedData._40hc} */}
+                  ${state.bookedData.total}
               </span>
             </div>
             {/* <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">

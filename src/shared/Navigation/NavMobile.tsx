@@ -116,10 +116,10 @@ const NavMobile: React.FC<NavMobileProps> = ({
       <div className="py-6 px-5">
         <Logo />
         <div className="flex flex-col mt-5 text-neutral-700 dark:text-neutral-300 text-sm">
-          <span>
+          {/* <span>
             Discover the most outstanding articles on all topics of life. Write
             your stories and share them
-          </span>
+          </span> */}
 
           <div className="flex justify-between items-center mt-4">
             <SocialsList itemClass="w-9 h-9 flex items-center justify-center rounded-full bg-neutral-100 text-xl dark:bg-neutral-800 dark:text-neutral-300" />
@@ -135,11 +135,11 @@ const NavMobile: React.FC<NavMobileProps> = ({
       <ul className="flex flex-col py-6 px-2 space-y-1">
         {data.map(_renderItem)}
       </ul>
-      <div className="flex items-center justify-between py-6 px-5 space-x-4">
+      {/* <div className="flex items-center justify-between py-6 px-5 space-x-4">
         <a href="/#" target="_blank" rel="noopener noreferrer">
           <ButtonPrimary>Get Template</ButtonPrimary>
         </a>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { Fragment } from "react";
@@ -6,6 +6,8 @@ import { Fragment } from "react";
 // 1 => select focus\ auto focus
 
 export const ShipingDetails = (props: any) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const [inputValue, setInputValue] = useState("FCL,20'Standard");
   const [isLActive, setIsLActive] = useState(false);
   const [isBActive, setIsBActive] = useState(false);
@@ -26,6 +28,18 @@ export const ShipingDetails = (props: any) => {
     setInputValue(transType + "," + contDetails);
     setShowPopover(!showPopover);
   };
+
+  // for click outside div
+  useEffect(() => {
+    if (eventClickOutsideDiv) {
+      document.removeEventListener("click", eventClickOutsideDiv);
+    }
+    showPopover && document.addEventListener("click", eventClickOutsideDiv);
+    return () => {
+      document.removeEventListener("click", eventClickOutsideDiv);
+    };
+  }, [showPopover]);
+
   useEffect(() => {
     props.selectedType(inputValue);
   }, [inputValue]);
@@ -50,15 +64,25 @@ export const ShipingDetails = (props: any) => {
     defaultV();
   }, [showPopover]);
 
+  const eventClickOutsideDiv = (event: MouseEvent) => {
+    if (!containerRef.current) return;
+    // CLICK IN_SIDE
+    if (!showPopover || containerRef.current.contains(event.target as Node)) {
+      return;
+    }
+    // CLICK OUT_SIDE
+    setShowPopover(false);
+  };
+
   return (
-    <div>
+    <div ref={containerRef}>
       <Popover className="relative">
-        {({ open }) => (
+        {({ open, close }) => (
           <>
             <Popover.Button
               className={`
                 ${open ? "" : "text-opacity-90"}
-                text-white bg-[white] group  my-5 rounded-md inline-flex items-center text-base font-medium hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
+                text-white bg-white group  my-5 rounded-md inline-flex items-center text-base font-medium hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
             >
               <svg
                 viewBox="0 0 18 18"
@@ -71,7 +95,7 @@ export const ShipingDetails = (props: any) => {
               </svg>
 
               <input
-                className="py-5 bg-transparent rounded border+- block font-bold text-neutral-700 dark:text-neutral-500"
+                className="py-5 bg-transparent rounded border+- block font-bold text-neutral-100 focus:outline-none dark:text-neutral-500"
                 value={inputValue}
                 style={{ color: "black" }}
                 onClick={() => {
@@ -107,7 +131,7 @@ export const ShipingDetails = (props: any) => {
                   <div className="relative grid gap-8 bg-white p-7 lg:grid-cols-1">
                     {/* <TransportationType /> */}
                     <div>
-                      <h3>TRANSPORTATION TYPE</h3>
+                      <h3>SHIPMENT</h3>
                       <select
                         className="w-full"
                         onChange={(e) => {
@@ -119,13 +143,11 @@ export const ShipingDetails = (props: any) => {
                             setIsFActive(false);
                             setVol(1);
                             setWeight(1);
-                            console.log("in LCL");
                           } else if (Ttype === "Bulk") {
                             setIsBActive(true);
                             setIsLActive(false);
                             setIsFActive(false);
                             setGWeight(1);
-                            console.log("in Bulk");
                           } else if (Ttype === "FCL") {
                             setIsFActive(true);
                             setIsLActive(false);

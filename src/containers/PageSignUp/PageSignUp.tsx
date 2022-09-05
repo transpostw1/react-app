@@ -4,6 +4,7 @@ import twitterSvg from "images/Twitter.svg";
 import googleSvg from "images/Google.svg";
 import { Helmet } from "react-helmet";
 import Input from "shared/Input/Input";
+import Select from "shared/Select/Select";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import { Link, useHistory } from "react-router-dom";
 import {
@@ -163,6 +164,18 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
                 onChange={(e) => setPhoneNumber(e.target.value)}
               />
             </label>
+            <label className="block">
+              <span className="text-neutral-800 dark:text-neutral-200">
+                Business Type
+              </span>
+              <Select className="mt-1.5">
+                  <option value="Shipper">Shipper</option>
+                  <option value="Freight Forwarder">Freight Forwarder</option>
+                  <option value="Custom Broker">Custom Broker</option>
+                </Select>
+         
+            </label>
+           
             <label className="block">
               <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
                 GST Number

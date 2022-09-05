@@ -48,7 +48,9 @@ import Bookings from "new_component/Bookings";
 import LoadCalculator from "new_component/LoadCalculator";
 import DetailedRequest from "new_component/DetailedRequest";
 import MyRequest from "new_component/MyRequest";
-import BookingDetails from "new_component/BookingDetails";
+import BookingDetails from "new_component/Bookings-timeline/BookingDetails";
+import PrivateRoute from "./PrivateRoute";
+import QuotesPage from "new_component/QuotesPage";
 
 export const pages: Page[] = [
   // { path: "/", exact: true, component: PageHome },
@@ -57,7 +59,6 @@ export const pages: Page[] = [
   { path: "/#", exact: true, component: ListingFlightsPage },
   { path: "/home-1-header-2", exact: true, component: PageHome },
   // { path: "/home-2", component: PageHome2 },
-  //
   { path: "/listing-stay", component: ListingStayPage },
   { path: "/listing-stay-map", component: ListingStayMapPage },
   { path: "/listing-stay-detail", component: ListingStayDetailPage },
@@ -112,18 +113,19 @@ export const pages: Page[] = [
   { path: "/signup", component: PageSignUp },
   { path: "/login", component: PageLogin },
   { path: "/subscription", component: PageSubcription },
-  { path: "/dashboard", component: Dashboard },   // newly added 
-  { path: "/bookings", component: Bookings },   // newly added 
-  { path: "/loadcalculator", component: LoadCalculator },   // newly added 
-  { path: "/request", component: DetailedRequest },   // newly added 
-  { path: "/my-request", component: MyRequest },   // newly added 
+  // { path: "/user/bookings", component: Dashboard }, // newly added
+  { path: "/bookings", component: Bookings }, // newly added
+  { path: "/user/quotes", component: QuotesPage }, // newly added
+  { path: "/loadcalculator", component: LoadCalculator }, // newly added
+  { path: "/quotes", component: DetailedRequest }, // newly added
+  { path: "/user/my-request", component: MyRequest }, // newly added
   //
-  { path: "/booking-details", component: BookingDetails },   // newly added 
+  { path: "/booking-details", component: BookingDetails }, // newly added
 ];
 
-const Routes = () => {
+const MyRouter = () => {
   return (
-    <BrowserRouter>
+    <>
       <ScrollToTop />
       <SiteHeader />
 
@@ -133,16 +135,18 @@ const Routes = () => {
             <Route
               key={path}
               component={component}
-              exact={!!exact} // double not operator
+              exact={!!exact}
               path={path}
             />
           );
         })}
+
+        <PrivateRoute path="/user/bookings" component={Dashboard} />
         <Route component={Page404} />
       </Switch>
       <Footer />
-    </BrowserRouter>
+    </>
   );
 };
 
-export default Routes;
+export default MyRouter;

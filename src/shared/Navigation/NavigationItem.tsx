@@ -4,6 +4,12 @@ import React, { FC, Fragment, useEffect, useState } from "react";
 import { NavLink, RouteComponentProps, withRouter } from "react-router-dom";
 import NcImage from "shared/NcImage/NcImage";
 
+
+// auth
+import {
+  onAuthStateChangedListener,
+  signOutUser
+} from "../../utils/firebase/firebase-config";
 // <--- NavItemType --->
 export interface MegamenuItem {
   id: string;
@@ -15,6 +21,7 @@ export interface NavItemType {
   id: string;
   name: string;
   isNew?: boolean;
+  protected?: boolean;
   href: string;
   targetBlank?: boolean;
   children?: NavItemType[];
@@ -33,6 +40,26 @@ const NavigationItem: FC<NavigationItemWithRouterProps> = ({
   history,
 }) => {
   const [menuCurrentHovers, setMenuCurrentHovers] = useState<string[]>([]);
+  const [userIsLogin, setUserIsLogin] = useState(true);
+
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChangedListener((user: any) => {
+      if (user) {
+        setUserIsLogin(true);
+      }
+     else {
+      setUserIsLogin(false)
+     }
+    });
+
+    return unsubscribe;
+  }, []);
+
+  const signOuthandler = () => {
+    setUserIsLogin(!userIsLogin);
+    signOutUser();
+  };
 
   // CLOSE ALL MENU OPENING WHEN CHANGE HISTORY
   useEffect(() => {
@@ -124,6 +151,7 @@ const NavigationItem: FC<NavigationItemWithRouterProps> = ({
   const renderMegaMenuNavlink = (item: NavItemType) => {
     return (
       <li key={item.id}>
+        (
         <NavLink
           exact
           strict
@@ -137,6 +165,7 @@ const NavigationItem: FC<NavigationItemWithRouterProps> = ({
         >
           {item.name}
         </NavLink>
+        )
       </li>
     );
   };
@@ -301,7 +330,11 @@ const NavigationItem: FC<NavigationItemWithRouterProps> = ({
     case "dropdown":
       return renderDropdownMenu(menuItem);
     default:
-      return <li className="menu-item">{renderMainItem(menuItem)}</li>;
+      return (
+        <li className="menu-item">
+          {(menuItem.protected || userIsLogin) &&  renderMainItem(menuItem)}
+        </li>
+      );
   }
 };
 // Your component own properties

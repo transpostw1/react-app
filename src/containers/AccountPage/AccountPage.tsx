@@ -104,6 +104,8 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                 <Select className="mt-1.5">
                   <option value="Shipper">Shipper</option>
                   <option value="Freight Forwarder">Freight Forwarder</option>
+                  <option value="Custom Broker">Custom Broker</option>
+
                 </Select>
               </div>
 
@@ -116,32 +118,18 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                   ""
                 )}
               </div>
-              {/* ---- */}
-              <div>
-                <Label>Currency</Label>
-                <Select className="mt-1.5">
-                  <option value="USD">USD</option>
-                  <option value="Indian Rupee">Indian Rupee</option>
-                </Select>
-              </div>
-
-              {/* ---- */}
-              {/* <div>
-                <Label>Addess</Label>
-                <Input className="mt-1.5" defaultValue="Address Info" />
-              </div> */}
-              {/* ---- */}
+    
               <div>
                 <Label>Phone number</Label>
                 <Input
                   className="mt-1.5"
-                  defaultValue="Enter your Phone Number"
+                  placeholder="Enter your Phone Number"
                 />
               </div>
               {/* ---- */}
               <div>
                 <Label>About you</Label>
-                <Textarea className="mt-1.5" defaultValue="..." />
+                <Textarea className="mt-1.5" placeholder="Your size of Business and Frequently used corridors" />
               </div>
               <div className="pt-2">
                 <ButtonPrimary>Update info</ButtonPrimary>

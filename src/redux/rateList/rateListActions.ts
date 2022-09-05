@@ -3,8 +3,7 @@ import axios from "axios";
 import { AnyAction, Dispatch } from "redux";
 import { Action } from "./rateListReducer";
 import { ThunkDispatch } from "redux-thunk";
-
-
+import { postDataProps } from "components/HeroSearchForm/FlightSearchForm";
 
 export const fetchDataRequest = () => {
   return {
@@ -27,18 +26,30 @@ export const fetchDatafailure = (error: any) => {
 };
 
 // for async action
-export const fetchData = (postData: {}) => {
+export const fetchData = (postData: postDataProps) => {
   return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     // specify by importing the action
     console.log(postData);
     let config = {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
+        "Access-Control-Allow-Origin": "*",
       },
     };
     dispatch(fetchDataRequest);
     axios
-      .post("https://launchindia.org/transpost/rates.php", postData, config)
+      .get(`http://apis.transpost.co/api/rates/select`, {
+       params: {
+        from_port:postData.from_port,
+        to_port: postData.to_port,
+        cargo_type: postData.cargo_type,
+        Validity: postData.sl_date
+       },
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
       .then((response) => {
         const fetchedData = response.data;
         dispatch(fetchDataSuccess(fetchedData)); // dispatching the action

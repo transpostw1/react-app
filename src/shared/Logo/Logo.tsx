@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logoImg from "images/logo.png";
+import logoImg from "images/transpost images/Logos/logo.png";
 import logoLightImg from "images/logo-light.png";
 import LogoSvgLight from "./LogoSvgLight";
 import LogoSvg from "./LogoSvg";
@@ -13,7 +13,7 @@ export interface LogoProps {
 
 const Logo: React.FC<LogoProps> = ({
   img = logoImg,
-  imgLight = logoLightImg,
+  imgLight = logoImg,
   className = "",
 }) => {
   return (

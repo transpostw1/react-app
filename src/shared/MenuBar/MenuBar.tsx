@@ -20,6 +20,7 @@ const MenuBar: React.FC<MenuBarProps> = () => {
           as="div"
           className="fixed inset-0 z-50 overflow-y-auto"
           onClose={handleCloseMenu}
+
         >
           <div className="fixed left-0 top-0 bottom-0 w-full md:w-auto z-max outline-none focus:outline-none">
             <React.Fragment>
@@ -74,7 +75,6 @@ const MenuBar: React.FC<MenuBarProps> = () => {
           />
         </svg>
       </button>
-
       {renderContent()}
     </>
   );

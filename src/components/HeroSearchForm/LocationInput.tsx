@@ -67,6 +67,7 @@ const LocationInput: FC<LocationInputProps> = ({
     setShowPopover(false);
   };
 
+
   const handleSelectLocation = (item: string) => {
     setValue(item);
     onInputDone && onInputDone(item);
@@ -80,7 +81,7 @@ const LocationInput: FC<LocationInputProps> = ({
           Recent searches
         </h3>
         <div className="mt-2">
-          {["Nhava Sheva", "Hongkong", "Venice", "AQABA", "Shanghai"].map(
+          {["Jawaharlal Nehru", "Hongkong", "Colombo", "Aqaba", "Shanghai"].map(
             (item) => (
               <span
                 onClick={() => handleSelectLocation(item)}
@@ -117,7 +118,7 @@ const LocationInput: FC<LocationInputProps> = ({
   const renderSearchValue = () => {
     return (
       <>
-        {["Nhava Sheva", "Hongkong", "Venice", "AQABA", "Shanghai"].map(
+        {["Jawaharlal Nehru", "Hongkong", "Venice", "Aqaba", "Colombo"].map(
           (item) => (
             <span
               onClick={() => handleSelectLocation(item)}

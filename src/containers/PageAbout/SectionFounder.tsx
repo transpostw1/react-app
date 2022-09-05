@@ -1,10 +1,11 @@
 import Heading from "components/Heading/Heading";
 import React from "react";
 import NcImage from "shared/NcImage/NcImage";
-// import {satyaueImg} from "../../images/transpost images/about-page/satyaue.jpg"
-// import {satyaueImg} from "../../images/transpost images/about-page/satyaue.jpg"
-// import {satyaueImg} from "../../images/transpost images/about-page/satyaue.jpg"
-// import {satyaueImg} from "../../images/transpost images/about-page/satyaue.jpg"
+import satyaueImg from "../../images/transpost images/Aboutus/satyaue-paul_optimized-scaled.jpg";
+import masoodImg from "../../images/transpost images/Aboutus/Masood Ahmed - CTO.jpg";
+import vinayImg from "../../images/transpost images/Aboutus/Vinay Sangwan ( Head Of Sales - North Region).jpg";
+import amtullaImg from "../../images/transpost images/Aboutus/Amtulla Kagalwala.jpeg";
+import vivekImg from "../../images/transpost images/Aboutus/Vivek Das - Head Of Customer Experience.jpg";
 
 export interface People {
   id: string;
@@ -18,50 +19,31 @@ const FOUNDER_DEMO: People[] = [
     id: "1",
     name: `Satyaue Paul`,
     job: "CEO | Co-founder",
-    avatar:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
+    avatar: satyaueImg,
   },
   {
     id: "2",
-    name: `Neelam Choudhary`,
-    job: "Director | Co-founder",
-    avatar:
-      "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
+    name: `Masood Ahmed`,
+    job: "CTO",
+    avatar: masoodImg,
   },
   {
     id: "3",
-    name: `Amtulla Kagalwala`,
-    job: "Process Manager",
-    avatar:
-      "https://images.unsplash.com/photo-1560365163-3e8d64e762ef?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
+    name: `Vinay Sangwan`,
+    job: "Head Of Sales - North Region",
+    avatar: vinayImg,
   },
   {
     id: "4",
-    name: `Pratiksha Hegde`,
-    job: "Onboarding Specialist",
-    avatar:
-      "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
+    name: `Amtulla Kagalwala`,
+    job: "Head of Sales - West Region",
+    avatar: amtullaImg,
   },
   {
     id: "5",
-    name: `Rim Jana`,
-    job: "Process Expert",
-    avatar:
-      "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
-  },
-  {
-    id: "6",
-    name: `Bertha Bhatti`,
-    job: "Onboarding Specialist",
-    avatar:
-      "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
-  },
-  {
-    id: "7",
-    name: `Bhavana Choudhary`,
-    job: "Process Expert",
-    avatar:
-      "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
+    name: `Vivek Das`,
+    job: "Head Of Customer Experience",
+    avatar: vivekImg,
   },
 ];
 

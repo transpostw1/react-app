@@ -21,7 +21,7 @@ export interface MainNav1Props {
 }
 
 const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
     const unsubscribe = onAuthStateChangedListener((user: User) => {
       if (user) {
         createUserDocumentFromAuth(user);
-        setIsLogin(false);
+        setIsLogin(true);
       }
       setCurrentUser(user);
       console.log(user);
@@ -54,22 +54,24 @@ const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
         <div className="flex justify-start flex-grow items-center space-x-4 sm:space-x-10 2xl:space-x-14">
           <Logo />
           <Navigation />
-          {isLogin ? (
+          {/* {isLogin ? (
             ""
           ) : (
             <Link to={"/dashboard"}>
               <div>Profile</div>
             </Link>
-          )}
+          )} */}
         </div>
         <div className="flex-shrink-0 flex items-center justify-end text-neutral-700 dark:text-neutral-100 space-x-1">
           <div className="hidden items-center xl:flex space-x-1">
             <SwitchDarkMode />
             <SearchDropdown />
             {isLogin ? (
-              <ButtonPrimary href="/login">Sign In</ButtonPrimary>
+              <ButtonPrimary className="p-0 bg-[#cd512f]" onClick={signOuthandler}>
+                Sign Out
+              </ButtonPrimary>
             ) : (
-              <ButtonPrimary className="p-0" onClick={signOuthandler}>Sign Out</ButtonPrimary>
+              <ButtonPrimary className="bg-[#cd512f]" href="/login">Sign In</ButtonPrimary>
               // <ButtonPrimary onClick={signOuthandler}>{currentUser?.displayName?.charAt(0)}</ButtonPrimary>
             )}
             <div className="px-1" />

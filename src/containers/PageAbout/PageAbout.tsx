@@ -1,4 +1,4 @@
-import rightImg from "images/transpost images/Aboutus/Group-134-1-1.png";
+import rightImg from "images/transpost images/Aboutus/GroupImage.png";
 import React, { FC } from "react";
 import SectionFounder from "./SectionFounder";
 import SectionStatistic from "./SectionStatistic";
@@ -45,8 +45,58 @@ const PageAbout: FC<PageAboutProps> = ({ className = "" }) => {
         </div> */}
 
         {/* <SectionStatistic /> */}
-
+        <SectionValues />
         <SectionSubscribe2 />
+      </div>
+    </div>
+  );
+};
+
+const SectionValues = () => {
+  return (
+    <div className="grid grid-cols-2 gap-8 w-full">
+      {/* <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span> */}
+      <h1 className="hover:animate-bounce mb-10 pb-10 col-span-2 text-center text-[3rem] leading-none font-bold">
+        Our Values
+      </h1>
+      <div className="flex p-5 ">
+        <img className="" src="https://transpost.co/wp-content/themes/saasland-child/images/Save-time.svg"></img>
+        <span className="ml-3">
+          <h1 className="text-[1.5rem] mb-5 font-semibold">Be Agile</h1>
+          Being agile in everything we do to get the desired result for our
+          customers, employees and stakeholders.
+          <p></p>
+        </span>
+      </div>
+      <div className="flex p-5">
+        <img src="https://transpost.co/wp-content/themes/saasland-child/images/collaborate-and-win.svg"></img>
+        <span className="ml-3">
+          <h1 className="text-[1.5rem] mb-5 font-semibold">Collaborate & Win Together</h1>
+          <p>
+            We take pride in our collaborative work culture which enables
+            integrated solutions, bringing the best outcomes.
+          </p>
+        </span>
+      </div>
+      <div className="flex p-5">
+        <img src="https://transpost.co/wp-content/themes/saasland-child/images/Open-to-ideas.svg"></img>
+        <span className="ml-3">
+          <h1 className="text-[1.5rem] mb-5 font-semibold">Open to New Ideas</h1>
+          <p>
+            Open mindedness and change go hand in hand. We encourage our
+            employees to be open to new ideas and drive change.
+          </p>
+        </span>
+      </div>
+      <div className="flex p-5">
+        <img src="https://transpost.co/wp-content/themes/saasland-child/images/Diversity.svg"></img>
+        <span className="ml-3">
+          <h1 className="text-[1.5rem] mb-5 font-semibold">Strength in Diversity</h1>
+          <p>
+            We commit ourselves to diversity in as many ways as possible. Be it
+            diversity in gender, culture, nationality or age.
+          </p>
+        </span>
       </div>
     </div>
   );

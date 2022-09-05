@@ -56,11 +56,13 @@ export interface LocationStates {
   "/page404"?: {};
   "/subscription"?: {};
   // added along with router
-  "/dashboard"?: {};
+  "/user"?: {};
   "/bookings"?: {};
+  "/user/bookings"?: {};
+  "/user/quotes"?: {};
+  "/user/my-request"?: {};
   "/loadcalculator"?: {};
-  "/request"?: {};
-  "/my-request"?: {};
+  "/quotes"?: {};
   "/booking-details"?: {};
 }
 

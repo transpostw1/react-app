@@ -1,5 +1,11 @@
 import React, { FC, ReactNode } from "react";
 import imagePng from "images/Hero-illustration-main-1.png";
+
+import hero1 from "images/transpost images/heros/hero-1.jpeg"
+import hero2 from "images/transpost images/heros/hero-2.jpeg"
+import hero3 from "images/transpost images/heros/hero-3.jpeg"
+import hero4 from "images/transpost images/heros/hero-4.jpeg"
+import hero5 from "images/transpost images/heros/hero-5.jpeg"
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import HeroSearchForm, {
   SearchTab,
@@ -18,7 +24,7 @@ const SectionHeroArchivePage: FC<SectionHeroArchivePageProps> = ({
   listingType,
   currentPage,
   currentTab,
-  rightImage = imagePng,
+  rightImage = hero3,
 }) => {
   return (
     <div
@@ -54,13 +60,13 @@ const SectionHeroArchivePage: FC<SectionHeroArchivePageProps> = ({
           {/* </div> */}
         </div>
         <div className=" hidden md:flex  flex-grow ">
-          <img className="w-full" src={rightImage} alt="hero" />
+          <img className="w-full object-fill" src={rightImage} alt="hero" />
         </div>
       </div>
 
       <div className="flow-root w-full">
         {/* for moving the search bar up and down */}
-        <div className="z-10 lg:-mt-40 xl:-mt-80 w-full">
+        <div className="z-10 lg:-mt-40 xl:-mt-15 w-full">
           <HeroSearchForm currentPage={currentPage} currentTab={currentTab} />
         </div>
       </div>

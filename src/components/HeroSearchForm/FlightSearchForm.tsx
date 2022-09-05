@@ -36,7 +36,13 @@ export interface Data {
   from_port: string;
   to_port: string;
   sl_date: moment.Moment | string | null;
-  cargoType: string;
+  cargo_type: string | null;
+}
+export interface postDataProps {
+  from_port: string;
+  to_port: string;
+  sl_date:  moment.Moment | string | null |undefined;
+  cargo_type: string | null;
 }
 
 export interface ExperiencesSearchFormProps {
@@ -55,7 +61,7 @@ export interface TimeRage {
 
 export interface FlightSearchFormProps {
   haveDefaultValue?: boolean;
-  fetchData: (D: object) => {} | any; // check
+  fetchData: (D: postDataProps) => {} | any; // check
 }
 
 const flightClass = [
@@ -72,6 +78,22 @@ const flightClass = [
     href: "##",
   },
 ];
+
+const cargoSize = (containerDetail: string) => {
+  switch (containerDetail) {
+    case "FCL,20'Standard":
+      return "20gp";
+      break;
+    case "FCL,40'Standard":
+      return "40gp";
+      break;
+    case "FCL,40'High Cube":
+      return "40hc";
+      break;
+    default:
+      return null;
+  }
+};
 
 const FlightSearchForm: FC<FlightSearchFormProps> = ({
   haveDefaultValue,
@@ -124,12 +146,12 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({
   >("roundTrip");
   const [guests, setGuests] = useState(1);
   const [flightClassState, setFlightClassState] = useState("Economy");
-  const [postData, setPostData] = useState({
+  const [postData, setPostData] = useState<postDataProps>({
     from_port: pickUpInputValue,
     to_port: dropOffInputValue,
     sl_date: convDate, // converted date in string format
-    cargoType: contDetails,
-    user_email: currentUser ? currentUser.email : "",
+    cargo_type: cargoSize(contDetails),
+    // user_email: currentUser ? currentUser.email : "",
   });
 
   useEffect(() => {
@@ -166,15 +188,15 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({
   }, [dateValue]);
 
   useEffect(() => {
-    setPostData({ ...postData, cargoType: contDetails });
+    setPostData({ ...postData, cargo_type: cargoSize(contDetails) });
   }, [contDetails]);
 
-  useEffect(() => {
-    setPostData({
-      ...postData,
-      user_email: currentUser ? currentUser.email : "",
-    });
-  }, [currentUser]);
+  // useEffect(() => {
+  //   setPostData({
+  //     ...postData,
+  //     user_email: currentUser ? currentUser.email : "",
+  //   });
+  // }, [currentUser]);
 
   const renderGuest = () => {
     return (
@@ -326,7 +348,7 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({
                   setPickUpInputValue(e);
                 }}
                 onInputDone={() => setFieldFocused("dropOffInput")}
-                placeHolder="Port,City"
+                placeHolder="Origin"
                 desc="From"
               />
               <LocationInput
@@ -335,7 +357,7 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({
                   setDropOffInputValue(e);
                 }}
                 onInputDone={() => setFieldFocused("startDate")}
-                placeHolder="Port,City"
+                placeHolder="Destination"
                 desc="To"
                 autoFocus={fieldFocused === "dropOffInput"}
               />
@@ -361,7 +383,7 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({
               <button
                 onClick={submitHandler}
                 type="button"
-                className="h-14 md:h-16 w-full md:w-16 rounded-full bg-[#2AA996] hover:bg-[#218778] flex items-center justify-center text-neutral-50 focus:outline-none"
+                className="h-14 md:h-16 w-full md:w-16 rounded-full bg-[#cd512f] hover:bg-[#218778] flex items-center justify-center text-neutral-50 focus:outline-none"
               >
                 <span className="mr-3 md:hidden">Search</span>
                 <svg
@@ -397,7 +419,7 @@ const mapStateToProps = (state: { data: any }) => {
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => {
   return {
-    fetchData: async (postData: {}) => {
+    fetchData: async (postData: postDataProps) => {
       dispatch(fetchData(postData));
     },
   };
