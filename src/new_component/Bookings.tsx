@@ -92,7 +92,7 @@ const Bookings = () => {
               <div className="flex flex-col">
                 <span className="text-sm text-neutral-400">Sailing Date</span>
                 <span className="mt-1.5 text-lg font-semibold">
-                  June 30, 2022
+                  September 30, 2022
                 </span>
               </div>
             </div>
@@ -130,7 +130,7 @@ const Bookings = () => {
             <div className="flex text-neutral-6000 dark:text-neutral-300">
               <span className="flex-1">Date of Booking</span>
               <span className="flex-1 font-medium text-neutral-900 dark:text-neutral-100">
-                {moment().format("DD-MM-YYYY")}
+                {moment().format("MMM Do, YYYY")}
               </span>
             </div>
             <div className="flex text-neutral-6000 dark:text-neutral-300">

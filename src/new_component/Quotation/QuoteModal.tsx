@@ -20,49 +20,57 @@ export interface ModalProps {
 }
 
 const getLocalStorage = () => {
-  let list = localStorage.getItem('list');
+  let list = localStorage.getItem("list");
   if (list) {
-    return (list = JSON.parse(localStorage.getItem('list') || ""));
+    return (list = JSON.parse(localStorage.getItem("list") || ""));
   } else {
     return [];
   }
 };
 
 const QuoteModal = (props: any) => {
-  const rate = () => {
-    if (!!props.data._20gp) {
-      return props.data._20gp;
-    } else if (!!props.data._40gp) {
-      return props.data._40gp;
-    } else if (!!props.data._40hc) {
-      return props.data._40hc;
-    }
-  };
+  // const rate = () => {
+  //   if (!!props.data._20gp) {
+  //     return props.data._20gp;
+  //   } else if (!!props.data._40gp) {
+  //     return props.data._40gp;
+  //   } else if (!!props.data._40hc) {
+  //     return props.data._40hc;
+  //   }
+  // };
 
+  // const [inputList, setInputList] = useState(getLocalStorage());
   const [inputList, setInputList] = useState(getLocalStorage());
-  const [totalBuyRate, setTotalBuyRate] = useState(rate());
-  const [totalSellRate, setTotalSellRate] = useState(rate());
+  const [totalBuyRate, setTotalBuyRate] = useState(props.data.total);
+  const [totalSellRate, setTotalSellRate] = useState(props.data.total);
 
   useEffect(() => {
-    localStorage.setItem('list', JSON.stringify(inputList));
+    localStorage.setItem("list", JSON.stringify(inputList));
   }, [inputList]);
-  
+
   const removeItem = (id: string) => {
-    return inputList.filter((item:any) => item.id !== id);
+    return inputList.filter((item: any) => item.id !== id);
   };
-
-
 
   const buyRateHandler = (value: number) => {
     setTotalBuyRate(value);
   };
 
   const onAddHandler = () => {
-    setInputList([
-      ...inputList,
-      {id:new Date().getTime().toString()}
-      ,
-    ]);
+    if (inputList.rateId !== props.data.ID) {
+      setInputList([
+        ...inputList,
+        // {
+        //   rateId: props.data.ID,
+        //   additionalChargeIds: {
+        //     id: new Date().getTime().toString(),
+        //   },
+        // },
+        {
+          id: new Date().getTime().toString(),
+        },
+      ]);
+    }
   };
 
   const handleOnClose = () => {
@@ -71,7 +79,6 @@ const QuoteModal = (props: any) => {
   if (!props.show) {
     return null;
   }
-
 
   return (
     <div className="p-10 fixed z-50 inset-0 bg-neutral-200 bg-opacity-10  backdrop-blur-sm border rounded ">
@@ -160,29 +167,29 @@ const QuoteModal = (props: any) => {
             1.00
           </div>
           <div className="flex px-3 items-center border border-zinc-500">
-            USD {totalBuyRate}
+            USD {props.data.total}
           </div>
           <div className="flex px-3 items-center border border-zinc-500">
-            USD {totalSellRate}
+            USD {props.data.total}
           </div>
           <div className="flex px-3 items-center border border-zinc-500">
             <span>USD</span>
             <input
               className="border-b-2 pl-2 focus:outline-none w-full"
               onChange={(e) => e.target.value}
-              value={rate()}
+              value={props.data.total}
             ></input>
           </div>
           <div className="flex px-3 items-center border border-zinc-500">
-            USD {rate()}
+            USD {props.data.total}
           </div>
           <div className="flex px-3 items-center border border-zinc-500">
             Delete
           </div>
         </div>
-        
+
         {inputList.map((item: any, index: number) => {
-          return ( 
+          return (
             <AdditonalCharge
               key={item.id}
               item={item}
@@ -213,11 +220,23 @@ const QuoteModal = (props: any) => {
             <span>{totalSellRate}</span>
           </div>
           <div className="border-l-2 pl-5">
-            You Earn USD <span className=" font-semibold">{totalSellRate - totalBuyRate}{" "}</span>
-           <span className="text-[green] font-semibold"> {(((totalSellRate - totalBuyRate) * 100) / totalBuyRate).toFixed(2)} % </span> on this
-            rate
+            You Earn USD{" "}
+            <span className=" font-semibold">
+              {totalSellRate - totalBuyRate}{" "}
+            </span>
+            <span className="text-[green] font-semibold">
+              {" "}
+              {(((totalSellRate - totalBuyRate) * 100) / totalBuyRate).toFixed(
+                2
+              )}{" "}
+              %{" "}
+            </span>{" "}
+            on this rate
           </div>
-          <button className="order-last bg-blue p-2 px-6 border border-1 rounded-2xl bg-indigo-500 text-white">
+          <button
+            onClick={handleOnClose}
+            className="order-last bg-blue p-2 px-6 border border-1 rounded-2xl bg-indigo-500 text-white"
+          >
             Done
           </button>
         </div>

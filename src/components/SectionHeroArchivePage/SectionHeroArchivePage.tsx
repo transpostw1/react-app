@@ -6,6 +6,7 @@ import hero2 from "images/transpost images/heros/hero-2.jpeg"
 import hero3 from "images/transpost images/heros/hero-3.jpeg"
 import hero4 from "images/transpost images/heros/hero-4.jpeg"
 import hero5 from "images/transpost images/heros/hero-5.jpeg"
+import hero6 from "images/transpost images/heros/hero-6.png"
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import HeroSearchForm, {
   SearchTab,
@@ -24,7 +25,7 @@ const SectionHeroArchivePage: FC<SectionHeroArchivePageProps> = ({
   listingType,
   currentPage,
   currentTab,
-  rightImage = hero3,
+  rightImage = hero6,
 }) => {
   return (
     <div
@@ -66,7 +67,7 @@ const SectionHeroArchivePage: FC<SectionHeroArchivePageProps> = ({
 
       <div className="flow-root w-full">
         {/* for moving the search bar up and down */}
-        <div className="z-10 lg:-mt-40 xl:-mt-15 w-full">
+        <div className="z-10 lg:-mt-40 xl:-mt-13 w-full">
           <HeroSearchForm currentPage={currentPage} currentTab={currentTab} />
         </div>
       </div>

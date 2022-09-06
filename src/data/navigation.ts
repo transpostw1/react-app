@@ -10,7 +10,6 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     const uid = user.uid;
     authLogin = true;
-    
   } else {
     authLogin = false;
   }
@@ -192,7 +191,13 @@ const templatesChildrenMenus: NavItemType[] = [
     // ],
   },
   //
-  { id: ncNanoId(), href: "/#", name: "Load Calculator" },
+  {
+    id: ncNanoId(),
+    href: "https://transpost.co/load-calculator/",
+    targetBlank: true,
+    name: "Load Calculator",
+  },
+ 
   // { id: ncNanoId(), href: "/pay-done", name: "Pay done" },
   //
   // { id: ncNanoId(), href: "/author", name: "Author Page" },
@@ -327,5 +332,12 @@ export const NAVIGATION_DEMO: NavItemType[] = [
     // type: "dropdown",
     // children: otherPageChildMenus,
   },
-  
+  {
+    id: ncNanoId(),
+    href: "https://transpost.co/blog/",
+    targetBlank: true,
+    protected: true,
+
+    name: "Blog",
+  },
 ];

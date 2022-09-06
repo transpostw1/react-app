@@ -7,7 +7,6 @@ import { fetchData } from "../../redux";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
 import imgpng from "../../images/coscoLogo.jpg";
 
-
 import QuoteModal from "new_component/Quotation/QuoteModal";
 
 import {
@@ -31,7 +30,8 @@ export interface FlightCardProps {
     to_port?: string;
     via?: string;
     sl_logo?: string;
-    total?:string
+    total?: string;
+    cargo_size?: string;
   };
 }
 
@@ -45,8 +45,8 @@ const FlightCard: FC<FlightCardProps> = ({ className = "", data }) => {
   const [email, setEmail] = useState("");
   const [rate, setRate] = useState<string | undefined>("");
   const [cargo, setCargo] = useState<string>("");
-  
-  const [show,setShow] = useState(false)
+
+  const [show, setShow] = useState(false);
 
   // signout should effect here
   useEffect(() => {
@@ -62,9 +62,9 @@ const FlightCard: FC<FlightCardProps> = ({ className = "", data }) => {
     return unsubscribe;
   }, []);
 
-const handleClose = () => {
-  setShow(false)
-}
+  const handleClose = () => {
+    setShow(false);
+  };
 
   const signOuthandler = () => {
     setIsLogin(!isLogin);
@@ -73,13 +73,13 @@ const handleClose = () => {
 
   // for Selecting rates
   useEffect(() => {
-    if (!!data._20gp ) {
+    if (!!data._20gp || data.cargo_size == "20gp") {
       setRate(data._20gp);
       setCargo("20'Standard");
-    } else if (!!data._40gp) {
+    } else if (!!data._40gp || data.cargo_size == "40gp") {
       setRate(data._40gp);
       setCargo("40'Standard");
-    } else if (data._40hc) {
+    } else if (!!data._40hc || data.cargo_size == "40hc") {
       setRate(data._40hc);
       setCargo("40'High Cube");
     }
@@ -105,9 +105,11 @@ const handleClose = () => {
         console.log(fetchedData);
         history.push({
           pathname: "/bookings",
-          state: { bId: fetchedData?.BookingID,
-                    bookedData: data,
-                  cargoType: cargo} ,
+          state: {
+            bId: fetchedData?.Booking.id,
+            bookedData: data,
+            cargoType: cargo,
+          },
         });
       })
       .catch((error) => {
@@ -115,12 +117,10 @@ const handleClose = () => {
       });
   };
 
-  
-
   const renderDetailTop = () => {
     return (
       <div>
-        <QuoteModal data={data} onclose={handleClose} show={show}/>
+        <QuoteModal data={data} onclose={handleClose} show={show} />
         <div className="flex flex-col md:flex-row ">
           <div className="w-12 mt-8 md:w-20 lg:w-24 flex-shrink-0 md:pt-7">
             <img src={data.sl_logo} className="w-[90%] h-15" alt="" />
@@ -154,7 +154,9 @@ const handleClose = () => {
           <div className="border-l border-neutral-200 dark:border-neutral-700 md:mx-6 lg:mx-10"></div>
           <ul className="text-sm text-neutral-500 dark:text-neutral-400 space-y-1 md:space-y-2">
             {/* <li>Rate Validity : {data.expiry_date?.split(" ").shift()}</li> */}
-            <li>Rate Validity : {moment(data.expiry_date).format('Do MMM YY')}</li>
+            <li>
+              Rate Validity : {moment(data.expiry_date).format("Do MMM YY")}
+            </li>
             {/* <li>Transit Port: {data.transit_port}</li> */}
             {/* <li>Transit Time: {data.transit_time}</li> */}
           </ul>
@@ -181,13 +183,16 @@ const handleClose = () => {
               {!isLogin ? (
                 // <ButtonPrimary onClick={(e) => bookNowHandler(e, data.ID)} href="/bookings">Book Now</ButtonPrimary>
                 <>
-                <button className="p-2 border border-black rounded-2xl" onClick={(e) => bookNowHandler(e, data)}>
-                  Book Now
-                </button>
-                <ButtonPrimary className="ml-2" onClick={() => setShow(true)}>+Create Quote</ButtonPrimary>
+                  <button
+                    className="p-2 border border-black rounded-2xl"
+                    onClick={(e) => bookNowHandler(e, data)}
+                  >
+                    Book Now
+                  </button>
+                  <ButtonPrimary className="ml-2" onClick={() => setShow(true)}>
+                    +Create Quote
+                  </ButtonPrimary>
                 </>
-
-                
               ) : (
                 <Link
                   className="mt-5 font-medium underline underline-offset-1"
@@ -206,7 +211,6 @@ const handleClose = () => {
   const renderDetail = () => {
     if (!isOpen) return null;
     return (
-      
       <div className="p-4 md:p-8 border border-neutral-200 dark:border-neutral-700 rounded-2xl ">
         {renderDetailTop()}
         <div className="my-7 md:my-10 space-y-5 md:pl-24">
@@ -292,7 +296,7 @@ const handleClose = () => {
           <div className="hidden lg:block flex-[4] whitespace-nowrap">
             <div className="font-medium text-lg"> Validity:</div>
             <div className="text-sm text-neutral-500 font-normal mt-0.5">
-              {moment(data.expiry_date).format('Do MMM YY')}
+              {moment(data.expiry_date).format("Do MMM YY")}
             </div>
           </div>
 

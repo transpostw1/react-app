@@ -36,13 +36,13 @@ const BookingCard: FC<BookingCardProps> = ({ data }) => {
     //     "Content-Type": "application/x-www-form-urlencoded",
     //   },
     axios
-      .post("https://tsr.transpost.co", postData)
+      .get("https://apis.transpost.co/api/bookings/timeline?bookingID=43")
       .then((response) => {
         const fetchedData = response.data;
         console.log(fetchedData);
         history.push({
-          pathname: "/booking-detail",
-          // state: { bId: fetchedData?.BookingID, bookedData: data },
+          pathname: "/booking-details",
+          state: { BId:fetchedData?.bookingID, bookingsData: fetchedData?.data },
         });
       })
       .catch((error) => {
