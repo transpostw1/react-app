@@ -68,7 +68,7 @@ const BookingDetails = () => {
 
   const location = useLocation<BookingsTimelineProps>();
   const { state } = location;
-
+// testing
   useEffect(() => {
     setTimelineData({ state });
     console.log(timelineData);
