@@ -3,7 +3,6 @@ import { BookingCardProps } from "./Dashboard";
 import moment from "moment";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import { PollingWatchKind } from "typescript";
 
 const BookingCard: FC<BookingCardProps> = ({ data }) => {
   const {
@@ -36,13 +35,13 @@ const BookingCard: FC<BookingCardProps> = ({ data }) => {
     //     "Content-Type": "application/x-www-form-urlencoded",
     //   },
     axios
-      .get("https://apis.transpost.co/api/bookings/timeline?bookingID=43")
+      .get(`https://apis.transpost.co/api/bookings/timeline?bookingID=${data.ID}`)
       .then((response) => {
         const fetchedData = response.data;
         console.log(fetchedData);
         history.push({
           pathname: "/booking-details",
-          state: { BId:fetchedData?.bookingID, bookingsData: fetchedData?.data },
+          state: { bookingsData: fetchedData },
         });
       })
       .catch((error) => {

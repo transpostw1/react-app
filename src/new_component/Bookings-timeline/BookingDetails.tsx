@@ -7,6 +7,7 @@ import Loading from "new_component/Loading";
 
 const response = {
   status: "success",
+  bookingID: 43,
   data: [
     {
       ID: 4,
@@ -47,15 +48,20 @@ const response = {
 };
 
 export interface BookingsTimelineProps {
-  BId: string | number | null;
   bookingsData: {
-    ID?: number;
-    time?: string;
-    status?: [
+    bookingID?: string;
+
+    data: [
       {
         ID?: number;
-        name?: string;
-        template?: string;
+        cs_statusId?: number;
+        status?: [
+          {
+            ID?: number;
+            name?: string;
+            template?: string;
+          }
+        ];
       }
     ];
   };
@@ -63,15 +69,14 @@ export interface BookingsTimelineProps {
 
 const BookingDetails = () => {
   const [timelineData, setTimelineData] = useState<
-    RouteComponentProps | null | string | {} | number
-  >({});
+    RouteComponentProps | null | string | {}
+  >("");
 
   const location = useLocation<BookingsTimelineProps>();
   const { state } = location;
-// testing
+
   useEffect(() => {
-    setTimelineData({ state });
-    console.log(timelineData);
+    setTimelineData(state.bookingsData);
   }, []);
 
   // if (timelineData) {
@@ -82,29 +87,37 @@ const BookingDetails = () => {
   //   );
   // }
 
-  return (
-    <div className="flex flex-col xl:pl-5 xl:ml-8 mb-4 justify-center ">
-      <h1 className="text-2xl mb-4">Booking No: {} </h1>
+  if (typeof timelineData === "object" && !Array.isArray(timelineData) && timelineData !== null) {
+    console.log(timelineData);
 
-      {response.data.map((item: any) => {
-        return (
-          <Timeline key={item.ID}>
-            <TimelineEvent
-              title={
-                <h1 className="text-2xl font-semibold">
-                  {item.status[0].name}
-                </h1>
-              }
-              createdAt={item.time}
-              // icon={<img className="ml-2 w-5 h-5" src={bookingRcvd}></img>}
-            >
-              {item.status[0].template}
-            </TimelineEvent>
-          </Timeline>
-        );
-      })}
-    </div>
-  );
+    return (
+      <div className="flex flex-col xl:pl-5 xl:ml-8 mb-4 justify-center ">
+        <h1 className="text-2xl mb-4">Booking No: {timelineData.bookingID} </h1>
+
+        {timelineData.data.map((item: any) => {
+          return (
+            <Timeline key={item.ID}>
+              <TimelineEvent
+                title={
+                  <h1 className="text-2xl font-semibold">
+                    {item.status[0].name}
+                  </h1>
+                }
+                createdAt={item.time}
+                // icon={<img className="ml-2 w-5 h-5" src={bookingRcvd}></img>}
+              >
+                {item.status[0].template}
+              </TimelineEvent>
+            </Timeline>
+          );
+        })}
+      </div>
+    );
+  } else {
+    console.log(typeof timelineData);
+
+    return <>loading</>;
+  }
 };
 
 export default BookingDetails;
