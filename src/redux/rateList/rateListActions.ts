@@ -38,7 +38,7 @@ export const fetchData = (postData: postDataProps) => {
     };
     dispatch(fetchDataRequest);
     axios
-      .get(`http://apis.transpost.co/api/rates/select`, {
+      .get(`https://apis.transpost.co/api/rates/select`, {
        params: {
         from_port:postData.from_port,
         to_port: postData.to_port,

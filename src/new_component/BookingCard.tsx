@@ -35,7 +35,11 @@ const BookingCard: FC<BookingCardProps> = ({ data }) => {
     //     "Content-Type": "application/x-www-form-urlencoded",
     //   },
     axios
-      .get(`https://apis.transpost.co/api/bookings/timeline?bookingID=${data.ID}`)
+      .get(`https://apis.transpost.co/api/bookings/timeline?bookingID=${data.ID}`,{
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+      })
       .then((response) => {
         const fetchedData = response.data;
         console.log(fetchedData);

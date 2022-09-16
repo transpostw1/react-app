@@ -8,6 +8,7 @@ import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import SectionHero from "./SectionHero";
 import SectionClientSay from "components/SectionClientSay/SectionClientSay";
+import NcImage from "shared/NcImage/NcImage";
 
 export interface PageAboutProps {
   className?: string;
@@ -54,22 +55,23 @@ const PageAbout: FC<PageAboutProps> = ({ className = "" }) => {
 
 const SectionValues = () => {
   return (
-    <div className="grid grid-cols-2 gap-8 w-full">
+    <div className="grid grid-cols-1 w-full gap-y-0  xl:grid-cols-2  xl:gap-8 ">
       {/* <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span> */}
-      <h1 className="hover:animate-bounce mb-10 pb-10 col-span-2 text-center text-[3rem] leading-none font-bold">
+      <h1 className="hover:animate-bounce xl:mb-10  xl:pb-10 xl:col-span-2 text-center text-[3rem] leading-none font-bold">
         Our Values
       </h1>
-      <div className="flex p-5 ">
-        <img className="" src="https://transpost.co/wp-content/themes/saasland-child/images/Save-time.svg"></img>
+      <div className="w-full xl:flex xl:p-5">
+        <img className="invisible xl:visible" src="https://transpost.co/wp-content/themes/saasland-child/images/Save-time.svg"></img>
         <span className="ml-3">
           <h1 className="text-[1.5rem] mb-5 font-semibold">Be Agile</h1>
+          <p>
           Being agile in everything we do to get the desired result for our
           customers, employees and stakeholders.
-          <p></p>
+          </p>
         </span>
       </div>
-      <div className="flex p-5">
-        <img src="https://transpost.co/wp-content/themes/saasland-child/images/collaborate-and-win.svg"></img>
+      <div className="w-full xl:flex xl:p-5">
+        <img className="invisible xl:visible" src="https://transpost.co/wp-content/themes/saasland-child/images/collaborate-and-win.svg"></img>
         <span className="ml-3">
           <h1 className="text-[1.5rem] mb-5 font-semibold">Collaborate & Win Together</h1>
           <p>
@@ -78,8 +80,8 @@ const SectionValues = () => {
           </p>
         </span>
       </div>
-      <div className="flex p-5">
-        <img src="https://transpost.co/wp-content/themes/saasland-child/images/Open-to-ideas.svg"></img>
+      <div className="w-full xl:flex xl:p-5">
+        <img className=" invisible xl:visible" src="https://transpost.co/wp-content/themes/saasland-child/images/Open-to-ideas.svg"></img>
         <span className="ml-3">
           <h1 className="text-[1.5rem] mb-5 font-semibold">Open to New Ideas</h1>
           <p>
@@ -88,8 +90,8 @@ const SectionValues = () => {
           </p>
         </span>
       </div>
-      <div className="flex p-5">
-        <img src="https://transpost.co/wp-content/themes/saasland-child/images/Diversity.svg"></img>
+      <div className="w-full xl:flex xl:p-5">
+        <img className=" invisible xl:visible" src="https://transpost.co/wp-content/themes/saasland-child/images/Diversity.svg"></img>
         <span className="ml-3">
           <h1 className="text-[1.5rem] mb-5 font-semibold">Strength in Diversity</h1>
           <p>

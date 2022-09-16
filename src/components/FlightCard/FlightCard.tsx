@@ -6,6 +6,7 @@ import ButtonPrimary from "shared/Button/ButtonPrimary";
 import { fetchData } from "../../redux";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
 import imgpng from "../../images/coscoLogo.jpg";
+import { MapStateToProps,MapDispatchToProps, connect } from "react-redux";
 
 import QuoteModal from "new_component/Quotation/QuoteModal";
 
@@ -15,6 +16,7 @@ import {
   signOutUser,
 } from "../../utils/firebase/firebase-config";
 import { useHistory } from "react-router-dom";
+import { createQuote } from "redux/quotes/quotesActions";
 
 export interface FlightCardProps {
   className?: string;
@@ -33,12 +35,32 @@ export interface FlightCardProps {
     total?: string;
     cargo_size?: string;
   };
+  setQuoteList?: (prevState: any) => void;
+  quoteList?: [];
+  quote?: any,
+  createQuote?: any
 }
 
 // 1 - Display the data of search term overhere
 // 2 - need to pass the api details to this
 
-const FlightCard: FC<FlightCardProps> = ({ className = "", data }) => {
+const getLocalStorage = () => {
+  let quote_list = localStorage.getItem("quote_list");
+  if (quote_list) {
+    return (quote_list = JSON.parse(localStorage.getItem("quote_list") || ""));
+  } else {
+    return [];
+  }
+};
+
+const FlightCard: FC<FlightCardProps> = ({
+  className = "",
+  data,
+  setQuoteList,
+  quoteList,
+  quote,
+  createQuote
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(true); // temporary for testing purpose
   const [currentUser, setCurrentUser] = useState(null);
@@ -89,7 +111,8 @@ const FlightCard: FC<FlightCardProps> = ({ className = "", data }) => {
 
   const bookNowHandler = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    data: {}
+    data: {},
+   
   ) => {
     const postData = { ...data, email };
     console.log(postData);
@@ -116,6 +139,50 @@ const FlightCard: FC<FlightCardProps> = ({ className = "", data }) => {
         const errorMsg = error.message;
       });
   };
+
+  const createQuoteHandler = (id: any) => {
+    setShow(true);
+    if (quoteList?.some((item: any) => item.rateId == id)) {
+      console.log(true);
+    } else {
+
+      // setQuoteList((prevState: any) => [
+      //   ...prevState,
+      //   {
+      //     rateId: `${id}`,
+      //     addCharge: [
+      //       {
+      //         addId: new Date().getTime().toString(),
+      //         charge: data.total,
+      //       },
+      //     ],
+      //   },
+      // ]);
+    }
+  };
+
+  // const specificItem = list.find((item) => item.id === id)
+  // if (quoteList) {
+  //   let newquote = {
+  //     rateId: data.ID,
+  //     addCharge: {
+  //       freightCharge: data.total,
+  //     },
+  //   };
+  //   setQuoteList([...quoteList, newquote]);
+  // }
+  // };
+
+  // useEffect(() => {
+  //   const items = JSON.parse(localStorage.getItem("quote_list"))
+  //   if (items) {
+  //    setQuoteList(items);
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   localStorage.setItem("quote_list", JSON.stringify(quoteList));
+  // }, [quoteList]);
 
   const renderDetailTop = () => {
     return (
@@ -189,7 +256,10 @@ const FlightCard: FC<FlightCardProps> = ({ className = "", data }) => {
                   >
                     Book Now
                   </button>
-                  <ButtonPrimary className="ml-2" onClick={() => setShow(true)}>
+                  <ButtonPrimary
+                    className="ml-2"
+                    onClick={() => createQuoteHandler(data.ID)}
+                  >
                     +Create Quote
                   </ButtonPrimary>
                 </>
@@ -352,10 +422,16 @@ const FlightCard: FC<FlightCardProps> = ({ className = "", data }) => {
   );
 };
 
-export default FlightCard;
-function elseif(_40gp: string | undefined) {
-  throw new Error("Function not implemented.");
+const mapStateToProps = (state:{ quote:any}) => {
+  return {
+      quote: state.quote
+  }
 }
-function postData(postData: any) {
-  throw new Error("Function not implemented.");
+
+const mapDispatchToProps = (dispatch:any,data: any) => {
+  return {
+      createQuote: () => dispatch(createQuote(data))
+  }
 }
+
+export default connect(mapStateToProps,mapDispatchToProps)(FlightCard);

@@ -10,6 +10,7 @@ import { ThunkDispatch } from "redux-thunk";
 import QuickRequest from "new_component/QuickRequest";
 import Loading from "new_component/Loading";
 import { postDataProps } from "components/HeroSearchForm/FlightSearchForm";
+import { useLocalStorage } from "hooks/useLocalStorage";
 // import {dummyData} from "../../assets/rates"
 
 // const data = require("../../assets/testing_rates.json");
@@ -20,25 +21,15 @@ export interface SectionGridFilterCardProps {
   shippingData: { data: [] | {}; loading: string; error: string };
 }
 
-// export interface Details {
-//   ID: string;
-//   LoadType: string;
-//   SL_date: string;
-//   SL_name: string;
-//   cargo: string;
-//   expiry_date: string;
-//   free_dates: string;
-//   freight_cost: number;
-//   from_port: string;
-//   inclusions: string;
-//   rates_by_forwarder: number;
-//   remarks: string;
-//   service_mode: string;
-//   to_port: string;
-//   total_cost: number;
-//   transit_port: string;
-//   transit_time: string;
-// }
+
+const getLocalStorage = () => {
+  let quote_list = localStorage.getItem("quote_list");
+  if (quote_list) {
+    return (quote_list = JSON.parse(localStorage.getItem("quote_list") || "[]"));
+  } else {
+    return [];
+  }
+};
 
 const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
   className = "",
@@ -46,8 +37,11 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
   shippingData,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [quoteList, setQuoteList] = useState(getLocalStorage());
+  const [quote,setQuote] = useLocalStorage("quote_list", [])
 
   const myRef = useRef<null | HTMLDivElement>(null);
+
 
   useEffect(() => {
     if (!Array.isArray(shippingData.data)) {
@@ -63,6 +57,13 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
     }
   }, [shippingData.data]);
 
+  
+  useEffect(() => {
+    // localStorage.setItem("quote_list", JSON.stringify(quoteList));
+    setQuote(quoteList)
+  }, [quoteList]);
+
+
   return (
     <div
       ref={myRef}
@@ -72,7 +73,7 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
       <div className="lg:p-10 lg:bg-neutral-50 lg:dark:bg-black/20 grid grid-cols-1 gap-6 rounded-3xl">
         {Array.isArray(shippingData.data) && shippingData.data.length > 0
           ? shippingData?.data?.map((item, index) => {
-              return <FlightCard key={index} data={item} />;
+              return <FlightCard key={index} quote={quote} setQuoteList={setQuoteList} data={item} />;
             })
           : isOpen && <QuickRequest />}
 

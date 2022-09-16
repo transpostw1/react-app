@@ -14,6 +14,7 @@ const AdditonalCharge = ({
   removeItem,
   setTotalBuyRate,
   setTotalSellRate,
+
 }: AdditonalChargeProps) => {
   const [buyRate, setBuyRate] = useState(0);
   const [sellRate, setSellRate] = useState(0);

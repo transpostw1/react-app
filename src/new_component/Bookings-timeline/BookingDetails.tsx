@@ -92,9 +92,11 @@ const BookingDetails = () => {
 
     return (
       <div className="flex flex-col xl:pl-5 xl:ml-8 mb-4 justify-center ">
-        <h1 className="text-2xl mb-4">Booking No: {timelineData.bookingID} </h1>
+        {/* <h1 className="text-2xl mb-4">Booking No: {timelineData.bookingID} </h1> */}
 
-        {timelineData.data.map((item: any) => {
+        {/* {timelineData.data.map((item: any) => { */}
+        {/* for testing  */}
+        {response.data.map((item: any) => {
           return (
             <Timeline key={item.ID}>
               <TimelineEvent

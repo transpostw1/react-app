@@ -1,13 +1,14 @@
 {
   "files": {
-    "main.css": "./static/css/main.e79b0828.css",
-    "main.js": "./static/js/main.1cde0914.js",
+    "main.css": "./static/css/main.07b333f7.css",
+    "main.js": "./static/js/main.1ba35e0f.js",
     "static/js/787.dfd8dd9b.chunk.js": "./static/js/787.dfd8dd9b.chunk.js",
     "static/media/hero-right-3.png": "./static/media/hero-right-3.25e989ed2b6ef0cfb25e.png",
     "static/media/Masood Ahmed - CTO.jpg": "./static/media/Masood Ahmed - CTO.fa77065f2e5703ed3909.jpg",
     "static/media/Vivek Das - Head Of Customer Experience.jpg": "./static/media/Vivek Das - Head Of Customer Experience.f8bdfb9fffd08ad39f9a.jpg",
     "static/media/hero-right-car.png": "./static/media/hero-right-car.3628b224580ee243b1ba.png",
     "static/media/our-features.png": "./static/media/our-features.d69027726b5a972c1b17.png",
+    "static/media/hero-6.png": "./static/media/hero-6.bb16bdb51074a46ca87d.png",
     "static/media/la-brands-400.svg": "./static/media/la-brands-400.331115337bc9be66667a.svg",
     "static/media/la-solid-900.svg": "./static/media/la-solid-900.0f874d69730f8631d632.svg",
     "static/media/15.png": "./static/media/15.e7aafcbed1b69a888ab9.png",
@@ -107,12 +108,12 @@
     "static/media/mastercard.svg": "./static/media/mastercard.92c5b76a9ebc565de87902533102fc82.svg",
     "index.html": "./index.html",
     "static/media/VectorHIW.svg": "./static/media/VectorHIW.2a56b4d0aa5690494df25bc0b2bb3bf6.svg",
-    "main.e79b0828.css.map": "./static/css/main.e79b0828.css.map",
-    "main.1cde0914.js.map": "./static/js/main.1cde0914.js.map",
+    "main.07b333f7.css.map": "./static/css/main.07b333f7.css.map",
+    "main.1ba35e0f.js.map": "./static/js/main.1ba35e0f.js.map",
     "787.dfd8dd9b.chunk.js.map": "./static/js/787.dfd8dd9b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e79b0828.css",
-    "static/js/main.1cde0914.js"
+    "static/css/main.07b333f7.css",
+    "static/js/main.1ba35e0f.js"
   ]
 }

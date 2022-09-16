@@ -2,6 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import CommonLayout from "containers/AccountPage/CommonLayout";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
 import emptyicon from "../images/transpost images/dashboard/emptyPng.png";
+import axios from "axios";
 
 import BookingCard from "./BookingCard";
 import Loading from "./Loading";
@@ -42,34 +43,71 @@ const Dashboard = () => {
   const [completedList, setCompletedList] = useState([]);
   const [activeTab, setActiveTab] = useState("All");
 
-  const fetchData = async () => {
-    var requestOptions = {
-      method: "GET",
-      redirect: "follow",
-    };
-    const response = await fetch(
-      "http://apis.transpost.co/api/bookings/user/?email=pavan@geminitest.com"
-    );
-    const result = await response.json();
-    console.log(result.data);
+  // const fetchData = async () => {
+  //   const response = await fetch(
+  //     "https://apis.transpost.co/api/bookings/user/?email=pavan@geminitest.com",
+  //     {
+  //       method: "GET",
+  //       headers: {
+  //         "Content-Type": "application/x-www-form-urlencoded",
+  //       },
+  //     }
+  //   );
+  //   const result = await response.json();
+  //   console.log(result.data);
 
-    setBookingList(result.data);
-    setAllList(result.data);
-    if (result.data.length > 0) {
-      setCompletedList(
-        result.data.filter((v: any) => {
-          const { status } = v;
-          return status === "8";
-        })
-      );
-      setPendingList(
-        result.data.filter((v: any) => {
-          const { status } = v;
-          return status !== "8";
-        })
-      );
-    }
+  //   setBookingList(result.data);
+  //   setAllList(result.data);
+  //   if (result.data.length > 0) {
+  //     setCompletedList(
+  //       result.data.filter((v: any) => {
+  //         const { status } = v;
+  //         return status === "8";
+  //       })
+  //     );
+  //     setPendingList(
+  //       result.data.filter((v: any) => {
+  //         const { status } = v;
+  //         return status !== "8";
+  //       })
+  //     );
+  //   }
+  // };
+
+  const fetchData = async () => {
+    axios
+      .get(
+        "https://apis.transpost.co/api/bookings/user/?email=pavan@geminitest.com",
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      )
+      .then((response) => {
+        const result = response.data;
+        console.log(result.data);
+
+        setBookingList(result.data);
+        setAllList(result.data);
+        if (result.data.length > 0) {
+          setCompletedList(
+            result.data.filter((v: any) => {
+              const { status } = v;
+              return status === "8";
+            })
+          );
+          setPendingList(
+            result.data.filter((v: any) => {
+              const { status } = v;
+              return status !== "8";
+            })
+          );
+        }
+      });
   };
+
   useEffect(() => {
     fetchData();
   }, []);
