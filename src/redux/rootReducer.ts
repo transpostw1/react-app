@@ -6,7 +6,7 @@ import { userReducer } from "./user/userReducer";
 const rootReducer = combineReducers({
   data: rateListReducer,
   user: userReducer,
-  quote: quoteReducer
+  quote: quoteReducer,
 });
 
 export default rootReducer;

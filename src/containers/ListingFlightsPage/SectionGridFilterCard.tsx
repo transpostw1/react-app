@@ -37,8 +37,8 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
   shippingData,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [quoteList, setQuoteList] = useState(getLocalStorage());
-  const [quote,setQuote] = useLocalStorage("quote_list", [])
+  const [quoteList, setQuoteList] = useState(getLocalStorage);
+  // const [quote,setQuote] = useLocalStorage("quote_list", getLocalStorage)
 
   const myRef = useRef<null | HTMLDivElement>(null);
 
@@ -58,10 +58,10 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
   }, [shippingData.data]);
 
   
-  useEffect(() => {
-    // localStorage.setItem("quote_list", JSON.stringify(quoteList));
-    setQuote(quoteList)
-  }, [quoteList]);
+  // useEffect(() => {
+  //   // localStorage.setItem("quote_list", JSON.stringify(quoteList));
+  //   setQuote(quoteList)
+  // }, [quoteList]);
 
 
   return (
@@ -73,7 +73,7 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
       <div className="lg:p-10 lg:bg-neutral-50 lg:dark:bg-black/20 grid grid-cols-1 gap-6 rounded-3xl">
         {Array.isArray(shippingData.data) && shippingData.data.length > 0
           ? shippingData?.data?.map((item, index) => {
-              return <FlightCard key={index} quote={quote} setQuoteList={setQuoteList} data={item} />;
+              return <FlightCard key={index}  data={item} />;
             })
           : isOpen && <QuickRequest />}
 

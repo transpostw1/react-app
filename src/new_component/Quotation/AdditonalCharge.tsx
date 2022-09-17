@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 
+import IquoteList from "./QuoteModal";
+
 interface AdditonalChargeProps {
   item: {
-    id: string;
+    addId: string;
   };
-  removeItem: (id: string) => void;
+  removeItem: (addId: string) => void;
   setTotalBuyRate: (prevState: any) => void;
   setTotalSellRate: (prevState: any) => void;
+  setQuotes: any;
+  quotes: any;
+  data: any;
 }
 
 const AdditonalCharge = ({
@@ -14,8 +19,12 @@ const AdditonalCharge = ({
   removeItem,
   setTotalBuyRate,
   setTotalSellRate,
-
+  setQuotes,
+  quotes,
+  data,
 }: AdditonalChargeProps) => {
+  const [chargeName, setChargeName] = useState();
+  const [basis, setbasis] = useState();
   const [buyRate, setBuyRate] = useState(0);
   const [sellRate, setSellRate] = useState(0);
   const [quantity, setQuantity] = useState(1);
@@ -31,7 +40,38 @@ const AdditonalCharge = ({
     setNetSellRate(quantity * sellRate);
   }, [sellRate]);
 
-  const selectHandler = () => {
+  useEffect(() => {
+    setQuotes(
+      quotes.map((quote: any) => {
+        if (quote.rateId == data.ID) {
+          return {
+            ...quote,
+            addCharge: quote.addCharge?.map((charge: any) => {
+              if (charge.addId == item.addId) {
+                return {
+                  ...charge,
+                  buyRate,
+                  sellRate,
+                  netBuyRate,
+                  netSellRate,
+                  quantity,
+                  basis,
+                  chargeName,
+                };
+              } else {
+                return charge;
+              }
+            }),
+          };
+        } else {
+          return quote;
+        }
+      })
+    );
+  }, [basis]);
+
+  const selectHandler = (e: any) => {
+    setbasis(e.target.value);
     setTotalBuyRate((prev: any) => parseInt(prev) + netBuyRate);
     setTotalSellRate((prev: any) => parseInt(prev) + netSellRate);
   };
@@ -43,6 +83,7 @@ const AdditonalCharge = ({
           type="text"
           className="w-full border-0 focus:outline-none"
           placeholder="Charge Name"
+          onChange={(e: any) => setChargeName(e.target.value)}
         />
       </div>
 
@@ -131,8 +172,8 @@ const AdditonalCharge = ({
       <button
         type="button"
         onClick={() => {
-          console.log(item.id);
-          removeItem(item.id);
+          console.log(item.addId);
+          removeItem(item.addId);
         }}
         className="flex px-3 outline-none items-center border border-zinc-500"
       >

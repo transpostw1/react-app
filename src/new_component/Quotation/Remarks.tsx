@@ -2,7 +2,8 @@ import React from "react";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
-const Remarks = () => {
+const Remarks = ({data}:any) => {
+  
   return (
     <>
       <span className="container">Remarks</span>

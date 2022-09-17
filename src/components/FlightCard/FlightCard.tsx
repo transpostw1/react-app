@@ -6,7 +6,7 @@ import ButtonPrimary from "shared/Button/ButtonPrimary";
 import { fetchData } from "../../redux";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
 import imgpng from "../../images/coscoLogo.jpg";
-import { MapStateToProps,MapDispatchToProps, connect } from "react-redux";
+import { MapStateToProps, MapDispatchToProps, connect } from "react-redux";
 
 import QuoteModal from "new_component/Quotation/QuoteModal";
 
@@ -17,6 +17,8 @@ import {
 } from "../../utils/firebase/firebase-config";
 import { useHistory } from "react-router-dom";
 import { createQuote } from "redux/quotes/quotesActions";
+import { useLocalStorage } from "hooks/useLocalStorage";
+import { isTemplateExpression } from "typescript";
 
 export interface FlightCardProps {
   className?: string;
@@ -35,10 +37,10 @@ export interface FlightCardProps {
     total?: string;
     cargo_size?: string;
   };
-  setQuoteList?: (prevState: any) => void;
+  // setQuoteList?: (prevState: any) => void;
   quoteList?: [];
-  quote?: any,
-  createQuote?: any
+  quote?: any;
+  createQuote?: any;
 }
 
 // 1 - Display the data of search term overhere
@@ -56,10 +58,8 @@ const getLocalStorage = () => {
 const FlightCard: FC<FlightCardProps> = ({
   className = "",
   data,
-  setQuoteList,
-  quoteList,
-  quote,
-  createQuote
+  // quote, // redux
+  // createQuote, // redux
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(true); // temporary for testing purpose
@@ -67,6 +67,7 @@ const FlightCard: FC<FlightCardProps> = ({
   const [email, setEmail] = useState("");
   const [rate, setRate] = useState<string | undefined>("");
   const [cargo, setCargo] = useState<string>("");
+  const [quotes, setQuotes] = useLocalStorage("quote_list", getLocalStorage);
 
   const [show, setShow] = useState(false);
 
@@ -111,8 +112,7 @@ const FlightCard: FC<FlightCardProps> = ({
 
   const bookNowHandler = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    data: {},
-   
+    data: {}
   ) => {
     const postData = { ...data, email };
     console.log(postData);
@@ -139,27 +139,66 @@ const FlightCard: FC<FlightCardProps> = ({
         const errorMsg = error.message;
       });
   };
+  // setting up in local storage
+  // useEffect(() => {
+  //   setQuotes((quotes: any) => {
+  //     if (quotes?.find((item: any) => item.id === data.ID) == null) {
+  //       return [
+  //         ...quotes,
+  //         {
+  //           rateId: `${data.ID}`,
+  //           addCharge: [
+  //             {
+  //               addId: new Date().getTime().toString(),
+  //               charge: data.total,
+  //             },
+  //           ],
+  //         },
+  //       ];
+  //     }
+  //   });
+  // }, [show]);
 
   const createQuoteHandler = (id: any) => {
-    setShow(true);
-    if (quoteList?.some((item: any) => item.rateId == id)) {
-      console.log(true);
-    } else {
+    setQuotes((quotes: any) => {
+      if (quotes?.find((item: any) => item.rateId == data.ID) == null) {
+        return [
+          ...quotes,
+          {
+            rateId: `${data.ID}`,
+            addCharge: [
+              {
+                addId: new Date().getTime().toString(),
+                charge: data.total,
+              },
+            ],
+          },
+        ];
+      } else {
+        return quotes;
+      }
+    });
 
-      // setQuoteList((prevState: any) => [
-      //   ...prevState,
-      //   {
-      //     rateId: `${id}`,
-      //     addCharge: [
-      //       {
-      //         addId: new Date().getTime().toString(),
-      //         charge: data.total,
-      //       },
-      //     ],
-      //   },
-      // ]);
-    }
+    setShow(true);
   };
+
+  // if (quoteList?.some((item: any) => item.rateId == id)) {
+  // console.log(true);
+  // } else {
+  // setQuotes(quote);
+  // setQuoteList((prevState: any) => [
+  //   ...prevState,
+  //   {
+  //     rateId: `${id}`,
+  //     addCharge: [
+  //       {
+  //         addId: new Date().getTime().toString(),
+  //         charge: data.total,
+  //       },
+  //     ],
+  //   },
+  // ]);
+  // };
 
   // const specificItem = list.find((item) => item.id === id)
   // if (quoteList) {
@@ -172,22 +211,18 @@ const FlightCard: FC<FlightCardProps> = ({
   //   setQuoteList([...quoteList, newquote]);
   // }
   // };
-
   // useEffect(() => {
-  //   const items = JSON.parse(localStorage.getItem("quote_list"))
-  //   if (items) {
-  //    setQuoteList(items);
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   localStorage.setItem("quote_list", JSON.stringify(quoteList));
-  // }, [quoteList]);
+  //   // if (quotes?.find((item: any) => item.rateId == data.ID) == null) {
+  //     createQuote(quotes);
+  //   // } else {
+  //     console.log(quotes);
+  //   // }
+  // }, [quotes]);
 
   const renderDetailTop = () => {
     return (
       <div>
-        <QuoteModal data={data} onclose={handleClose} show={show} />
+        <QuoteModal data={data} quotes={quotes} setQuotes={setQuotes} onclose={handleClose} show={show} />
         <div className="flex flex-col md:flex-row ">
           <div className="w-12 mt-8 md:w-20 lg:w-24 flex-shrink-0 md:pt-7">
             <img src={data.sl_logo} className="w-[90%] h-15" alt="" />
@@ -422,16 +457,16 @@ const FlightCard: FC<FlightCardProps> = ({
   );
 };
 
-const mapStateToProps = (state:{ quote:any}) => {
+const mapStateToProps = (state: any) => {
   return {
-      quote: state.quote
-  }
-}
+    quote: state.quote,
+  };
+};
 
-const mapDispatchToProps = (dispatch:any,data: any) => {
+const mapDispatchToProps = (dispatch: any, data: any) => {
   return {
-      createQuote: () => dispatch(createQuote(data))
-  }
-}
+    createQuote: () => dispatch(createQuote(data)),
+  };
+};
 
-export default connect(mapStateToProps,mapDispatchToProps)(FlightCard);
+export default connect(mapStateToProps, mapDispatchToProps)(FlightCard);

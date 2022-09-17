@@ -3,7 +3,7 @@ import React, { ReactComponentElement, useEffect, useState } from "react";
 import AdditonalCharge from "./AdditonalCharge";
 import Remarks from "./Remarks";
 
-export interface ModalProps {
+export interface Modal {
   show: boolean;
   onclose: void;
   data: {
@@ -21,7 +21,7 @@ export interface ModalProps {
   };
 }
 
-export interface quoteList {
+export interface IquoteList {
   rateId?: string;
   addCharge: [
     {
@@ -31,30 +31,25 @@ export interface quoteList {
   ];
 }
 
-export interface inputList {
-  addId: string;
-}
+
 
 const getLocalStorage = () => {
   let quote_list = localStorage.getItem("quote_list");
   if (quote_list) {
     return (quote_list = JSON.parse(localStorage.getItem("quote_list") || ""));
+  } else {
+    return [];
   }
-  // else {
-  // return [];
-  // }
 };
 
-const QuoteModal = (props: any) => {
-  const [inputList, setInputList] = useState([]);
-  const [freightBuyRate, setFreightBuyRate] = useState(props.data.total);
-  const [freightSellRate, setFreightSellRate] = useState(props.data.total);
+const QuoteModal = ({data,quotes,setQuotes,onclose,show}: any) => {
+  const [freightBuyRate, setFreightBuyRate] = useState(data.total);
+  const [freightSellRate, setFreightSellRate] = useState(data.total);
   const [totalBuyRate, setTotalBuyRate] = useState(freightBuyRate);
   const [totalSellRate, setTotalSellRate] = useState(freightSellRate);
   const [showRemarks, setShowRemarks] = useState(false);
-  const [quoteList, setQuoteList] = useState(getLocalStorage());
-  const [editID,setEditID] = useState();
-  const [quotes,setquotes] = useLocalStorage<any>("quote_list", getLocalStorage())
+  const [editID, setEditID] = useState(-1);
+const [test,setTest] = useState(getLocalStorage)
 
   // useEffect(() => {
   //   if(quotes){
@@ -69,19 +64,33 @@ const QuoteModal = (props: any) => {
   //   }
   // }, [quoteList]);
 
-  useEffect(() => {
-    const index = quotes.findIndex(
-      (item: any) => item.rateId == props.data.ID
-    );
-    
-    setEditID(index)
-  },[quotes])
+  // useEffect(() => {
+  //   const index = quotes.findIndex(
+  //     (item: any) => item.rateId == .data.ID
+  //   );
 
-  const removeItem = (id: string) => {
-    setInputList(inputList.filter((item: any) => item.id !== id));
+  //   setEditID(index)
+  // },[quotes])
+
+  const removeItem = (addId: string) => {
+    setQuotes(
+      quotes.map((quote: IquoteList) => {
+        if (quote.rateId == data.ID) {
+          return {
+            ...quote,
+            addCharge: quote.addCharge?.filter(
+              (item: any) => item.addId !== addId
+            ),
+          };
+        } else {
+          return quote;
+        }
+      })
+    );
+
   };
 
-  // const buyRateHandler = (value: number) => {
+  // const buyRateHandler = (value: numer) => {
   //   setTotalBuyRate(value);
   // };
 
@@ -106,41 +115,47 @@ const QuoteModal = (props: any) => {
   //   setIsEditing(false);
   // }
 
-  
+  useEffect(() => {
+    const index = quotes.findIndex(
+      (item: any) => item.rateId == data.ID
+    );
+    setEditID(index);
+    console.log(editID);
+    console.log(test);
+    
+  }, [quotes]);
 
   const onAddHandler = () => {
-    const index = quoteList.findIndex(
-      (item: any) => item.rateId == props.data.ID
+    const index = quotes.findIndex(
+      (item: any) => item.rateId == data.ID
     );
-    console.log(index);
-    
-    setEditID(index)
+    setEditID(index);
     // setQuoteList(quoteList.map(quote:any) => {
-    //   if(quote.rateId == props.data.Id){
+    //   if(quote.rateId == .data.Id){
     //     return {...quote,  }
     //   }
     // })
-    setquotes( () => {
-      
-     return quotes.map((quote: quoteList) => {
-        if (quote.rateId == props.data.ID) {
-          return {...quote, addCharge: [...quote.addCharge, {addId: new Date().getTime().toString()}]}
+    setQuotes(
+      quotes.map((quote: IquoteList) => {
+        if (quote.rateId == data.ID) {
+          return {
+            ...quote,
+            addCharge: [
+              ...quote.addCharge,
+              { addId: new Date().getTime().toString() },
+            ],
+          };
         } else {
-          console.log("outside");
-          return quote ;
+          return quote;
         }
       })
-    }
-    
     );
-
-   
   };
 
   const handleOnClose = () => {
-    props.onclose();
+    onclose();
   };
-  if (!props.show) {
+  if (!show) {
     return null;
   }
 
@@ -188,7 +203,7 @@ const QuoteModal = (props: any) => {
           </div>
 
           {showRemarks ? (
-            <Remarks />
+            <Remarks data={data} />
           ) : (
             <div>
               <div className="flex border rounded-2xl mx-5 my-3 mt-10 w-max">
@@ -267,17 +282,22 @@ const QuoteModal = (props: any) => {
                   Delete
                 </div>
               </div>
-              { (editID === Number) && quotes[editID].addCharge.map((item: any, index: number) => {
-                return (
-                  <AdditonalCharge
-                    key={item.addId}
-                    item={item}
-                    removeItem={removeItem}
-                    setTotalSellRate={setTotalSellRate}
-                    setTotalBuyRate={setTotalBuyRate}
-                  />
-                );
-              })}
+              {quotes[editID]?.addCharge?.map(
+                (item: any, index: number) => {
+                  return (
+                    <AdditonalCharge
+                      key={item.addId}
+                      item={item}
+                      removeItem={removeItem}
+                      setTotalSellRate={setTotalSellRate}
+                      setTotalBuyRate={setTotalBuyRate}
+                      quotes={quotes}
+                      setQuotes={setQuotes}
+                      data={data}
+                    />
+                  );
+                }
+              )}
               <div className="mt-3 p-3 border-b-1">
                 {/* <hr className="absolute h-[0.1rem] bg-indigo-500" /> */}
                 {/* <div className="border-b-2 border-indigo-500">
