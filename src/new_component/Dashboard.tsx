@@ -43,36 +43,6 @@ const Dashboard = () => {
   const [completedList, setCompletedList] = useState([]);
   const [activeTab, setActiveTab] = useState("All");
 
-  // const fetchData = async () => {
-  //   const response = await fetch(
-  //     "https://apis.transpost.co/api/bookings/user/?email=pavan@geminitest.com",
-  //     {
-  //       method: "GET",
-  //       headers: {
-  //         "Content-Type": "application/x-www-form-urlencoded",
-  //       },
-  //     }
-  //   );
-  //   const result = await response.json();
-  //   console.log(result.data);
-
-  //   setBookingList(result.data);
-  //   setAllList(result.data);
-  //   if (result.data.length > 0) {
-  //     setCompletedList(
-  //       result.data.filter((v: any) => {
-  //         const { status } = v;
-  //         return status === "8";
-  //       })
-  //     );
-  //     setPendingList(
-  //       result.data.filter((v: any) => {
-  //         const { status } = v;
-  //         return status !== "8";
-  //       })
-  //     );
-  //   }
-  // };
 
   const fetchData = async () => {
     axios

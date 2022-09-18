@@ -270,7 +270,7 @@ const [test,setTest] = useState(getLocalStorage)
                 <div className="flex px-3 items-center border border-zinc-500">
                   <span>USD</span>
                   <input
-                    className="border-b-2 pl-2 focus:outline-none w-full"
+                    className="border-b-2 pl-2 Zocus:outline-none w-full"
                     onChange={(e) => setFreightSellRate(e.target.value)}
                     value={freightSellRate}
                   ></input>

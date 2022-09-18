@@ -68,6 +68,7 @@ const FlightCard: FC<FlightCardProps> = ({
   const [rate, setRate] = useState<string | undefined>("");
   const [cargo, setCargo] = useState<string>("");
   const [quotes, setQuotes] = useLocalStorage("quote_list", getLocalStorage);
+  const [quoteList, setQuoteList] = useState([]);
 
   const [show, setShow] = useState(false);
 
@@ -140,32 +141,17 @@ const FlightCard: FC<FlightCardProps> = ({
       });
   };
   // setting up in local storage
-  // useEffect(() => {
-  //   setQuotes((quotes: any) => {
-  //     if (quotes?.find((item: any) => item.id === data.ID) == null) {
-  //       return [
-  //         ...quotes,
-  //         {
-  //           rateId: `${data.ID}`,
-  //           addCharge: [
-  //             {
-  //               addId: new Date().getTime().toString(),
-  //               charge: data.total,
-  //             },
-  //           ],
-  //         },
-  //       ];
-  //     }
-  //   });
-  // }, [show]);
+  
 
   const createQuoteHandler = (id: any) => {
-    setQuotes((quotes: any) => {
-      if (quotes?.find((item: any) => item.rateId == data.ID) == null) {
+    setQuotes((currentQuotes: any) => {
+      if (currentQuotes?.findIndex((item: any) => item.rateId == id) == -1) {
+        console.log("inside");
+        
         return [
-          ...quotes,
+          ...currentQuotes,
           {
-            rateId: `${data.ID}`,
+            rateId: `${id}`,
             addCharge: [
               {
                 addId: new Date().getTime().toString(),
@@ -175,54 +161,45 @@ const FlightCard: FC<FlightCardProps> = ({
           },
         ];
       } else {
-        return quotes;
+        console.log("Outside");
+        
+        return currentQuotes.map((item:any) => item);
       }
     });
+    // setQuotes((prevState: any) => {
+    //   if (quotes?.findIndex((item: any) => item.rateId == id) == -1) {
+    //     return [
+    //       ...prevState,
+    //       {
+    //         rateId: `${id}`,
+    //         addCharge: [
+    //           {
+    //             addId: new Date().getTime().toString(),
+    //             charge: data.total,
+    //           },
+    //         ],
+    //       },
+    //     ];
+    //   } else {
+    //     return [...quotes];
+    //   }
+    // });
 
     setShow(true);
   };
 
-  // if (quoteList?.some((item: any) => item.rateId == id)) {
-  // console.log(true);
-  // } else {
-  // setQuotes(quote);
-  // setQuoteList((prevState: any) => [
-  //   ...prevState,
-  //   {
-  //     rateId: `${id}`,
-  //     addCharge: [
-  //       {
-  //         addId: new Date().getTime().toString(),
-  //         charge: data.total,
-  //       },
-  //     ],
-  //   },
-  // ]);
-  // };
-
-  // const specificItem = list.find((item) => item.id === id)
-  // if (quoteList) {
-  //   let newquote = {
-  //     rateId: data.ID,
-  //     addCharge: {
-  //       freightCharge: data.total,
-  //     },
-  //   };
-  //   setQuoteList([...quoteList, newquote]);
-  // }
-  // };
-  // useEffect(() => {
-  //   // if (quotes?.find((item: any) => item.rateId == data.ID) == null) {
-  //     createQuote(quotes);
-  //   // } else {
-  //     console.log(quotes);
-  //   // }
-  // }, [quotes]);
+ 
 
   const renderDetailTop = () => {
     return (
       <div>
-        <QuoteModal data={data} quotes={quotes} setQuotes={setQuotes} onclose={handleClose} show={show} />
+        <QuoteModal
+          data={data}
+          quotes={quotes}
+          setQuotes={setQuotes}
+          onclose={handleClose}
+          show={show}
+        />
         <div className="flex flex-col md:flex-row ">
           <div className="w-12 mt-8 md:w-20 lg:w-24 flex-shrink-0 md:pt-7">
             <img src={data.sl_logo} className="w-[90%] h-15" alt="" />

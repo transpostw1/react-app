@@ -5,6 +5,14 @@ import IquoteList from "./QuoteModal";
 interface AdditonalChargeProps {
   item: {
     addId: string;
+    basis:string;
+    chargeName:string;
+    quantity:number;
+    buyRate:number;
+    sellRate:number;
+    netBuyRate: string,
+    netSellRate: string ,
+
   };
   removeItem: (addId: string) => void;
   setTotalBuyRate: (prevState: any) => void;
@@ -40,6 +48,7 @@ const AdditonalCharge = ({
     setNetSellRate(quantity * sellRate);
   }, [sellRate]);
 
+  // after changing buy rates and sell rates
   useEffect(() => {
     setQuotes(
       quotes.map((quote: any) => {
@@ -68,7 +77,7 @@ const AdditonalCharge = ({
         }
       })
     );
-  }, [basis]);
+  }, [basis,buyRate,sellRate,quantity,chargeName]);
 
   const selectHandler = (e: any) => {
     setbasis(e.target.value);
@@ -84,12 +93,14 @@ const AdditonalCharge = ({
           className="w-full border-0 focus:outline-none"
           placeholder="Charge Name"
           onChange={(e: any) => setChargeName(e.target.value)}
+          value={item.chargeName}
         />
       </div>
 
       <div className="border border-zinc-500">
         <select
           onChange={selectHandler}
+          value={item.basis}
           className="border-0 focus:outline-none w-full"
         >
           <option label="per equipment" value="per equipment">
@@ -98,40 +109,40 @@ const AdditonalCharge = ({
           <option label="per B/L" value="per B/L">
             per B/L
           </option>
-          <option label="per shipment" value="string:per shipment">
+          <option label="per shipment" value="per shipment">
             per shipment
           </option>
-          <option label="per shipping bill" value="string:per shipping bill">
+          <option label="per shipping bill" value="per shipping bill">
             per shipping bill
           </option>
-          <option label="per container" value="string:per container">
+          <option label="per container" value="per container">
             per container
           </option>
           <option
             label="per shipping bill / per container"
-            value="string:per shipping bill / per container"
+            value="per shipping bill / per container"
           >
             per shipping bill / per container
           </option>
-          <option label="per carton" value="string:per carton">
+          <option label="per carton" value="per carton">
             per carton
           </option>
-          <option label="per pallet" value="string:per pallet">
+          <option label="per pallet" value="per pallet">
             per pallet
           </option>
-          <option label="per vehicle" value="string:per vehicle">
+          <option label="per vehicle" value="per vehicle">
             per vehicle
           </option>
-          <option label="per shift" value="string:per shift">
+          <option label="per shift" value="per shift">
             per shift
           </option>
-          <option label="per package" value="string:per package">
+          <option label="per package" value="per package">
             per package
           </option>
-          <option label="per invoice" value="string:per invoice">
+          <option label="per invoice" value="per invoice">
             per invoice
           </option>
-          <option label="N/A" value="string:N/A">
+          <option label="N/A" value="N/A">
             N/A
           </option>
         </select>
@@ -141,8 +152,9 @@ const AdditonalCharge = ({
       </div>
       <div className="flex items-center border border-zinc-500">
         <input
-          type="text"
+          type="number"
           defaultValue={quantity}
+          value={item.quantity}
           onChange={(e) => setQuantity(parseInt(e.target.value))}
           className="border-transparent focus:border-transparent focus:ring-0 outline-none border-0 w-full"
         />
@@ -150,24 +162,31 @@ const AdditonalCharge = ({
       <div className="flex px-3 outline-none items-center border border-zinc-500">
         <span>USD</span>
         <input
+        type="number"
+        value={item.buyRate}
           onChange={(e) => {
             setBuyRate(parseInt(e.target.value));
+
           }}
-          className=" border-b-2 pl-2 focus:outline-none w-full"
+
+          className="border-transparent focus:border-transparent focus:ring-0 outline-none border-0 w-full"
         ></input>
       </div>
       <div className="flex px-3 outline-none items-center border  border-zinc-500">
-        USD {netBuyRate}
+        USD {netBuyRate || item.netBuyRate}
       </div>
       <div className="flex px-3 outline-none items-center border border-zinc-500">
         <span>USD</span>
         <input
+        type="number"
+        value={item.sellRate}
           onChange={(e) => setSellRate(parseInt(e.target.value))}
-          className="border-b-2 pl-2 focus:outline-none w-full"
+          className="border-transparent focus:border-transparent focus:ring-0 outline-none border-0 w-full"
+
         ></input>
       </div>
       <div className="flex px-3 outline-none items-center border border-zinc-500">
-        USD {netSellRate}
+        USD {netSellRate || item.netSellRate}
       </div>
       <button
         type="button"

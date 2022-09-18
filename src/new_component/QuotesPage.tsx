@@ -14,7 +14,7 @@ const QuotesPage = () => {
             <div className="flex space-x-8 md:space-x-14 overflow-x-auto hiddenScrollbar">
               <NavLink
                 activeClassName="!border-primary-500"
-                to="/user/my-request"
+                to="/user/quotes"
                 className="block py-1 md:py-2 border-b-2 border-transparent flex-shrink-0"
               >
                 Quotes
