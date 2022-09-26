@@ -20,9 +20,9 @@ export const ShipingDetails = (props: any) => {
   const [showPopover, setShowPopover] = useState(false);
 
   const selectHandler = () => {
-    if (transType === "LCL") {
+    if (transType === "Less Truck Load") {
       setContDetails(vol + " M3/" + weight + " MT");
-    } else if (transType === "Bulk") {
+    } else if (transType === "Full Truck Load") {
       setContDetails(gWeight + " MT");
     }
     setInputValue(transType + "," + contDetails);
@@ -45,9 +45,9 @@ export const ShipingDetails = (props: any) => {
   }, [inputValue]);
 
   useEffect(() => {
-    if (transType === "LCL") {
+    if (transType === "Less Truck Load") {
       setContDetails(vol + " M3/" + weight + " MT");
-    } else if (transType === "Bulk") {
+    } else if (transType === "Full Truck Load") {
       setContDetails(gWeight + " MT");
     }
   }, [transType, contDetails]);
@@ -85,15 +85,13 @@ export const ShipingDetails = (props: any) => {
                 nc-hero-field-padding  text-white bg-white group bg-transparent mt-5 rounded-md inline-flex items-center text-base font-medium hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white  text-neutral-300 dark:bg- dark:text-neutral-400 focus-visible:ring-opacity-75`}
             >
               <svg
-                viewBox="0 0 18 18"
-                xmlns="http://www.w3.org/2000/svg"
-                className="nc-icon-field  h-6 ml-3 sm:h-8 w-6 sm:w-8 mr-3"
+                viewBox="0 0 20 20"
                 fill="#C9CFDB"
+                className="nc-icon-field  h-6 ml-3 sm:h-8 w-6 sm:w-8 mr-3"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <path d="M14.7229 5.89836V9.48968L13.1479 8.96239V6.71865H6.84814V8.96239L5.27319 9.48968V5.89836C5.27319 5.68081 5.35616 5.47216 5.50384 5.31833C5.65152 5.1645 5.85182 5.07807 6.06067 5.07807H7.63562V4.05272C7.63562 3.88955 7.69784 3.73307 7.8086 3.61769C7.91937 3.50232 8.06959 3.4375 8.22623 3.4375H11.7699C11.9265 3.4375 12.0767 3.50232 12.1875 3.61769C12.2982 3.73307 12.3605 3.88955 12.3605 4.05272V5.07807H13.9354C14.1443 5.07807 14.3446 5.1645 14.4923 5.31833C14.6399 5.47216 14.7229 5.68081 14.7229 5.89836Z"></path>
-                <path d="M17.8748 15.5365V15.9467C17.8748 16.1099 17.8125 16.2663 17.7018 16.3817C17.591 16.4971 17.4408 16.5619 17.2841 16.5619C15.783 16.5619 14.6387 16.0333 13.7587 15.0393C13.58 15.4895 13.2771 15.8744 12.8884 16.1454C12.4998 16.4165 12.0427 16.5614 11.575 16.5619H8.42505C7.95732 16.5614 7.50024 16.4165 7.11155 16.1454C6.72287 15.8744 6.42002 15.4895 6.24128 15.0393C5.36128 16.0336 4.21698 16.5619 2.71585 16.5619C2.55921 16.5619 2.40899 16.4971 2.29823 16.3817C2.18747 16.2663 2.12524 16.1099 2.12524 15.9467V15.5365C2.12524 15.3734 2.18747 15.2169 2.29823 15.1015C2.40899 14.9862 2.55921 14.9213 2.71585 14.9213C4.2315 14.9213 5.22175 14.1085 5.65363 12.9896L3.93102 11.1952C3.83562 11.0958 3.76633 10.9725 3.72982 10.8372C3.69331 10.7018 3.6908 10.559 3.72252 10.4224C3.75424 10.2858 3.81913 10.1599 3.91098 10.0569C4.00282 9.95395 4.11853 9.87728 4.247 9.83427L9.75933 7.98863C9.91598 7.93608 10.0845 7.93608 10.2412 7.98863L15.7535 9.83427C15.882 9.87728 15.9977 9.95395 16.0895 10.0569C16.1814 10.1599 16.2463 10.2858 16.278 10.4224C16.3097 10.559 16.3072 10.7018 16.2707 10.8372C16.2342 10.9725 16.1649 11.0958 16.0695 11.1952L14.3469 12.9896C14.7854 14.1267 15.7875 14.9213 17.2841 14.9213C17.4408 14.9213 17.591 14.9862 17.7018 15.1015C17.8125 15.2169 17.8748 15.3734 17.8748 15.5365Z"></path>
+                <path d="M18.473 9.49907L16.8273 7.93178C16.4919 7.61234 16.037 7.4329 15.5627 7.4329H14.5V5.71526C14.5 4.76844 13.6941 4.00098 12.7 4.00098H2.8C1.80589 4.00098 1 4.76844 1 5.71526V13.7406C1 14.8337 1.80474 15.835 2.94223 15.9812C3.80569 16.0921 4.58237 15.7276 5.05 15.1338C5.52168 15.7366 6.30772 16.0972 7.18013 15.9784C8.09245 15.8542 8.84176 15.1573 9.04645 14.3016C9.12391 13.9778 9.10911 13.7037 9.0543 13.4296H13.6457C13.6281 13.5078 13.6159 13.586 13.6086 13.6655C13.5086 14.7484 14.3265 15.786 15.4518 15.9685C16.8728 16.1991 18.1 15.1676 18.1 13.8581C18.1 13.7108 18.0824 13.5702 18.0543 13.4296H18.55C18.7961 13.4296 19 13.2354 19 13.001V10.7108C19 10.2563 18.8104 9.82044 18.473 9.49907ZM3.25 14.7153C2.7543 14.7153 2.35 14.3302 2.35 13.8581C2.35 13.386 2.7543 13.001 3.25 13.001C3.7457 13.001 4.15 13.386 4.15 13.8581C4.15 14.3302 3.7457 14.7153 3.25 14.7153ZM6.85 14.7153C6.3543 14.7153 5.95 14.3302 5.95 13.8581C5.95 13.386 6.3543 13.001 6.85 13.001C7.3457 13.001 7.75 13.386 7.75 13.8581C7.75 14.3302 7.3457 14.7153 6.85 14.7153ZM15.85 14.7153C15.3543 14.7153 14.95 14.3302 14.95 13.8581C14.95 13.386 15.3543 13.001 15.85 13.001C16.3457 13.001 16.75 13.386 16.75 13.8581C16.75 14.3302 16.3457 14.7153 15.85 14.7153ZM14.5 10.001V8.71527H15.5547C15.6742 8.71527 15.7867 8.76214 15.8711 8.8425L17.091 10.001H14.5Z"></path>
               </svg>
-
               <input
                 className=" bg-transparent rounded border+- block font-bold text-neutral-800 focus:outline-none  dark:text-neutral-200"
                 value={inputValue}
@@ -134,17 +132,16 @@ export const ShipingDetails = (props: any) => {
                       <h3>SHIPMENT</h3>
                       <select
                         className="nc-Select h-11 mt-1.5 block w-full text-sm rounded-2xl border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700  dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-800"
-                        // className="nc-select w-full  dark:bg-transparent focus:bg-transparent"
                         onChange={(e) => {
                           let Ttype = e.target.value;
                           setTransType(Ttype);
-                          if (Ttype === "LCL") {
+                          if (Ttype === "Less Truck Load") {
                             setIsLActive(true);
                             setIsBActive(false);
                             setIsFActive(false);
                             setVol(1);
                             setWeight(1);
-                          } else if (Ttype === "Bulk") {
+                          } else if (Ttype === "Full Truck Load") {
                             setIsBActive(true);
                             setIsLActive(false);
                             setIsFActive(false);
@@ -158,16 +155,16 @@ export const ShipingDetails = (props: any) => {
                       >
                         {[
                           "Full Container Load",
-                          "Less Container Load",
-                          "Bulk",
+                          "Full Truck Load",
+                          "Less Truck Load",
                         ].map((item) => {
                           return (
                             <option
                               defaultValue={transType}
                               key={item}
                               value={
-                                item === "Bulk"
-                                  ? "Bulk"
+                                item === "Full Truck Load"
+                                  ? "Full Truck Load"
                                   : item.match(/[A-Z]/g)?.join("")
                               }
                             >
@@ -182,7 +179,7 @@ export const ShipingDetails = (props: any) => {
                       <div>
                         <h3>WEIGHT, MT</h3>
                         <input
-                          className="block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 rounded-2xl text-sm font-normal h-11 px-4 py-3 mt-1.5"
+                        className="block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 rounded-2xl text-sm font-normal h-11 px-4 py-3 mt-1.5"
                           type="number"
                           min="0"
                           value={weight}
@@ -193,7 +190,8 @@ export const ShipingDetails = (props: any) => {
                             VOLUME, M<sup>3</sup>
                           </h3>
                           <input
-                            className="block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 rounded-2xl text-sm font-normal h-11 px-4 py-3 mt-1.5"
+                        className="block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 rounded-2xl text-sm font-normal h-11 px-4 py-3 mt-1.5"
+
                             type="number"
                             min="0"
                             value={vol}
@@ -206,7 +204,8 @@ export const ShipingDetails = (props: any) => {
                       <div>
                         <h3>GROSS WEIGHT, MT</h3>
                         <input
-                          className="block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 rounded-2xl text-sm font-normal h-11 px-4 py-3 mt-1.5"
+                        className="block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 rounded-2xl text-sm font-normal h-11 px-4 py-3 mt-1.5"
+
                           type="number"
                           min="0"
                           onChange={(e) => setGWeight(parseInt(e.target.value))}

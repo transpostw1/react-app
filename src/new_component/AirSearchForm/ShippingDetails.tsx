@@ -8,15 +8,15 @@ import { Fragment } from "react";
 export const ShipingDetails = (props: any) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const [inputValue, setInputValue] = useState("FCL,20'Standard");
+  const [inputValue, setInputValue] = useState("AIR,1MT");
   const [isLActive, setIsLActive] = useState(false);
   const [isBActive, setIsBActive] = useState(false);
   const [isFActive, setIsFActive] = useState(true);
   const [vol, setVol] = useState(1);
   const [weight, setWeight] = useState(1);
   const [gWeight, setGWeight] = useState(1);
-  const [transType, setTransType] = useState("FCL");
-  const [contDetails, setContDetails] = useState("20'Standard");
+  const [transType, setTransType] = useState("AIR");
+  const [contDetails, setContDetails] = useState("1MT");
   const [showPopover, setShowPopover] = useState(false);
 
   const selectHandler = () => {
@@ -84,16 +84,20 @@ export const ShipingDetails = (props: any) => {
                 ${open ? "nc-hero-field-focused" : "text-opacity-90"}
                 nc-hero-field-padding  text-white bg-white group bg-transparent mt-5 rounded-md inline-flex items-center text-base font-medium hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white  text-neutral-300 dark:bg- dark:text-neutral-400 focus-visible:ring-opacity-75`}
             >
+             
               <svg
-                viewBox="0 0 18 18"
+                viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
                 className="nc-icon-field  h-6 ml-3 sm:h-8 w-6 sm:w-8 mr-3"
                 fill="#C9CFDB"
               >
-                <path d="M14.7229 5.89836V9.48968L13.1479 8.96239V6.71865H6.84814V8.96239L5.27319 9.48968V5.89836C5.27319 5.68081 5.35616 5.47216 5.50384 5.31833C5.65152 5.1645 5.85182 5.07807 6.06067 5.07807H7.63562V4.05272C7.63562 3.88955 7.69784 3.73307 7.8086 3.61769C7.91937 3.50232 8.06959 3.4375 8.22623 3.4375H11.7699C11.9265 3.4375 12.0767 3.50232 12.1875 3.61769C12.2982 3.73307 12.3605 3.88955 12.3605 4.05272V5.07807H13.9354C14.1443 5.07807 14.3446 5.1645 14.4923 5.31833C14.6399 5.47216 14.7229 5.68081 14.7229 5.89836Z"></path>
-                <path d="M17.8748 15.5365V15.9467C17.8748 16.1099 17.8125 16.2663 17.7018 16.3817C17.591 16.4971 17.4408 16.5619 17.2841 16.5619C15.783 16.5619 14.6387 16.0333 13.7587 15.0393C13.58 15.4895 13.2771 15.8744 12.8884 16.1454C12.4998 16.4165 12.0427 16.5614 11.575 16.5619H8.42505C7.95732 16.5614 7.50024 16.4165 7.11155 16.1454C6.72287 15.8744 6.42002 15.4895 6.24128 15.0393C5.36128 16.0336 4.21698 16.5619 2.71585 16.5619C2.55921 16.5619 2.40899 16.4971 2.29823 16.3817C2.18747 16.2663 2.12524 16.1099 2.12524 15.9467V15.5365C2.12524 15.3734 2.18747 15.2169 2.29823 15.1015C2.40899 14.9862 2.55921 14.9213 2.71585 14.9213C4.2315 14.9213 5.22175 14.1085 5.65363 12.9896L3.93102 11.1952C3.83562 11.0958 3.76633 10.9725 3.72982 10.8372C3.69331 10.7018 3.6908 10.559 3.72252 10.4224C3.75424 10.2858 3.81913 10.1599 3.91098 10.0569C4.00282 9.95395 4.11853 9.87728 4.247 9.83427L9.75933 7.98863C9.91598 7.93608 10.0845 7.93608 10.2412 7.98863L15.7535 9.83427C15.882 9.87728 15.9977 9.95395 16.0895 10.0569C16.1814 10.1599 16.2463 10.2858 16.278 10.4224C16.3097 10.559 16.3072 10.7018 16.2707 10.8372C16.2342 10.9725 16.1649 11.0958 16.0695 11.1952L14.3469 12.9896C14.7854 14.1267 15.7875 14.9213 17.2841 14.9213C17.4408 14.9213 17.591 14.9862 17.7018 15.1015C17.8125 15.2169 17.8748 15.3734 17.8748 15.5365Z"></path>
+                <g clip-path="url(#Air0)">
+                  <path d="M3.72074 4.9118C3.82515 4.81502 4.02851 4.78031 4.17532 4.83398L10.2238 7.06531L12.5521 4.90738C13.2722 4.23998 15.1167 3.75142 15.8675 4.56149C16.6183 5.37156 15.9912 7.1737 15.2711 7.8411L12.9428 9.99903L14.7084 16.1999C14.7564 16.3678 14.7135 16.5387 14.597 16.6467L13.2625 17.8835C13.0461 18.0841 12.673 17.9958 12.5158 17.7061L9.86963 12.8474L7.77372 14.7899L8.11728 16.9255C8.14116 17.0751 8.09484 17.2192 7.99234 17.3142L7.1774 18.0695C6.96538 18.2661 6.60226 18.1859 6.4394 17.9067L4.7843 14.8337L1.84567 12.9503C1.57968 12.7668 1.52725 12.3986 1.73927 12.2021L2.55421 11.4468C2.65671 11.3518 2.80393 11.3165 2.95131 11.3517L5.05466 11.8562L7.15057 9.91366L2.50621 6.90628C2.22927 6.72754 2.16982 6.34924 2.38628 6.14861L3.72074 4.9118Z"></path>
+                </g>
+                <clipPath id="Air0">
+                  <rect width="20" height="20" fill="white"></rect>
+                </clipPath>
               </svg>
-
               <input
                 className=" bg-transparent rounded border+- block font-bold text-neutral-800 focus:outline-none  dark:text-neutral-200"
                 value={inputValue}
@@ -134,7 +138,7 @@ export const ShipingDetails = (props: any) => {
                       <h3>SHIPMENT</h3>
                       <select
                         className="nc-Select h-11 mt-1.5 block w-full text-sm rounded-2xl border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700  dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-800"
-                        // className="nc-select w-full  dark:bg-transparent focus:bg-transparent"
+
                         onChange={(e) => {
                           let Ttype = e.target.value;
                           setTransType(Ttype);
@@ -158,11 +162,12 @@ export const ShipingDetails = (props: any) => {
                       >
                         {[
                           "Full Container Load",
-                          "Less Container Load",
-                          "Bulk",
+                          "Full Truck Load",
+                          "Less Truck Load",
                         ].map((item) => {
                           return (
                             <option
+                            
                               defaultValue={transType}
                               key={item}
                               value={
@@ -182,7 +187,9 @@ export const ShipingDetails = (props: any) => {
                       <div>
                         <h3>WEIGHT, MT</h3>
                         <input
-                          className="block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 rounded-2xl text-sm font-normal h-11 px-4 py-3 mt-1.5"
+                        className="block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 rounded-2xl text-sm font-normal h-11 px-4 py-3 mt-1.5"
+                        
+
                           type="number"
                           min="0"
                           value={weight}
@@ -193,7 +200,8 @@ export const ShipingDetails = (props: any) => {
                             VOLUME, M<sup>3</sup>
                           </h3>
                           <input
-                            className="block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 rounded-2xl text-sm font-normal h-11 px-4 py-3 mt-1.5"
+                        className="block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 rounded-2xl text-sm font-normal h-11 px-4 py-3 mt-1.5"
+
                             type="number"
                             min="0"
                             value={vol}
@@ -206,7 +214,8 @@ export const ShipingDetails = (props: any) => {
                       <div>
                         <h3>GROSS WEIGHT, MT</h3>
                         <input
-                          className="block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 rounded-2xl text-sm font-normal h-11 px-4 py-3 mt-1.5"
+                        className="block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 rounded-2xl text-sm font-normal h-11 px-4 py-3 mt-1.5"
+
                           type="number"
                           min="0"
                           onChange={(e) => setGWeight(parseInt(e.target.value))}
@@ -218,7 +227,8 @@ export const ShipingDetails = (props: any) => {
                       <div>
                         <h3>Type</h3>
                         <select
-                          className="nc-Select h-11 mt-1.5 block w-full text-sm rounded-2xl border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700  dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-800"
+                        className="nc-Select h-11 mt-1.5 block w-full text-sm rounded-2xl border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700  dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-800"
+
                           onChange={(e) => setContDetails(e.target.value)}
                         >
                           {[
@@ -230,7 +240,10 @@ export const ShipingDetails = (props: any) => {
                             "45'High Cube",
                           ].map((item) => {
                             return (
-                              <option key={item} value={item}>
+                              <option
+                                key={item}
+                                value={item}
+                              >
                                 {item}
                               </option>
                             );

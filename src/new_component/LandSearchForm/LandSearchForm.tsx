@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import LocationInput from "components/HeroSearchForm/LocationInput";
 import { FocusedInputShape } from "react-dates";
 import ExperiencesDateSingleInput from "components/HeroSearchForm/ExperiencesDateSingleInput";
-
+import ShippingDetails
+ from "./ShippingDetails";
 const LandSearchForm = () => {
   const [pickUpInputValue, setPickUpInputValue] = useState("");
   const [dropOffInputValue, setDropOffInputValue] = useState("");
@@ -13,6 +14,10 @@ const LandSearchForm = () => {
   const [dateFocused, setDateFocused] = useState<boolean>(false);
 
   const submitHandler = () => {};
+
+const selectedType = () =>{
+
+}
 
   const renderForm = () => {
     return (
@@ -54,7 +59,7 @@ const LandSearchForm = () => {
               />
 
               {/* shipping details - new component */}
-              {/* <ShippingDetails selectedType={selectedType} /> */}
+              <ShippingDetails selectedType={selectedType} />
               {/* BUTTON SUBMIT OF FORM */}
             </div>
             <div className="px-4 py-3 flex items-center justify-center">
