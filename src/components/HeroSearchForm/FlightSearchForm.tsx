@@ -383,7 +383,7 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({
               <button
                 onClick={submitHandler}
                 type="button"
-                className="h-14 md:h-16 w-full md:w-16 rounded-full bg-[#cd512f] hover:bg-[#218778] flex items-center justify-center text-neutral-50 focus:outline-none"
+                className="h-14  md:h-16 w-full md:w-16 rounded-full bg-[#cd512f] hover:bg-[#218778] flex items-center justify-center text-neutral-50 focus:outline-none"
               >
                 <span className="mr-3 md:hidden">Search</span>
                 <svg

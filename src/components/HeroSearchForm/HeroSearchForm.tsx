@@ -1,3 +1,7 @@
+import AirSearchForm from "new_component/AirSearchForm/AirSearchForm";
+import LandSearchForm from "new_component/LandSearchForm/LandSearchForm";
+import Loading from "new_component/Loading";
+import RentWarehouseSearchForm from "new_component/RentWarehouseSearchForm/RentWarehouseSearchForm";
 import React, { FC, useState } from "react";
 import "react-dates/initialize";
 import ExperiencesSearchForm from "./ExperiencesSearchForm";
@@ -5,21 +9,22 @@ import ExperiencesSearchForm from "./ExperiencesSearchForm";
 // import RentalCarSearchForm from "./RentalCarSearchForm";
 import FlightSearchForm from "./FlightSearchForm";
 
-export type SearchTab = "Stays" | "Cargo Tracker" | "Cars" | "Rate Search";
+export type SearchTab = "Stays" | "Cargo Tracker" | "Cars" | "Sea" | "Land" |"Air" | "Rent Warehouse";
 
 export interface HeroSearchFormProps {
   className?: string;
   currentTab?: SearchTab;
-  currentPage?: "Stays" | "Cargo Tracker" | "Cars" | "Rate Search";
+  currentPage?: "Stays" | "Cargo Tracker" | "Cars" | "Sea" | "Land" | "Air" | "Rent Warehouse";
 }
 
 const HeroSearchForm: FC<HeroSearchFormProps> = ({
   className = "",
-  currentTab = "Rate Search",
+  currentTab = "Sea",
   currentPage,
 }) => {
-  const tabs: SearchTab[] = ["Rate Search","Cargo Tracker"];
+  const tabs: SearchTab[] = ["Sea","Land","Air","Cargo Tracker","Rent Warehouse"];
   const [tabActive, setTabActive] = useState<SearchTab>(currentTab);
+
 
   const renderTab = () => {
     return (
@@ -47,17 +52,24 @@ const HeroSearchForm: FC<HeroSearchFormProps> = ({
     );
   };
 
+
   const renderForm = () => {
     const isArchivePage = !!currentPage && !!currentTab;
     switch (tabActive) {
       // case "Stays":
-        // return <StaySearchForm haveDefaultValue={isArchivePage} />;
+      // return <StaySearchForm haveDefaultValue={isArchivePage} />;
       case "Cargo Tracker":
         return <ExperiencesSearchForm haveDefaultValue={isArchivePage} />;
       // case "Cars":
-        // return <RentalCarSearchForm haveDefaultValue={isArchivePage} />;
-      case "Rate Search":
+      // return <RentalCarSearchForm haveDefaultValue={isArchivePage} />;
+      case "Sea":
         return <FlightSearchForm haveDefaultValue={isArchivePage} />;
+      case "Land":
+        return <LandSearchForm />;
+      case "Air":
+        return <AirSearchForm/>;
+      case "Rent Warehouse":
+        return <RentWarehouseSearchForm/>;
 
       default:
         return null;
@@ -65,12 +77,14 @@ const HeroSearchForm: FC<HeroSearchFormProps> = ({
   };
 
   return (
-    <div
-      className={`nc-HeroSearchForm w-full max-w-6xl py lg:py-0 ${className}`}
-      data-nc-id="HeroSearchForm"
-    >
-      {renderTab()}
-      {renderForm()}
+    <div className="border border-gray-500 px-10 pb-10 backdrop-blur-[2px] rounded-3xl  w-full">
+      <div
+        className={`nc-HeroSearchForm w-full max-w-6xl py lg:py-2 ${className}`}
+        data-nc-id="HeroSearchForm"
+      >
+        {renderTab()}
+        {renderForm()}
+      </div>
     </div>
   );
 };

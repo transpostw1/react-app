@@ -1,16 +1,20 @@
 import { useLocalStorage } from "hooks/useLocalStorage";
+import Loading from "new_component/Loading";
 import React, { ReactComponentElement, useEffect, useState } from "react";
+import {
+  QuoteListProvider,
+  useQuoteList,
+} from "utils/contexts/quoteListContext";
+import ncNanoId from "utils/ncNanoId";
 import AdditonalCharge from "./AdditonalCharge";
 import Remarks from "./Remarks";
 
 export interface Modal {
-  show: boolean;
+  showModal: boolean;
   onclose: void;
   data: {
     ID?: string;
-    _20gp?: string;
-    _40gp?: string;
-    _40hc?: string;
+
     sl_name?: string;
     expiry_date?: string;
     from_port?: string;
@@ -18,144 +22,67 @@ export interface Modal {
     to_port?: string;
     via?: string;
     sl_logo?: string;
+    additionalCosts?: [
+      {
+        id: number;
+        code: string;
+        name: string;
+        amount: number;
+        currency: string;
+      }
+    ];
   };
 }
 
 export interface IquoteList {
-  rateId?: string;
-  addCharge: [
+  quoteId: string;
+  ID?: string;
+  sl_name?: string;
+  expiry_date?: string;
+  from_port?: string;
+  service_mode?: string;
+  to_port?: string;
+  via?: string;
+  sl_logo?: string;
+  total?: number;
+  cargo_size?: string;
+  additionalCosts?: [
     {
-      addId: string;
-      charge: string;
+      id: any;
+      code: string;
+      name: string;
+      amount: number;
+      currency: string;
     }
   ];
 }
 
-
-
-const getLocalStorage = () => {
-  let quote_list = localStorage.getItem("quote_list");
-  if (quote_list) {
-    return (quote_list = JSON.parse(localStorage.getItem("quote_list") || ""));
-  } else {
-    return [];
-  }
-};
-
-const QuoteModal = ({data,quotes,setQuotes,onclose,show}: any) => {
+const QuoteModal = ({ data, quotes, setQuotes, onclose, showModal }: any) => {
   const [freightBuyRate, setFreightBuyRate] = useState(data.total);
   const [freightSellRate, setFreightSellRate] = useState(data.total);
   const [totalBuyRate, setTotalBuyRate] = useState(freightBuyRate);
   const [totalSellRate, setTotalSellRate] = useState(freightSellRate);
   const [showRemarks, setShowRemarks] = useState(false);
   const [editID, setEditID] = useState(-1);
-const [test,setTest] = useState(getLocalStorage)
 
-  // useEffect(() => {
-  //   if(quotes){
-  //       // localStorage.setItem("quote_list", JSON.stringify(quoteList));
-  //   setquotes(quoteList)
-  //     }
-  // }, []);
-  // useEffect(() => {
-  //   if(quoteList){
-  //       localStorage.setItem("quote_list", JSON.stringify(quoteList));
-  //     console.log(quoteList);
-  //   }
-  // }, [quoteList]);
+  const { quoteList, addCharge } = useQuoteList();
 
-  // useEffect(() => {
-  //   const index = quotes.findIndex(
-  //     (item: any) => item.rateId == .data.ID
-  //   );
-
-  //   setEditID(index)
-  // },[quotes])
-
-  const removeItem = (addId: string) => {
-    setQuotes(
-      quotes.map((quote: IquoteList) => {
-        if (quote.rateId == data.ID) {
-          return {
-            ...quote,
-            addCharge: quote.addCharge?.filter(
-              (item: any) => item.addId !== addId
-            ),
-          };
-        } else {
-          return quote;
-        }
-      })
-    );
-
-  };
-
-  // const buyRateHandler = (value: numer) => {
-  //   setTotalBuyRate(value);
-  // };
-
-  // const editItem = (id) => {
-  //   const specificItem = list.find((item) => item.id === id);
-  //   setIsEditing(true);
-  //   setEditID(id);
-  //   setName(specificItem.title);
-  // };
-
-  // if (name && isEditing) {
-  //   setList(
-  //     list.map((item) => {
-  //       if (item.id === editID) {
-  //         return { ...item, title: name };
-  //       }
-  //       return item;
-  //     })
-  //   );
-  //   setName('');
-  //   setEditID(null);
-  //   setIsEditing(false);
-  // }
 
   useEffect(() => {
-    const index = quotes.findIndex(
-      (item: any) => item.rateId == data.ID
-    );
+    const index = quoteList.findIndex((item: any) => item.quoteId == data.ID);
     setEditID(index);
-    console.log(editID);
-    console.log(test);
-    
-  }, [quotes]);
+
+    // console.log(quotes[editID]?.additionalCosts);
+  }, [quoteList, showModal]);
 
   const onAddHandler = () => {
-    const index = quotes.findIndex(
-      (item: any) => item.rateId == data.ID
-    );
-    setEditID(index);
-    // setQuoteList(quoteList.map(quote:any) => {
-    //   if(quote.rateId == .data.Id){
-    //     return {...quote,  }
-    //   }
-    // })
-    setQuotes(
-      quotes.map((quote: IquoteList) => {
-        if (quote.rateId == data.ID) {
-          return {
-            ...quote,
-            addCharge: [
-              ...quote.addCharge,
-              { addId: new Date().getTime().toString() },
-            ],
-          };
-        } else {
-          return quote;
-        }
-      })
-    );
+    addCharge(data.ID);
   };
 
   const handleOnClose = () => {
     onclose();
   };
-  if (!show) {
+  if (!showModal) {
     return null;
   }
 
@@ -282,21 +209,26 @@ const [test,setTest] = useState(getLocalStorage)
                   Delete
                 </div>
               </div>
-              {quotes[editID]?.addCharge?.map(
-                (item: any, index: number) => {
-                  return (
-                    <AdditonalCharge
-                      key={item.addId}
-                      item={item}
-                      removeItem={removeItem}
-                      setTotalSellRate={setTotalSellRate}
-                      setTotalBuyRate={setTotalBuyRate}
-                      quotes={quotes}
-                      setQuotes={setQuotes}
-                      data={data}
-                    />
-                  );
-                }
+              {quoteList.length > 0 &&
+              quoteList[editID] &&
+              quoteList[editID].additionalCosts ? (
+                quoteList[editID]?.additionalCosts?.map(
+                  (item: any, index: number) => {
+                    return (
+                      <AdditonalCharge
+                        key={item.id}
+                        item={item}
+                        setTotalSellRate={setTotalSellRate}
+                        setTotalBuyRate={setTotalBuyRate}
+                        quotes={quotes}
+                        setQuotes={setQuotes}
+                        data={data}
+                      />
+                    );
+                  }
+                )
+              ) : (
+                <Loading className="w-5 h-5" />
               )}
               <div className="mt-3 p-3 border-b-1">
                 {/* <hr className="absolute h-[0.1rem] bg-indigo-500" /> */}

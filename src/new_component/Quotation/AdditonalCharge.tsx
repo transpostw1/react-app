@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
+import { useQuoteList } from "utils/contexts/quoteListContext";
 
 import IquoteList from "./QuoteModal";
 
 interface AdditonalChargeProps {
   item: {
-    addId: string;
-    basis:string;
-    chargeName:string;
-    quantity:number;
-    buyRate:number;
-    sellRate:number;
-    netBuyRate: string,
-    netSellRate: string ,
-
+    id: string;
+    code: string;
+    name: string;
+    amount: number;
+    currency: string;
+    basis: string;
+    chargeName: string;
+    quantity: number;
+    buyRate: number;
+    sellRate: number;
+    netBuyRate: string;
+    netSellRate: string;
   };
-  removeItem: (addId: string) => void;
   setTotalBuyRate: (prevState: any) => void;
   setTotalSellRate: (prevState: any) => void;
   setQuotes: any;
@@ -24,20 +27,21 @@ interface AdditonalChargeProps {
 
 const AdditonalCharge = ({
   item,
-  removeItem,
   setTotalBuyRate,
   setTotalSellRate,
   setQuotes,
   quotes,
   data,
 }: AdditonalChargeProps) => {
-  const [chargeName, setChargeName] = useState();
-  const [basis, setbasis] = useState();
-  const [buyRate, setBuyRate] = useState(0);
-  const [sellRate, setSellRate] = useState(0);
-  const [quantity, setQuantity] = useState(1);
+  const [chargeName, setChargeName] = useState( item.name || item.chargeName);
+  const [basis, setbasis] = useState(item.basis);
+  const [buyRate, setBuyRate] = useState(item.amount || item.buyRate || 0);
+  const [sellRate, setSellRate] = useState(item.amount || item.sellRate || 0);
+  const [quantity, setQuantity] = useState(item.quantity || 1);
   const [netBuyRate, setNetBuyRate] = useState(0);
   const [netSellRate, setNetSellRate] = useState(0);
+
+const {removeCharge,editCharge} = useQuoteList();
 
   useEffect(() => {
     setNetBuyRate(quantity * buyRate);
@@ -50,25 +54,27 @@ const AdditonalCharge = ({
 
   // after changing buy rates and sell rates
   useEffect(() => {
+
+
     setQuotes(
       quotes.map((quote: any) => {
-        if (quote.rateId == data.ID) {
+        if (quote.quoteId == data.ID) {
           return {
             ...quote,
-            addCharge: quote.addCharge?.map((charge: any) => {
-              if (charge.addId == item.addId) {
+            additionalCosts: quote?.additionalCosts?.map((costItem: any) => {
+              if (costItem.id == item.id) {
                 return {
-                  ...charge,
+                  ...costItem,
+                  basis,
+                  chargeName,
                   buyRate,
                   sellRate,
                   netBuyRate,
                   netSellRate,
                   quantity,
-                  basis,
-                  chargeName,
                 };
               } else {
-                return charge;
+                return costItem;
               }
             }),
           };
@@ -77,7 +83,7 @@ const AdditonalCharge = ({
         }
       })
     );
-  }, [basis,buyRate,sellRate,quantity,chargeName]);
+  }, [basis, buyRate, sellRate, quantity, chargeName, netBuyRate, netSellRate]);
 
   const selectHandler = (e: any) => {
     setbasis(e.target.value);
@@ -162,13 +168,11 @@ const AdditonalCharge = ({
       <div className="flex px-3 outline-none items-center border border-zinc-500">
         <span>USD</span>
         <input
-        type="number"
-        value={item.buyRate}
+          type="number"
+          value={item.buyRate}
           onChange={(e) => {
             setBuyRate(parseInt(e.target.value));
-
           }}
-
           className="border-transparent focus:border-transparent focus:ring-0 outline-none border-0 w-full"
         ></input>
       </div>
@@ -178,11 +182,10 @@ const AdditonalCharge = ({
       <div className="flex px-3 outline-none items-center border border-zinc-500">
         <span>USD</span>
         <input
-        type="number"
-        value={item.sellRate}
+          type="number"
+          value={item?.sellRate}
           onChange={(e) => setSellRate(parseInt(e.target.value))}
           className="border-transparent focus:border-transparent focus:ring-0 outline-none border-0 w-full"
-
         ></input>
       </div>
       <div className="flex px-3 outline-none items-center border border-zinc-500">
@@ -191,8 +194,7 @@ const AdditonalCharge = ({
       <button
         type="button"
         onClick={() => {
-          console.log(item.addId);
-          removeItem(item.addId);
+          removeCharge(item.id,data.ID)
         }}
         className="flex px-3 outline-none items-center border border-zinc-500"
       >

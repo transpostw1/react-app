@@ -82,7 +82,7 @@ export const ShipingDetails = (props: any) => {
             <Popover.Button
               className={`
                 ${open ? "" : "text-opacity-90"}
-                text-white bg-white group  my-5 rounded-md inline-flex items-center text-base font-medium hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
+                 text-white bg-white group  my-5 rounded-md inline-flex items-center text-base font-medium hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
             >
               <svg
                 viewBox="0 0 18 18"

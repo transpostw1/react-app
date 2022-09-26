@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import TabFilters from "./TabFilters";
 import Heading2 from "components/Heading/Heading2";
-import FlightCard, { FlightCardProps } from "components/FlightCard/FlightCard";
+import RateCard, { RateCardProps } from "components/RateCard/RateCard";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import { ChevronDoubleLeftIcon } from "@heroicons/react/outline";
 import { fetchData } from "../../redux";
@@ -73,7 +73,7 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
       <div className="lg:p-10 lg:bg-neutral-50 lg:dark:bg-black/20 grid grid-cols-1 gap-6 rounded-3xl">
         {Array.isArray(shippingData.data) && shippingData.data.length > 0
           ? shippingData?.data?.map((item, index) => {
-              return <FlightCard key={index}  data={item} />;
+              return <RateCard key={index}  data={item} />;
             })
           : isOpen && <QuickRequest />}
 

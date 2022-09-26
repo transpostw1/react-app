@@ -15,7 +15,7 @@ const CommonSidebar = () => {
       {/* ---- */}
       <div className="space-y-4">
         <NavLink
-          activeClassName=" bg-primary-200 rounded-lg"
+          activeClassName="bg-primary-200 rounded-lg"
           to={"/user/bookings"}
           className="block py-1 md:py-2 pl-2 border-l-2 border-transparent flex-shrink-0 "
         >

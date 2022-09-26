@@ -50,7 +50,7 @@ import DetailedRequest from "new_component/DetailedRequest";
 import MyRequest from "new_component/MyRequest";
 import BookingDetails from "new_component/Bookings-timeline/BookingDetails";
 import PrivateRoute from "./PrivateRoute";
-import QuotesPage from "new_component/QuotesPage";
+import QuotesPage from "new_component/Dashboard/QuotesPage";
 
 export const pages: Page[] = [
   // { path: "/", exact: true, component: PageHome },
