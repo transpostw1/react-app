@@ -11,7 +11,7 @@ const MyRequest = () => {
     return (
       // <div className="listingSection__wrap">
       <div>
-        <div className="border-b border-neutral-200 dark:border-neutral-700  dark:bg-neutral-800">
+        <div className="border-b border-neutral-200 dark:border-neutral-700  dark:bg-transparent">
           <div className="container">
             <div className="flex space-x-8 md:space-x-14 overflow-x-auto hiddenScrollbar">
               <NavLink
@@ -31,7 +31,7 @@ const MyRequest = () => {
 
   const renderSection2 = () => {
     return (
-      <div className="listingSection__wrap bg-white h-screen flex justify-center items-center">
+      <div className="listingSection__wrap bg-white h-screen flex justify-center items-center dark:bg-neutral-800">
         {/* HEADING */}
 
         <img src={emptyIcon} className="h-[4rem] w-[4rem]" alt="" />

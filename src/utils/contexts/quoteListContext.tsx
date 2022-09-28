@@ -21,17 +21,19 @@ type QuoteListProviderProps = {
 type quoteListContext = {
   addQuote: (id: string, data: any) => void;
   quoteList: IquoteList[];
-  addCharge: (ID: any) => void;
-  editCharge:( ID: string,
-    chargeid:string,
+  addCharge: (id: any) => void;
+  editCharge: (
+    id: string,
+    chargeid: string,
     basis: string,
     chargeName: string,
     buyRate: number,
     sellRate: number,
     netBuyRate: number,
     netSellRate: number,
-    quantity: number) => void;
-  removeCharge: (id: string, ID: string) => void;
+    quantity: number
+  ) => void;
+  removeCharge: (id: string, rateId: string) => void;
 };
 
 // getLocalStorage
@@ -56,32 +58,39 @@ export const QuoteListProvider = ({ children }: QuoteListProviderProps) => {
 
   useEffect(() => {
     setQuotes(quoteList);
-    console.log("quotes", quotes);
     console.log("quoteList", quoteList);
+    console.log("quotes", quotes);
   }, [quoteList]);
 
   const addQuote = (id: string, data: any) => {
     setQuoteList((prevState: any) => {
-      if (prevState?.findIndex((item: any) => item.ID == id) == -1) {
+      if (prevState?.find((item: any) => item.id === id) == null) {
+        console.log("prevState in", prevState);
+
         return [
           ...prevState,
           {
-            quoteId: `${id}`,
+            quoteId: id,
+            sum_buy: data.total,
+            sum_sell: data.total,
             ...data,
           },
         ];
       } else {
-        return [...prevState];
+        console.log("prevState out", prevState);
+
+        return prevState;
       }
     });
   };
 
   // function for adding charges
-  const addChargeHandler = (ID: any) => {
+  const addChargeHandler = (id: string) => {
     if (quoteList.length > 0) {
       const result = quoteList.map((quote: any) => {
-        if (quote?.quoteId == ID) {
-          if (quote.additionalCosts) {
+        if (quote?.id === id) {
+
+          if (quote?.additionalCosts) {
             return {
               ...quote,
               additionalCosts: [
@@ -95,38 +104,59 @@ export const QuoteListProvider = ({ children }: QuoteListProviderProps) => {
                 },
               ],
             };
-          } else {
-            return quote;
           }
+        } else {
+
+          return quote;
         }
       });
+      console.log("result", result);
+
       return result;
     } else {
       return [];
     }
   };
 
-  const addCharge = (ID: string) => {
-    setQuoteList(addChargeHandler(ID));
+  const addCharge = (id: string) => {
+    setQuoteList(addChargeHandler(id));
   };
 
   // Edit Charge function
   const editCharge = (
-    ID: string,
-    chargeid:string,
+    id: string,
+    chargeid: string,
     basis: string,
     chargeName: string,
     buyRate: number,
     sellRate: number,
     netBuyRate: number,
     netSellRate: number,
-    quantity: number
+    quantity: number,
+    
   ) => {
+const sum = (arr:number[],initialvalue:number) => {
+
+  return arr.reduce((pv:number,cv:number) =>{
+    if(typeof pv == "number" && typeof cv =="number"){
+      return pv+cv;
+    } 
+    else {
+      return pv
+    }
+  },initialvalue)
+}
+
+
+
     setQuoteList(
       quoteList.map((quote: any) => {
-        if (quote.quoteId == ID) {
+        if (quote.quoteId === id) {
+// setTotalBuyRate(sum(quote?.additionalCosts,total))
           return {
             ...quote,
+            sum_buy: sum(quote?.additionalCosts.map((item:any) => item.netBuyRate),quote.sum_buy),
+            sum_sell: sum(quote?.additionalCosts.map((item:any) => item.netSellRate),quote.sum_sell),
             additionalCosts: quote?.additionalCosts?.map((costItem: any) => {
               if (costItem.id == chargeid) {
                 return {
@@ -148,15 +178,14 @@ export const QuoteListProvider = ({ children }: QuoteListProviderProps) => {
           return quote;
         }
       })
-
-    )
+    );
   };
 
   // Remover Charge
-  const removeCharge = (id: string, ID: string) => {
+  const removeCharge = (id: string, rateId: string) => {
     setQuoteList(
       quoteList?.map((quote: any) => {
-        if (quote?.quoteId == ID) {
+        if (quote?.id == rateId) {
           return {
             ...quote,
             additionalCosts: quote?.additionalCosts?.filter(

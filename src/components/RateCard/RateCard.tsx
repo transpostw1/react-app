@@ -17,12 +17,11 @@ import {
 } from "../../utils/firebase/firebase-config";
 import { useHistory } from "react-router-dom";
 import { createQuote } from "redux/quotes/quotesActions";
-import { useLocalStorage } from "hooks/useLocalStorage";
 
 export interface RateCardProps {
   className?: string;
   data: {
-    ID?: string;
+    id?: string;
     _20gp?: string;
     _40gp?: string;
     _40hc?: string;
@@ -53,14 +52,14 @@ export interface RateCardProps {
 // 1 - Display the data of search term overhere
 // 2 - need to pass the api details to this
 
-export const getLocalStorage = () => {
-  let quote_list = localStorage.getItem("quote_list");
-  if (quote_list) {
-    return (quote_list = JSON.parse(localStorage.getItem("quote_list") || ""));
-  } else {
-    return [];
-  }
-};
+// export const getLocalStorage = () => {
+//   let quote_list = localStorage.getItem("quote_list");
+//   if (quote_list) {
+//     return (quote_list = JSON.parse(localStorage.getItem("quote_list") || ""));
+//   } else {
+//     return [];
+//   }
+// };
 
 const RateCard: FC<RateCardProps> = ({
   className = "",
@@ -74,7 +73,6 @@ const RateCard: FC<RateCardProps> = ({
   const [email, setEmail] = useState("");
   const [rate, setRate] = useState<string | undefined>("");
   const [cargo, setCargo] = useState<string>("");
-  const [quotes, setQuotes] = useLocalStorage("quote_list", getLocalStorage);
 
   const [showModal, setShowModal] = useState(false);
 
@@ -165,8 +163,8 @@ const RateCard: FC<RateCardProps> = ({
       <div className="">
         <QuoteModal
           data={data}
-          quotes={quotes} // remove it 
-          setQuotes={setQuotes} // remove it
+          // quotes={quotes} // remove it 
+          // setQuotes={setQuotes} // remove it
           onclose={handleClose}
           showModal={showModal}
         />
@@ -240,7 +238,7 @@ const RateCard: FC<RateCardProps> = ({
                   </button>
                   <ButtonPrimary
                     className="ml-2"
-                    onClick={() => createQuoteHandler(data.ID)}
+                    onClick={() => createQuoteHandler(data.id)}
                   >
                     +Create Quote
                   </ButtonPrimary>

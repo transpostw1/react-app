@@ -4,7 +4,7 @@ import CommonLayout from "containers/AccountPage/CommonLayout";
 import emptyIcon from "../../images/transpost images/dashboard/emptyPng.png";
 import CommonSidebar from "../CommonSidebar";
 import QuoteCard from "./QuoteCard";
-import { getLocalStorage } from 'components/RateCard/RateCard'
+// import { getLocalStorage } from 'components/RateCard/RateCard'
 
 
 export interface Iquote {
@@ -16,24 +16,24 @@ export interface Iquote {
 
 const QuotesPage = () => {
 
-const [quotes,setQuotes] = useState(getLocalStorage());
+// const [quotes,setQuotes] = useState(getLocalStorage());
 
-useEffect(()=>{
-  if(getLocalStorage !== null){
-setQuotes(getLocalStorage)
-console.log(typeof Array);
-console.log(quotes);
+// useEffect(()=>{
+//   if(getLocalStorage !== null){
+// setQuotes(getLocalStorage)
+// console.log(typeof Array);
+// console.log(quotes);
 
-console.log("insitde loacal");
+// console.log("insitde loacal");
 
-  }
-},[])
+//   }
+// },[])
 
   const renderSection1 = () => {
     return (
       // <div className="listingSection__wrap">
       <div>
-        <div className="border-b border-neutral-200 dark:border-neutral-700  dark:bg-neutral-800">
+        <div className="border-b border-neutral-200 dark:border-neutral-700  dark:bg-transparent">
           <div className="container">
             <div className="flex space-x-8 md:space-x-14 overflow-x-auto hiddenScrollbar">
               <NavLink
@@ -53,12 +53,12 @@ console.log("insitde loacal");
 
   const renderSection2 = () => {
     return (
-      <div className="listingSection__wrap bg-white h-screen flex justify-center items-center">
+      <div className="listingSection__wrap bg-white h-screen flex justify-center items-center dark:bg-neutral-800">
         {/* HEADING */}
         
-         {Array.isArray(quotes) && quotes?.map((item:Iquote) =>{
+         {/* {Array.isArray(quotes) && quotes?.map((item:Iquote) =>{
           <QuoteCard key={item.rateId} />
-        })}
+        })} */}
         <img src={emptyIcon} className="h-[4rem] w-[4rem]" alt="" />
         <div className="text-2xl text-centre font-semibold">
           You haven't made any quotes yet.

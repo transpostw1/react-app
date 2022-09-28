@@ -116,7 +116,7 @@ const Dashboard = () => {
     return (
       // <div className="listingSection__wrap">
       <div>
-        <div className="border-b border-neutral-200 dark:border-neutral-700  dark:bg-neutral-800">
+        <div className="border-b border-neutral-200 dark:border-neutral-700  dark:bg-transparent">
           <div className="container">
             <div className="flex space-x-8 md:space-x-14 overflow-x-auto hiddenScrollbar">
               <button
@@ -168,7 +168,7 @@ const Dashboard = () => {
       );
     }
     return (
-      <div className="listingSection__wrap bg-white   ">
+      <div className="listingSection__wrap bg-white dark:text-neutral-300  dark:bg-neutral-800 ">
         {/* HEADING */}
         {bookingList.length > 0 ? (
           <>
@@ -177,7 +177,7 @@ const Dashboard = () => {
             })}
           </>
         ) : (
-          <div className="h-screen flex flex-col justify-center items-center">
+          <div className="h-screen flex flex-col justify-center items-center dark:bg-neutral-800 ">
             <img src={emptyicon} className="h-[4rem] w-[4rem]" alt="" />
 
             <div className="text-2xl text-centre font-semibold">

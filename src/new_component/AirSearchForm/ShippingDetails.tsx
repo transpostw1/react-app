@@ -84,7 +84,6 @@ export const ShipingDetails = (props: any) => {
                 ${open ? "nc-hero-field-focused" : "text-opacity-90"}
                 nc-hero-field-padding  text-white bg-white group bg-transparent mt-5 rounded-md inline-flex items-center text-base font-medium hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white  text-neutral-300 dark:bg- dark:text-neutral-400 focus-visible:ring-opacity-75`}
             >
-             
               <svg
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -104,15 +103,15 @@ export const ShipingDetails = (props: any) => {
                 // style={{ color: "neutral" }}
                 onClick={() => {
                   setShowPopover(!showPopover);
-                  setTransType("FCL");
-                  setContDetails("20'Standard");
+                  setTransType("Standard Cargo");
+                  setContDetails("1MT");
                 }}
               ></input>
               <ChevronDownIcon
                 onClick={() => {
                   setShowPopover(!showPopover);
-                  setTransType("FCL");
-                  setContDetails("20'Standard");
+                  setTransType("Standard Cargo");
+                  setContDetails("1MT");
                 }}
                 className={`${open ? "" : "text-opacity-70"}
                   ml-2 h-5 w-5 text-black group-hover:text-opacity-80 transition ease-in-out duration-150`}
@@ -138,7 +137,6 @@ export const ShipingDetails = (props: any) => {
                       <h3>SHIPMENT</h3>
                       <select
                         className="nc-Select h-11 mt-1.5 block w-full text-sm rounded-2xl border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700  dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-800"
-
                         onChange={(e) => {
                           let Ttype = e.target.value;
                           setTransType(Ttype);
@@ -153,21 +151,16 @@ export const ShipingDetails = (props: any) => {
                             setIsLActive(false);
                             setIsFActive(false);
                             setGWeight(1);
-                          } else if (Ttype === "FCL") {
+                          } else if (Ttype === "Standard Cargo") {
                             setIsFActive(true);
                             setIsLActive(false);
                             setIsBActive(false);
                           }
                         }}
                       >
-                        {[
-                          "Full Container Load",
-                          "Full Truck Load",
-                          "Less Truck Load",
-                        ].map((item) => {
+                        {["Standard Cargo"].map((item) => {
                           return (
                             <option
-                            
                               defaultValue={transType}
                               key={item}
                               value={
@@ -187,9 +180,7 @@ export const ShipingDetails = (props: any) => {
                       <div>
                         <h3>WEIGHT, MT</h3>
                         <input
-                        className="block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 rounded-2xl text-sm font-normal h-11 px-4 py-3 mt-1.5"
-                        
-
+                          className="block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 rounded-2xl text-sm font-normal h-11 px-4 py-3 mt-1.5"
                           type="number"
                           min="0"
                           value={weight}
@@ -200,8 +191,7 @@ export const ShipingDetails = (props: any) => {
                             VOLUME, M<sup>3</sup>
                           </h3>
                           <input
-                        className="block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 rounded-2xl text-sm font-normal h-11 px-4 py-3 mt-1.5"
-
+                            className="block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 rounded-2xl text-sm font-normal h-11 px-4 py-3 mt-1.5"
                             type="number"
                             min="0"
                             value={vol}
@@ -210,12 +200,11 @@ export const ShipingDetails = (props: any) => {
                         </div>
                       </div>
                     )}
-                    {isBActive && (
+                    {isFActive && (
                       <div>
                         <h3>GROSS WEIGHT, MT</h3>
                         <input
-                        className="block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 rounded-2xl text-sm font-normal h-11 px-4 py-3 mt-1.5"
-
+                          className="block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 rounded-2xl text-sm font-normal h-11 px-4 py-3 mt-1.5"
                           type="number"
                           min="0"
                           onChange={(e) => setGWeight(parseInt(e.target.value))}
@@ -223,12 +212,11 @@ export const ShipingDetails = (props: any) => {
                         />
                       </div>
                     )}
-                    {isFActive && (
+                    {/* {isFActive && (
                       <div>
                         <h3>Type</h3>
                         <select
-                        className="nc-Select h-11 mt-1.5 block w-full text-sm rounded-2xl border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700  dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-800"
-
+                          className="nc-Select h-11 mt-1.5 block w-full text-sm rounded-2xl border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700  dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-800"
                           onChange={(e) => setContDetails(e.target.value)}
                         >
                           {[
@@ -240,17 +228,14 @@ export const ShipingDetails = (props: any) => {
                             "45'High Cube",
                           ].map((item) => {
                             return (
-                              <option
-                                key={item}
-                                value={item}
-                              >
+                              <option key={item} value={item}>
                                 {item}
                               </option>
                             );
                           })}
                         </select>
-                      </div>
-                    )}
+                      </div> */}
+                    {/* )} */}
                     <button
                       type="button"
                       onClick={selectHandler}

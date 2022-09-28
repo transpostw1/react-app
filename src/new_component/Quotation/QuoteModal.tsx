@@ -5,7 +5,6 @@ import {
   QuoteListProvider,
   useQuoteList,
 } from "utils/contexts/quoteListContext";
-import ncNanoId from "utils/ncNanoId";
 import AdditonalCharge from "./AdditonalCharge";
 import Remarks from "./Remarks";
 
@@ -13,7 +12,7 @@ export interface Modal {
   showModal: boolean;
   onclose: void;
   data: {
-    ID?: string;
+    id?: string;
 
     sl_name?: string;
     expiry_date?: string;
@@ -36,7 +35,7 @@ export interface Modal {
 
 export interface IquoteList {
   quoteId: string;
-  ID?: string;
+  id?: string;
   sl_name?: string;
   expiry_date?: string;
   from_port?: string;
@@ -57,7 +56,7 @@ export interface IquoteList {
   ];
 }
 
-const QuoteModal = ({ data, quotes, setQuotes, onclose, showModal }: any) => {
+const QuoteModal = ({ data, onclose, showModal }: any) => {
   const [freightBuyRate, setFreightBuyRate] = useState(data.total);
   const [freightSellRate, setFreightSellRate] = useState(data.total);
   const [totalBuyRate, setTotalBuyRate] = useState(freightBuyRate);
@@ -67,16 +66,22 @@ const QuoteModal = ({ data, quotes, setQuotes, onclose, showModal }: any) => {
 
   const { quoteList, addCharge } = useQuoteList();
 
-
   useEffect(() => {
-    const index = quoteList.findIndex((item: any) => item.quoteId == data.ID);
-    setEditID(index);
+    console.log("Id", data.id);
+
+    if (quoteList.length>0) {
+      const index = quoteList.findIndex((item: any) => {
+        // console.log("quoteId", item.quoteId);
+        return item?.id === data.id;
+      });
+      setEditID(index);
+    }
 
     // console.log(quotes[editID]?.additionalCosts);
   }, [quoteList, showModal]);
 
   const onAddHandler = () => {
-    addCharge(data.ID);
+    addCharge(data.id);
   };
 
   const handleOnClose = () => {
@@ -87,10 +92,10 @@ const QuoteModal = ({ data, quotes, setQuotes, onclose, showModal }: any) => {
   }
 
   return (
-    <div className=" p-10 fixed z-50 inset-0 bg-neutral-200 bg-opacity-10  backdrop-blur-sm border rounded ">
-      <div className="flex relative h-full flex-col align-center bg-white border rounded-lg">
+    <div className=" p-10 fixed z-50 inset-0 bg-neutral-200 bg-opacity-10  backdrop-blur-sm border rounded dark:border-neutral-800 ">
+      <div className="flex relative h-full flex-col align-center bg-white border rounded-lg dark:border-neutral-600 dark:bg-neutral-700">
         {/* <div className="flex relative h-full flex-col align-center bg-white border rounded-lg"> */}
-        <div className="flex h[15%] order-first justify-between border-b p-4 text-2xl ">
+        <div className="flex h[15%] order-first justify-between border-b p-4 text-2xl dark:bg-neutral-800 ">
           <span>Details</span>
           <button onClick={handleOnClose} className="order-last">
             <svg
@@ -109,7 +114,7 @@ const QuoteModal = ({ data, quotes, setQuotes, onclose, showModal }: any) => {
             </svg>
           </button>
         </div>
-        <div className="flex relative  h-[70%] flex-col align-center bg-white overflow-y-auto">
+        <div className="flex relative  h-[75%] flex-col align-center bg-white overflow-y-auto dark:bg-neutral-700">
           <div className="flex justify-center my-4 px-3 w-full">
             <button
               onClick={() => setShowRemarks(false)}
@@ -137,7 +142,7 @@ const QuoteModal = ({ data, quotes, setQuotes, onclose, showModal }: any) => {
                 <span className="flex px-4 items-center border-r-2">
                   Freight
                 </span>
-                <select className="pr-15 border-0 focus:outline-none">
+                <select className="pr-15 border-0  focus:ring-0 focus:outline-none dark:bg-transparent">
                   <option>USD</option>
                 </select>
                 <div className="w-5"></div>
@@ -197,7 +202,7 @@ const QuoteModal = ({ data, quotes, setQuotes, onclose, showModal }: any) => {
                 <div className="flex px-3 items-center border border-zinc-500">
                   <span>USD</span>
                   <input
-                    className="border-b-2 pl-2 Zocus:outline-none w-full"
+                    className="border-b-[1px] pl-2 focus:outline-none w-full dark:bg-transparent"
                     onChange={(e) => setFreightSellRate(e.target.value)}
                     value={freightSellRate}
                   ></input>
@@ -220,8 +225,6 @@ const QuoteModal = ({ data, quotes, setQuotes, onclose, showModal }: any) => {
                         item={item}
                         setTotalSellRate={setTotalSellRate}
                         setTotalBuyRate={setTotalBuyRate}
-                        quotes={quotes}
-                        setQuotes={setQuotes}
                         data={data}
                       />
                     );
@@ -245,7 +248,7 @@ const QuoteModal = ({ data, quotes, setQuotes, onclose, showModal }: any) => {
           )}
         </div>
 
-        <div className="absolute h-[15%] w-full flex border-t z-9999 inset-x-0 bottom-0 p-4 justify-between bg-white overscroll-none">
+        <div className="absolute h-[15%] w-full flex border-t z-9999 inset-x-0 bottom-0 p-4 justify-between bg-white overscroll-none dark:bg-neutral-800">
           <div className="flex flex-col pl-2 ">
             <span>BUY RATE</span>
             <span>{totalBuyRate}</span>

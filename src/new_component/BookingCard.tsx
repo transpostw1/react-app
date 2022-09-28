@@ -28,29 +28,13 @@ const BookingCard: FC<BookingCardProps> = ({ data }) => {
 
   const onClickHandler = () => {
     const postData = { ...data };
-    console.log(postData);
 
-    //  let config = {
-    //   headers: {
-    //     "Content-Type": "application/x-www-form-urlencoded",
-    //   },
-    axios
-      .get(`https://apis.transpost.co/api/bookings/timeline?bookingID=${data.ID}`,{
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-      })
-      .then((response) => {
-        const fetchedData = response.data;
-        console.log(fetchedData);
-        history.push({
-          pathname: "/booking-details",
-          state: { bookingsData: fetchedData },
-        });
-      })
-      .catch((error) => {
-        const errorMsg = error.message;
-      });
+    history.push({
+      pathname:"/booking-details",
+      state:{ID:data.ID}
+  })
+
+   
   };
 
   return (
@@ -58,7 +42,7 @@ const BookingCard: FC<BookingCardProps> = ({ data }) => {
 
     <div
       onClick={onClickHandler}
-      className="flex bg-[#80e8e0] flex-row border rounded-lg drop-shadow-md hover:drop-shadow-xl cursor-pointer"
+      className="flex bg-[#80e8e0] flex-row border rounded-lg drop-shadow-md hover:drop-shadow-xl cursor-pointer dark:border-neutral-500 dark:bg-neutral-700 "
     >
       <div className="flex font-bold border-r-[1px] p-2 content-center border-zinc-400 items-center">
         <svg

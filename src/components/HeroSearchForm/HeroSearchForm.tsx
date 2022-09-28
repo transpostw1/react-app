@@ -37,12 +37,12 @@ const HeroSearchForm: FC<HeroSearchFormProps> = ({
               className={`flex-shrink-0 flex items-center cursor-pointer text-sm lg:text-base font-medium  ${
                 active
                   ? ""
-                  : "text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-400"
+                  : "text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-300"
               } `}
               key={tab}
             >
               {active && (
-                <span className="block w-2.5 h-2.5 rounded-full bg-neutral-800 dark:bg-neutral-100 mr-2" />
+                <span className="block w-2.5 h-2.5 rounded-full bg-neutral-800 dark:bg-[#2AA996] mr-2" />
               )}
               <span>{tab}</span>
             </li>

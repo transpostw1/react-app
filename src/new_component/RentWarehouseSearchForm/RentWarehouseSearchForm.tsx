@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import LocationInput from "components/HeroSearchForm/LocationInput";
 import { FocusedInputShape } from "react-dates";
-import ExperiencesDateSingleInput from "components/HeroSearchForm/ExperiencesDateSingleInput";
+import PropertyStatusInput from "./PropertyStatusInput"
+import PropertyTypeInput from "./PropertyTypeInput"
 
 const RentWarehouseSearchForm = () => {
   const [pickUpInputValue, setPickUpInputValue] = useState("");
   const [dropOffInputValue, setDropOffInputValue] = useState("");
+  const [propertyTypeInputValue, setPropertyTypeInputValue] = useState("");
   const [fieldFocused, setFieldFocused] = useState<
-    FocusedInputShape | "dropOffInput" | null
+    FocusedInputShape | "dropOffInput" |"startDate" | null
   >(null);
   const [dateValue, setdateValue] = useState<moment.Moment | null>(null);
   const [dateFocused, setDateFocused] = useState<boolean>(false);
@@ -21,7 +23,7 @@ const RentWarehouseSearchForm = () => {
           {/* {renderRadioBtn()} */}
           <div className=" flex flex-col md:flex-row w-full rounded-full [ nc-divide-field ] ">
             <div className="relative flex flex-col md:flex-row flex-grow [ nc-divide-field ] ">
-              <LocationInput
+              <PropertyStatusInput
                 defaultValue={pickUpInputValue}
                 onChange={(e) => {
                   setPickUpInputValue(e);
@@ -30,10 +32,10 @@ const RentWarehouseSearchForm = () => {
                 placeHolder="Property Status"
                 desc=""
               />
-              <LocationInput
+              <PropertyTypeInput
                 defaultValue={dropOffInputValue}
                 onChange={(e) => {
-                  setDropOffInputValue(e);
+                  setPropertyTypeInputValue(e);
                 }}
                 onInputDone={() => setFieldFocused("startDate")}
                 placeHolder="Property Type"
@@ -48,7 +50,7 @@ const RentWarehouseSearchForm = () => {
                 onInputDone={() => setFieldFocused("startDate")}
                 placeHolder="Location"
                 desc=""
-                autoFocus={fieldFocused === "dropOffInput"}
+                autoFocus={fieldFocused === "startDate"}
               />
               {/* for single date selector */}
 
