@@ -31,8 +31,8 @@ const AdditonalCharge = ({
 }: AdditonalChargeProps) => {
   const [chargeName, setChargeName] = useState(item.name || item.chargeName);
   const [basis, setbasis] = useState(item.basis);
-  const [buyRate, setBuyRate] = useState(item.amount || item.buyRate || 0);
-  const [sellRate, setSellRate] = useState(item.amount || item.sellRate || 0);
+  const [buyRate, setBuyRate] = useState(item.buyRate || item.amount || 0);
+  const [sellRate, setSellRate] = useState(item.sellRate || item.amount || 0);
   const [quantity, setQuantity] = useState(item.quantity || 1);
   const [netBuyRate, setNetBuyRate] = useState(0);
   const [netSellRate, setNetSellRate] = useState(0);
@@ -48,51 +48,37 @@ const AdditonalCharge = ({
     setNetSellRate(quantity * sellRate);
   }, [sellRate]);
 
+  const sum = (arr: number[], initialvalue: number) => {
+    if(arr.length>0) {
 
-  const sum = (arr:number[],initialvalue:number) => {
-    return arr.reduce((pv:number,cv:number) =>{
-      return pv+cv;
-    },initialvalue)
-  }
-  
+      return arr.reduce((pv: number, cv: number) => {
+        return pv + cv;
+      }, initialvalue);
+    }else {
+      return initialvalue;
+    }
+    
+  };
+
   // after changing buy rates and sell rates
   useEffect(() => {
-    editCharge(data.id,item.id,basis,chargeName,buyRate,sellRate,netBuyRate,netSellRate,quantity)
-
-    
-    //   setQuotes(
-  //     quotes.map((quote: any) => {
-  //       if (quote.quoteId == data.id) {
-  //         return {
-  //           ...quote,
-  //           additionalCosts: quote?.additionalCosts?.map((costItem: any) => {
-  //             if (costItem.id == item.id) {
-  //               return {
-  //                 ...costItem,
-  //                 basis,
-  //                 chargeName,
-  //                 buyRate,
-  //                 sellRate,
-  //                 netBuyRate,
-  //                 netSellRate,
-  //                 quantity,
-  //               };
-  //             } else {
-  //               return costItem;
-  //             }
-  //           }),
-  //         };
-  //       } else {
-  //         return quote;
-  //       }
-  //     })
-  //   );
+    editCharge(
+      data.id,
+      item.id,
+      basis,
+      chargeName,
+      buyRate,
+      sellRate,
+      netBuyRate,
+      netSellRate,
+      quantity
+    );
   }, [basis, buyRate, sellRate, quantity, chargeName, netBuyRate, netSellRate]);
 
   const selectHandler = (e: any) => {
     setbasis(e.target.value);
-    setTotalBuyRate((prev: any) => parseInt(prev) + netBuyRate);
-    setTotalSellRate((prev: any) => parseInt(prev) + netSellRate);
+    // setTotalBuyRate((prev: any) => parseInt(prev) + netBuyRate);
+    // setTotalSellRate((prev: any) => parseInt(prev) + netSellRate);
   };
 
   return (
@@ -113,6 +99,9 @@ const AdditonalCharge = ({
           value={item.basis}
           className="border-0 focus:outline-none w-full dark:bg-transparent"
         >
+          <option label="" value="">
+            
+          </option>
           <option label="per equipment" value="per equipment">
             per equipment
           </option>

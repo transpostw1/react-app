@@ -4,30 +4,11 @@ import CommonLayout from "containers/AccountPage/CommonLayout";
 import emptyIcon from "../../images/transpost images/dashboard/emptyPng.png";
 import CommonSidebar from "../CommonSidebar";
 import QuoteCard from "./QuoteCard";
+import { useQuoteList } from "utils/contexts/quoteListContext";
 // import { getLocalStorage } from 'components/RateCard/RateCard'
 
-
-export interface Iquote {
-  rateId:string;
-  data: [];
-  charge: {}
-}
-
-
 const QuotesPage = () => {
-
-// const [quotes,setQuotes] = useState(getLocalStorage());
-
-// useEffect(()=>{
-//   if(getLocalStorage !== null){
-// setQuotes(getLocalStorage)
-// console.log(typeof Array);
-// console.log(quotes);
-
-// console.log("insitde loacal");
-
-//   }
-// },[])
+  const { quoteList } = useQuoteList();
 
   const renderSection1 = () => {
     return (
@@ -55,14 +36,19 @@ const QuotesPage = () => {
     return (
       <div className="listingSection__wrap bg-white h-screen flex justify-center items-center dark:bg-neutral-800">
         {/* HEADING */}
-        
-         {/* {Array.isArray(quotes) && quotes?.map((item:Iquote) =>{
-          <QuoteCard key={item.rateId} />
-        })} */}
-        <img src={emptyIcon} className="h-[4rem] w-[4rem]" alt="" />
-        <div className="text-2xl text-centre font-semibold">
-          You haven't made any quotes yet.
-        </div>
+
+        {quoteList && quoteList.length > 0 ? (
+          quoteList.map((quote: any) => {
+            return <QuoteCard key={quote.quoteId} quote={quote} />;
+          })
+        ) : (
+          <>
+            <img src={emptyIcon} className="h-[4rem] w-[4rem]" alt="" />
+            <div className="text-2xl text-centre font-semibold">
+              You haven't made any quotes yet.
+            </div>
+          </>
+        )}
       </div>
     );
   };

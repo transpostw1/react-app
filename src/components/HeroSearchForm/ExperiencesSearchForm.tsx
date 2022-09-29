@@ -7,6 +7,7 @@ import moment from "moment";
 import { FC } from "react";
 import shipIcon from "../../images/ship-solid.svg";
 import Input from "shared/Input/Input";
+import axios from "axios";
 
 // DEFAULT DATA FOR ARCHIVE PAGE
 const defaultLocationValue = "Tokyo, Jappan";
@@ -35,12 +36,35 @@ const ExperiencesSearchForm: FC<ExperiencesSearchFormProps> = ({
   const [shippingLine, setShippingLine] = useState("");
 
   useEffect(() => {
+    // axios
+    //   .get(`https://tracking.searates.com/container?number=TGBU6795701&sealine=maeu&api_key=42S8-ZYKI-WXE6-PCOV-01TA`, {
+  
+    //     headers: {
+    //       "Content-Type": "application/x-www-form-urlencoded",
+    //       "Access-Control-Allow-Origin": "*",
+    //     },
+    //   })
+    //   .then((response) => {
+    //     const fetchedData = response.data;
+    //     console.log( "fetched data",fetchedData);
+    //   })
+    //   .catch((error) => {
+    //     const errorMsg = error.message;
+    //     console.log("error",errorMsg );
+        
+    //   });
+    
+  })
+
+  useEffect(() => {
     if (haveDefaultValue) {
       setdateValue(defaultDate);
       setLocationInputValue(defaultLocationValue);
       setGuestValue(defaultGuestValue);
     }
   }, []);
+
+
 
   const renderForm = () => {
     return (

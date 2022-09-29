@@ -45,6 +45,8 @@ export interface IquoteList {
   sl_logo?: string;
   total?: number;
   cargo_size?: string;
+  sum_buy?:number;
+  sum_sell:number;
   additionalCosts?: [
     {
       id: any;
@@ -57,21 +59,75 @@ export interface IquoteList {
 }
 
 const QuoteModal = ({ data, onclose, showModal }: any) => {
+  const { quoteList, addCharge, addQuote } = useQuoteList();
+
+
   const [freightBuyRate, setFreightBuyRate] = useState(data.total);
-  const [freightSellRate, setFreightSellRate] = useState(data.total);
-  const [totalBuyRate, setTotalBuyRate] = useState(freightBuyRate);
-  const [totalSellRate, setTotalSellRate] = useState(freightSellRate);
+  const [freightSellRate, setFreightSellRate] = useState<number>(data.total);
+  const [totalBuyRate, setTotalBuyRate] = useState(0);
+  const [totalSellRate, setTotalSellRate] = useState(0);
   const [showRemarks, setShowRemarks] = useState(false);
   const [editID, setEditID] = useState(-1);
 
-  const { quoteList, addCharge } = useQuoteList();
+
+  const sum = (arr: any[], initialvalue: number) => {
+    if (arr.length > 0) {
+      return arr.reduce((pv: number, cv: number) => {
+        if (typeof pv == "number" && typeof cv == "number") {
+          return pv + cv;
+        } else {
+          return pv;
+        }
+      }, initialvalue);
+    } else {
+      return initialvalue;
+    }
+  };
 
   useEffect(() => {
-    console.log("Id", data.id);
-
-    if (quoteList.length>0) {
+    if (quoteList.length > 0) {
       const index = quoteList.findIndex((item: any) => {
-        // console.log("quoteId", item.quoteId);
+        return item?.id === data.id;
+      });
+      setEditID(index);
+    }
+
+    // initial sum
+    if (quoteList?.find((item: any) => item.id === data.id) == null) {
+      const buy_array = data.additionalCosts.map((item: any) => item.amount);
+      const initial_buy_Sum = sum(buy_array, data.total);
+      console.log("initialSum", initial_buy_Sum);
+      setTotalBuyRate(initial_buy_Sum);
+      const initial_sell_sum = sum(buy_array,freightSellRate)
+      setTotalSellRate(initial_sell_sum);
+
+      console.log("initial Sum", initial_sell_sum);
+    } else {
+      const quote = quoteList.find((item: any) => item.id === data.id);
+      if (quote?.additionalCosts && quote?.additionalCosts?.length > 0) {
+        const buy_array = quote?.additionalCosts?.map(
+          (charge: any) => (charge.netBuyRate || charge.amount) 
+        );
+        // console.log("cost array", buy_array);
+        const buy_result = sum(buy_array, data.total);
+        console.log("inner Result", buy_result);
+        setTotalBuyRate(buy_result);
+        // for sell rate
+        const sell_array = quote?.additionalCosts?.map(
+          (charge: any) => (charge.netSellRate || charge.amount)
+        );
+        const sell_result = sum(sell_array, freightSellRate);
+        console.log("inner Sell_result", typeof sell_result);
+        setTotalSellRate(sell_result);
+        quote.sum_sell = freightSellRate;
+      }
+
+    }
+  }, [quoteList,freightSellRate]);
+
+  useEffect(() => {
+    if (quoteList.length > 0) {
+      const index = quoteList.findIndex((item: any) => {
         return item?.id === data.id;
       });
       setEditID(index);
@@ -202,8 +258,9 @@ const QuoteModal = ({ data, onclose, showModal }: any) => {
                 <div className="flex px-3 items-center border border-zinc-500">
                   <span>USD</span>
                   <input
-                    className="border-b-[1px] pl-2 focus:outline-none w-full dark:bg-transparent"
-                    onChange={(e) => setFreightSellRate(e.target.value)}
+                  type={"number"}
+                    className="border-transparent  focus:border-transparent focus:ring-0 outline-none border-0 w-full dark:bg-transparent"
+                    onChange={(e) => setFreightSellRate(parseInt(e.target.value))}
                     value={freightSellRate}
                   ></input>
                 </div>
@@ -211,7 +268,7 @@ const QuoteModal = ({ data, onclose, showModal }: any) => {
                   USD {freightSellRate}
                 </div>
                 <div className="flex px-3 items-center border border-zinc-500">
-                  Delete
+                  
                 </div>
               </div>
               {quoteList.length > 0 &&

@@ -13,10 +13,6 @@ type QuoteListProviderProps = {
   children: ReactNode;
 };
 
-// type quoteList = {
-//   quoteId: string;
-//   data: any;
-// };
 
 type quoteListContext = {
   addQuote: (id: string, data: any) => void;
@@ -62,6 +58,21 @@ export const QuoteListProvider = ({ children }: QuoteListProviderProps) => {
     console.log("quotes", quotes);
   }, [quoteList]);
 
+  const sum = (arr: number[], initialvalue: number) => {
+    return arr.reduce((pv: number, cv: number) => {
+      if (typeof pv == "number" && typeof cv == "number") {
+        return pv + cv;
+      } else {
+        return pv;
+      }
+    }, initialvalue);
+  };
+
+  const calculatingTotal = () => {
+
+  }
+
+  // adding new quote
   const addQuote = (id: string, data: any) => {
     setQuoteList((prevState: any) => {
       if (prevState?.find((item: any) => item.id === id) == null) {
@@ -89,7 +100,6 @@ export const QuoteListProvider = ({ children }: QuoteListProviderProps) => {
     if (quoteList.length > 0) {
       const result = quoteList.map((quote: any) => {
         if (quote?.id === id) {
-
           if (quote?.additionalCosts) {
             return {
               ...quote,
@@ -106,7 +116,6 @@ export const QuoteListProvider = ({ children }: QuoteListProviderProps) => {
             };
           }
         } else {
-
           return quote;
         }
       });
@@ -132,31 +141,13 @@ export const QuoteListProvider = ({ children }: QuoteListProviderProps) => {
     sellRate: number,
     netBuyRate: number,
     netSellRate: number,
-    quantity: number,
-    
+    quantity: number
   ) => {
-const sum = (arr:number[],initialvalue:number) => {
-
-  return arr.reduce((pv:number,cv:number) =>{
-    if(typeof pv == "number" && typeof cv =="number"){
-      return pv+cv;
-    } 
-    else {
-      return pv
-    }
-  },initialvalue)
-}
-
-
-
     setQuoteList(
       quoteList.map((quote: any) => {
         if (quote.quoteId === id) {
-// setTotalBuyRate(sum(quote?.additionalCosts,total))
           return {
             ...quote,
-            sum_buy: sum(quote?.additionalCosts.map((item:any) => item.netBuyRate),quote.sum_buy),
-            sum_sell: sum(quote?.additionalCosts.map((item:any) => item.netSellRate),quote.sum_sell),
             additionalCosts: quote?.additionalCosts?.map((costItem: any) => {
               if (costItem.id == chargeid) {
                 return {

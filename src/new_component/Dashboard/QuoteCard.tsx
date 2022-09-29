@@ -1,8 +1,11 @@
 import React from 'react'
+import QuoteModal from 'new_component/Quotation/QuoteModal'
 
-const QuoteCard = ({item}:any) => {
+const QuoteCard = ({quote}:any) => {
   return (
-    <div>QuotesCard</div>
+    <div>
+      Quote Card
+    </div>
   )
 }
 

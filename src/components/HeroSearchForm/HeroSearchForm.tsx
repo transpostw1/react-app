@@ -77,7 +77,7 @@ const HeroSearchForm: FC<HeroSearchFormProps> = ({
   };
 
   return (
-    <div className="border border-gray-500 px-10 pb-10 backdrop-blur-[2px] rounded-3xl  w-full">
+    <div className="lg:border border-gray-500 lg:px-10 lg:pb-10 lg:backdrop-blur-[2px]  rounded-3xl  w-full">
       <div
         className={`nc-HeroSearchForm w-full max-w-6xl py lg:py-2 ${className}`}
         data-nc-id="HeroSearchForm"
