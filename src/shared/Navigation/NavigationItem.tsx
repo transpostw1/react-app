@@ -1,5 +1,5 @@
 import { Popover, Transition } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/solid";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import React, { FC, Fragment, useEffect, useState } from "react";
 import { NavLink, RouteComponentProps, withRouter } from "react-router-dom";
 import NcImage from "shared/NcImage/NcImage";

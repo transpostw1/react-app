@@ -1,6 +1,6 @@
 import { Popover, Transition } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/solid";
-import { GlobeAltIcon } from "@heroicons/react/outline";
+// import { ChevronDownIcon } from "@heroicons/react/20/solidlid";
+import { GlobeAltIcon } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
 
 export const headerLanguage = [
@@ -57,11 +57,11 @@ export default function LangDropdown() {
               <GlobeAltIcon className="w-[18px] h-[18px] opacity-80" />
 
               <span className="ml-2">Language</span>
-              <ChevronDownIcon
+              {/* <ChevronDownIcon
                 className={`${open ? "-rotate-180" : "text-opacity-70"}
                   ml-2 h-4 w-4  group-hover:text-opacity-80 transition ease-in-out duration-150`}
                 aria-hidden="true"
-              />
+              /> */}
             </Popover.Button>
             <Transition
               as={Fragment}

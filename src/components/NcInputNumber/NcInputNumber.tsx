@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { MinusIcon, PlusIcon } from "@heroicons/react/solid";
+import { MinusIcon, PlusIcon } from "@heroicons/react/20/solid";
 
 export interface NcInputNumberProps {
   className?: string;

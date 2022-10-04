@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { AuthorType } from "data/types";
-import { ArrowRightIcon } from "@heroicons/react/solid";
+import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { NavLink } from "react-router-dom";
 import Avatar from "shared/Avatar/Avatar";
 import NcImage from "shared/NcImage/NcImage";

@@ -1,4 +1,4 @@
-import { StarIcon } from "@heroicons/react/solid";
+import { StarIcon } from "@heroicons/react/20/solid";
 import React, { FC, useEffect } from "react";
 import { useState } from "react";
 

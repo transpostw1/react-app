@@ -1,5 +1,5 @@
 import { Tab } from "@headlessui/react";
-import { PencilAltIcon } from "@heroicons/react/outline";
+// import { PencilAltIcon } from "@heroicons/react/24/outline";
 import React, { FC, Fragment } from "react";
 import visaPng from "images/vis.png";
 import mastercardPng from "images/mastercard.svg";
@@ -92,14 +92,14 @@ const CheckOutPage: FC<CheckOutPageProps> = ({ className = "" }) => {
                   Aug 12 - 16, 2021
                 </span>
               </div>
-              <PencilAltIcon className="w-6 h-6 text-neutral-300 dark:text-neutral-6000" />
+              {/* <PencilAltIcon className="w-6 h-6 text-neutral-300 dark:text-neutral-6000" /> */}
             </div>
             <div className="flex-1 p-5 flex justify-between space-x-5">
               <div className="flex flex-col">
                 <span className="text-sm text-neutral-400">Guests</span>
                 <span className="mt-1.5 text-lg font-semibold">3 Guests</span>
               </div>
-              <PencilAltIcon className="w-6 h-6 text-neutral-300 dark:text-neutral-6000" />
+              {/* <PencilAltIcon className="w-6 h-6 text-neutral-300 dark:text-neutral-6000" /> */}
             </div>
           </div>
         </div>

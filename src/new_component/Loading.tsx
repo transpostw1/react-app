@@ -7,7 +7,7 @@ const Loading: FC<LoadingProp> = ({ className }) => {
   return (
     <div>
       <svg
-        className={`animate-spin -ml-1 mr-3 h-[100px] w-full ${className}`}
+        className={`animate-spin -ml-1 mr-3  ${className}`}
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"

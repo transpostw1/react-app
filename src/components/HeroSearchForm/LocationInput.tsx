@@ -3,6 +3,15 @@ import { FC } from "react";
 import { useEffect } from "react";
 import ClearDataButton from "./ClearDataButton";
 import { useRef } from "react";
+import axios from "axios";
+
+export interface IPorts {
+  id: number;
+  port_name: string;
+  port_code: string;
+  country: string;
+  country_code: string;
+}
 
 export interface LocationInputProps {
   defaultValue: string;
@@ -12,6 +21,7 @@ export interface LocationInputProps {
   desc?: string;
   className?: string;
   autoFocus?: boolean;
+  searchList?: IPorts[] | [];
 }
 
 const LocationInput: FC<LocationInputProps> = ({
@@ -19,6 +29,7 @@ const LocationInput: FC<LocationInputProps> = ({
   autoFocus = false,
   onChange,
   onInputDone,
+  searchList,
   placeHolder = "Location",
   desc = "Where are you going?",
   className = "nc-flex-1.5",
@@ -67,8 +78,8 @@ const LocationInput: FC<LocationInputProps> = ({
     setShowPopover(false);
   };
 
-
   const handleSelectLocation = (item: string) => {
+    
     setValue(item);
     onInputDone && onInputDone(item);
     setShowPopover(false);
@@ -77,15 +88,16 @@ const LocationInput: FC<LocationInputProps> = ({
   const renderRecentSearches = () => {
     return (
       <>
-        <h3 className="block mt-2 sm:mt-0 px-4 sm:px-8 font-semibold text-base sm:text-lg text-neutral-800 dark:text-neutral-100">
+        {/* <h3 className="block mt-2 sm:mt-0 px-4 sm:px-8 font-semibold text-base sm:text-lg text-neutral-800 dark:text-neutral-100">
           Recent searches
-        </h3>
+        </h3> */}
         <div className="mt-2">
-          {["Jawaharlal Nehru", "Hongkong", "Colombo", "Aqaba", "Shanghai"].map(
-            (item) => (
+          {searchList &&
+            searchList.length > 0 &&
+            searchList.map((item: IPorts) => (
               <span
-                onClick={() => handleSelectLocation(item)}
-                key={item}
+                onClick={() => handleSelectLocation(item.port_code)}
+                key={item.id}
                 className="flex px-4 sm:px-8 items-center space-x-3 sm:space-x-4 py-4 sm:py-5 hover:bg-neutral-100 dark:hover:bg-neutral-700 cursor-pointer"
               >
                 <span className="block text-neutral-400">
@@ -105,11 +117,10 @@ const LocationInput: FC<LocationInputProps> = ({
                   </svg>
                 </span>
                 <span className=" block font-medium text-neutral-700 dark:text-neutral-200">
-                  {item}
+                  {item.port_name}
                 </span>
               </span>
-            )
-          )}
+            ))}
         </div>
       </>
     );
@@ -118,11 +129,12 @@ const LocationInput: FC<LocationInputProps> = ({
   const renderSearchValue = () => {
     return (
       <>
-        {["Jawaharlal Nehru", "Hongkong", "Venice", "Aqaba", "Colombo"].map(
-          (item) => (
+        {searchList &&
+          searchList.length > 0 &&
+          searchList.map((item: IPorts) => (
             <span
-              onClick={() => handleSelectLocation(item)}
-              key={item}
+              onClick={() => handleSelectLocation(item.port_code)}
+              key={item.id}
               className="flex px-4 sm:px-8 items-center space-x-3 sm:space-x-4 py-4 sm:py-5 hover:bg-neutral-100 dark:hover:bg-neutral-700 cursor-pointer"
             >
               <span className="block text-neutral-400">
@@ -148,11 +160,10 @@ const LocationInput: FC<LocationInputProps> = ({
                 </svg>
               </span>
               <span className="block font-medium text-neutral-700 dark:text-neutral-200">
-                {item}
+                {item.port_name} <span className="text-[red]">({item.port_code})</span>
               </span>
             </span>
-          )
-        )}
+          ))}
       </>
     );
   };

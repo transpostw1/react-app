@@ -31,6 +31,7 @@ const AirSearchForm = () => {
                 onChange={(e) => {
                   setPickUpInputValue(e);
                 }}
+                
                 onInputDone={() => setFieldFocused("dropOffInput")}
                 placeHolder="Origin"
                 desc="From"

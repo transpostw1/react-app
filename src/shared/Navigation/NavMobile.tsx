@@ -7,7 +7,7 @@ import { NavItemType } from "./NavigationItem";
 import { NAVIGATION_DEMO } from "data/navigation";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import SocialsList from "shared/SocialsList/SocialsList";
-import { ChevronDownIcon } from "@heroicons/react/solid";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import SwitchDarkMode from "shared/SwitchDarkMode/SwitchDarkMode";
 
 export interface NavMobileProps {

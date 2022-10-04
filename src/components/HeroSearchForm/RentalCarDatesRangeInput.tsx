@@ -7,7 +7,7 @@ import {
 import { DateRage } from "./StaySearchForm";
 import { FC } from "react";
 import { Listbox } from "@headlessui/react";
-import { CheckIcon } from "@heroicons/react/solid";
+import { CheckIcon } from "@heroicons/react/20/solid";
 import { TimeRage } from "./RentalCarSearchForm";
 import useWindowSize from "hooks/useWindowResize";
 

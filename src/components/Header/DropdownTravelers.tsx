@@ -1,6 +1,6 @@
 import { Popover, Transition } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/solid";
-import { MenuAlt2Icon } from "@heroicons/react/solid";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
+// import { MenuAlt2Icon } from "@heroicons/react/20/solid";
 import { Fragment } from "react";
 
 const solutions = [
@@ -54,7 +54,7 @@ export default function DropdownTravelers() {
                 />
               </div>
               <div className="block sm:hidden">
-                <MenuAlt2Icon className="w-6 h-6" />
+                {/* <MenuAlt2Icon className="w-6 h-6" /> */}
               </div>
             </Popover.Button>
             <Transition

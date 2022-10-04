@@ -16,7 +16,7 @@ const DEMO_DATA: CarDataType[] = DEMO_CAR_LISTINGS.filter((_, i) => i < 12);
 const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
   className = "",
   data = DEMO_DATA,
-}) => {
+}) => { 
   return (
     <div
       className={`nc-SectionGridFilterCard ${className}`}

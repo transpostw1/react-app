@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\Rashid Shaikh\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @types/html-to-drafjs
+  C:\Program Files\nodejs\node.exe C:\Users\Rashid Shaikh\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @fortawesome/fontawesome-svg-core
 
 PATH: 
   C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\xampp\php;C:\Program Files\GitHub CLI\;C:\Users\Rashid Shaikh\AppData\Local\Microsoft\WindowsApps;C:\Users\Rashid Shaikh\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Rashid Shaikh\AppData\Roaming\npm;C:\Users\Rashid Shaikh\AppData\Local\Programs\Git\cmd
@@ -14,17 +14,8 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2fhtml-to-drafjs: Not found
-      at Request.params.callback [as _callback] (C:\Users\Rashid Shaikh\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66138:18)
-      at Request.self.callback (C:\Users\Rashid Shaikh\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140883:22)
-      at Request.emit (node:events:527:28)
-      at Request.<anonymous> (C:\Users\Rashid Shaikh\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141855:10)
-      at Request.emit (node:events:527:28)
-      at IncomingMessage.<anonymous> (C:\Users\Rashid Shaikh\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141777:12)
-      at Object.onceWrapper (node:events:641:28)
-      at IncomingMessage.emit (node:events:539:35)
-      at endReadableNT (node:internal/streams/readable:1345:12)
-      at processTicksAndRejections (node:internal/process/task_queues:83:21)
+  Error: getaddrinfo ENOTFOUND registry.yarnpkg.com
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:72:26)
 
 npm manifest: 
   {
@@ -34,10 +25,12 @@ npm manifest:
     "proxy": "http://localhost:3000/",
     "homepage": ".",
     "dependencies": {
-      "@fortawesome/react-fontawesome": "^0.1.18",
+      "@fortawesome/fontawesome-svg-core": "^6.2.0",
+      "@fortawesome/free-solid-svg-icons": "^6.2.0",
+      "@fortawesome/react-fontawesome": "^0.2.0",
       "@glidejs/glide": "^3.4.1",
       "@headlessui/react": "^1.5.0",
-      "@heroicons/react": "^1.0.6",
+      "@heroicons/react": "^2.0.11",
       "@react-pdf/renderer": "^3.0.0",
       "@tailwindcss/aspect-ratio": "^0.4.0",
       "@tailwindcss/forms": "^0.4.0",
@@ -47,6 +40,7 @@ npm manifest:
       "@testing-library/react": "^11.1.0",
       "@testing-library/user-event": "^12.1.10",
       "@types/draft-js": "^0.11.9",
+      "@types/html-to-draftjs": "^1.4.0",
       "@types/jest": "^26.0.15",
       "@types/node": "^12.0.0",
       "@types/react": "^17.0.0",
@@ -1656,10 +1650,29 @@ Lockfile:
     resolved "https://registry.npmjs.org/@firebase/webchannel-wrapper/-/webchannel-wrapper-0.6.2.tgz"
     integrity sha512-zThUKcqIU6utWzM93uEvhlh8qj8A5LMPFJPvk/ODb+8GSSif19xM2Lw1M2ijyBy8+6skSkQBbavPzOU5Oh/8tQ==
   
-  "@fortawesome/react-fontawesome@^0.1.18":
-    version "0.1.18"
-    resolved "https://registry.npmjs.org/@fortawesome/react-fontawesome/-/react-fontawesome-0.1.18.tgz"
-    integrity sha512-RwLIB4TZw0M9gvy5u+TusAA0afbwM4JQIimNH/j3ygd6aIvYPQLqXMhC9ErY26J23rDPyDZldIfPq/HpTTJ/tQ==
+  "@fortawesome/fontawesome-common-types@6.2.0":
+    version "6.2.0"
+    resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-6.2.0.tgz#76467a94aa888aeb22aafa43eb6ff889df3a5a7f"
+    integrity sha512-rBevIsj2nclStJ7AxTdfsa3ovHb1H+qApwrxcTVo+NNdeJiB9V75hsKfrkG5AwNcRUNxrPPiScGYCNmLMoh8pg==
+  
+  "@fortawesome/fontawesome-svg-core@^6.2.0":
+    version "6.2.0"
+    resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-6.2.0.tgz#11856eaf4dd1d865c442ddea1eed8ee855186ba2"
+    integrity sha512-Cf2mAAeMWFMzpLC7Y9H1I4o3wEU+XovVJhTiNG8ZNgSQj53yl7OCJaS80K4YjrABWZzbAHVaoHE1dVJ27AAYXw==
+    dependencies:
+      "@fortawesome/fontawesome-common-types" "6.2.0"
+  
+  "@fortawesome/free-solid-svg-icons@^6.2.0":
+    version "6.2.0"
+    resolved "https://registry.yarnpkg.com/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-6.2.0.tgz#8dcde48109354fd7a5ece8ea48d678bb91d4b5f0"
+    integrity sha512-UjCILHIQ4I8cN46EiQn0CZL/h8AwCGgR//1c4R96Q5viSRwuKVo0NdQEc4bm+69ZwC0dUvjbDqAHF1RR5FA3XA==
+    dependencies:
+      "@fortawesome/fontawesome-common-types" "6.2.0"
+  
+  "@fortawesome/react-fontawesome@^0.2.0":
+    version "0.2.0"
+    resolved "https://registry.yarnpkg.com/@fortawesome/react-fontawesome/-/react-fontawesome-0.2.0.tgz#d90dd8a9211830b4e3c08e94b63a0ba7291ddcf4"
+    integrity sha512-uHg75Rb/XORTtVt7OS9WoK8uM276Ufi7gCzshVWkUJbHhh3svsUUeqXerrM96Wm7fRiDzfKRwSoahhMIkGAYHw==
     dependencies:
       prop-types "^15.8.1"
   
@@ -1704,10 +1717,10 @@ Lockfile:
     resolved "https://registry.npmjs.org/@headlessui/react/-/react-1.5.0.tgz"
     integrity sha512-aaRnYxBb3MU2FNJf3Ut9RMTUqqU3as0aI1lQhgo2n9Fa67wRu14iOGqx93xB+uMNVfNwZ5B3y/Ndm7qZGuFeMQ==
   
-  "@heroicons/react@^1.0.6":
-    version "1.0.6"
-    resolved "https://registry.npmjs.org/@heroicons/react/-/react-1.0.6.tgz"
-    integrity sha512-JJCXydOFWMDpCP4q13iEplA503MQO3xLoZiKum+955ZCtHINWnx26CUxVxxFQu/uLb4LW3ge15ZpzIkXKkJ8oQ==
+  "@heroicons/react@^2.0.11":
+    version "2.0.11"
+    resolved "https://registry.yarnpkg.com/@heroicons/react/-/react-2.0.11.tgz#2c6cf4c66d81142ec87c102502407d8c353558bb"
+    integrity sha512-bASjOgSSaYj8HqXWsOqaBiB6ZLalE/g90WYGgZ5lPm4KCCG7wPXntY4kzHf5NrLh6UBAcnPwvbiw1Ne9GYfJtw==
   
   "@humanwhocodes/config-array@^0.9.2":
     version "0.9.5"
@@ -2603,6 +2616,13 @@ Lockfile:
     version "6.1.0"
     resolved "https://registry.npmjs.org/@types/html-minifier-terser/-/html-minifier-terser-6.1.0.tgz"
     integrity sha512-oh/6byDPnL1zeNXFrDXFLyZjkr1MsBG667IM792caf1L2UPOOMf65NFzjUH/ltyfwjAGfs1rsX1eftK0jC/KIg==
+  
+  "@types/html-to-draftjs@^1.4.0":
+    version "1.4.0"
+    resolved "https://registry.yarnpkg.com/@types/html-to-draftjs/-/html-to-draftjs-1.4.0.tgz#bfd712d3c5993e0644b76d2654adeae214678fae"
+    integrity sha512-w7Te62TAk2xkl+f/PRepVfaVbsArRYRACqH7Rv9H97gKqglQye3Cf8EArsKuSsN7vW6/zf1kTCsm/jnSR0gDQA==
+    dependencies:
+      "@types/draft-js" "*"
   
   "@types/http-proxy@^1.17.8":
     version "1.17.8"

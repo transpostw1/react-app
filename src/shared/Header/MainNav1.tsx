@@ -15,13 +15,14 @@ import { signOutStart } from "../../redux/user/userAction";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, Link } from "react-router-dom";
 import AccountPage from "containers/AccountPage/AccountPage";
+import ProfileDropdown from "./ProfileDropdown";
 
 export interface MainNav1Props {
   isTop: boolean;
 }
 
 const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState<boolean>(false);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   const dispatch = useDispatch();
@@ -65,11 +66,14 @@ const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
         <div className="flex-shrink-0 flex items-center justify-end text-neutral-700 dark:text-neutral-100 space-x-1">
           <div className="hidden items-center xl:flex space-x-1">
             <SwitchDarkMode />
-            <SearchDropdown />
+            {/* <SearchDropdown /> */}
             {isLogin ? (
-              <ButtonPrimary className="p-0 bg-[#cd512f]" onClick={signOuthandler}>
-                Sign Out
-              </ButtonPrimary>
+              // <ButtonPrimary className="p-0 bg-[#cd512f]" onClick={signOuthandler}>
+              //   Sign Out
+              // </ButtonPrimary>
+              
+                <ProfileDropdown isLogin={isLogin} setIsLogin={setIsLogin} />
+
             ) : (
               <ButtonPrimary className="bg-[#cd512f]" href="/login">Sign In</ButtonPrimary>
               // <ButtonPrimary onClick={signOuthandler}>{currentUser?.displayName?.charAt(0)}</ButtonPrimary>

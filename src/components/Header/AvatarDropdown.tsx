@@ -1,12 +1,13 @@
 import { Popover, Transition } from "@headlessui/react";
 import {
   UserCircleIcon,
-  AnnotationIcon,
+  // ArrowDownCircleIcon,
+  // AnnotationIcon,
   HeartIcon,
   HomeIcon,
-  LogoutIcon,
-  SupportIcon,
-} from "@heroicons/react/outline";
+  // LogoutIcon,
+  // SupportIcon,
+} from "@heroicons/react/24/solid";
 import { Fragment } from "react";
 import Avatar from "shared/Avatar/Avatar";
 
@@ -19,7 +20,8 @@ const solutions = [
   {
     name: "Messages",
     href: "##",
-    icon: AnnotationIcon,
+    // icon: AnnotationIcon,
+    icon:HeartIcon
   },
   {
     name: "Wishlists",
@@ -37,13 +39,17 @@ const solutionsFoot = [
   {
     name: "Help",
     href: "##",
-    icon: SupportIcon,
+    // icon: SupportIcon,
+    icon: HomeIcon,
+
   },
 
   {
     name: "Logout",
     href: "##",
-    icon: LogoutIcon,
+    // icon: LogoutIcon,
+    icon: HomeIcon,
+
   },
 ];
 

@@ -1,13 +1,13 @@
 import { Popover, Transition } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/solid";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import {
   CurrencyDollarIcon,
   CurrencyBangladeshiIcon,
   CurrencyEuroIcon,
   CurrencyPoundIcon,
   CurrencyRupeeIcon,
-  CashIcon,
-} from "@heroicons/react/outline";
+  // CashIcon,
+} from "@heroicons/react/24/outline";
 import { Fragment } from "react";
 
 export const headerCurrency = [
@@ -55,7 +55,7 @@ export default function CurrencyDropdown() {
                 ${open ? "" : "text-opacity-80"}
                 group px-3 py-1.5  border-neutral-300 hover:border-neutral-400 dark:border-neutral-700 rounded-full inline-flex items-center text-sm text-gray-700 dark:text-neutral-300 font-medium hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
             >
-              <CashIcon className="w-5 h-5 opacity-80" />
+              <CurrencyRupeeIcon className="w-5 h-5 opacity-80" />
               <span className="ml-2">Currency</span>
               <ChevronDownIcon
                 className={`${open ? "-rotate-180" : "text-opacity-70"}

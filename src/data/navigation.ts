@@ -131,6 +131,19 @@ const otherPageChildMenus: NavItemType[] = [
   },
 ];
 
+const  financeChildrenMenus:NavItemType[] = [
+  {
+    id: ncNanoId(),
+    href: "#",
+    name: "Trade Finance",
+  },
+  {
+    id: ncNanoId(),
+    href: "#",
+    name: "Freight Finance",
+  }
+]
+
 const templatesChildrenMenus: NavItemType[] = [
   {
     id: ncNanoId(),
@@ -197,6 +210,12 @@ const templatesChildrenMenus: NavItemType[] = [
     targetBlank: true,
     name: "Load Calculator",
   },
+  {
+    id: ncNanoId(),
+    href: "",
+    targetBlank: false,
+    name: "Cargo Tracking",
+  },
  
   // { id: ncNanoId(), href: "/pay-done", name: "Pay done" },
   //
@@ -205,107 +224,139 @@ const templatesChildrenMenus: NavItemType[] = [
 ];
 
 export const NAVIGATION_DEMO: NavItemType[] = [
+  // {
+  //   id: ncNanoId(),
+  //   href: "/",
+  //   name: "Home",
+  //   protected: true,
+  //   // type: "dropdown",
+  //   // children: demoChildMenus,
+  //   isNew: true,
+  // },
+
+  // {
+  //   id: ncNanoId(),
+  //   href: "/quotes",
+  //   name: "Quotes",
+  //   protected: true,
+  //   // type: "dropdown",
+  //   isNew: true,
+  //   // children: [
+  //   //   {
+  //   //     id: ncNanoId(),
+  //   //     href: "/listing-stay",
+  //   //     name: "Stay listing",
+  //   //     type: "dropdown",
+  //   //     children: [
+  //   //       { id: ncNanoId(), href: "/listing-stay", name: "Stay page" },
+  //   //       {
+  //   //         id: ncNanoId(),
+  //   //         href: "/listing-stay-map",
+  //   //         name: "Stay page (map)",
+  //   //       },
+  //   //       { id: ncNanoId(), href: "/listing-stay-detail", name: "Stay Detail" },
+  //   //     ],
+  //   //   },
+
+  //   //   {
+  //   //     id: ncNanoId(),
+  //   //     href: "/listing-experiences",
+  //   //     name: "Experiences listing",
+  //   //     type: "dropdown",
+  //   //     children: [
+  //   //       {
+  //   //         id: ncNanoId(),
+  //   //         href: "/listing-experiences",
+  //   //         name: "Experiences page",
+  //   //       },
+  //   //       {
+  //   //         id: ncNanoId(),
+  //   //         href: "/listing-experiences-map",
+  //   //         name: "Experiences page (map)",
+  //   //       },
+  //   //       {
+  //   //         id: ncNanoId(),
+  //   //         href: "/listing-experiences-detail",
+  //   //         name: "Experiences Detail",
+  //   //       },
+  //   //     ],
+  //   //   },
+
+  //   //   //
+  //   //   {
+  //   //     id: ncNanoId(),
+  //   //     href: "/listing-car",
+  //   //     name: "Cars listing",
+  //   //     type: "dropdown",
+  //   //     children: [
+  //   //       { id: ncNanoId(), href: "/listing-car", name: "Cars page" },
+  //   //       { id: ncNanoId(), href: "/listing-car-map", name: "Cars page (map)" },
+  //   //       { id: ncNanoId(), href: "/listing-car-detail", name: "Car Detail" },
+  //   //     ],
+  //   //   },
+
+  //   //   //
+  //   //   {
+  //   //     id: ncNanoId(),
+  //   //     href: "/listing-real-estate",
+  //   //     name: "Real Estate Listings",
+  //   //     isNew: true,
+  //   //     type: "dropdown",
+  //   //     children: [
+  //   //       {
+  //   //         id: ncNanoId(),
+  //   //         href: "/listing-real-estate",
+  //   //         name: "Real Estate Listings",
+  //   //         isNew: true,
+  //   //       },
+  //   //       {
+  //   //         id: ncNanoId(),
+  //   //         href: "/listing-real-estate-map",
+  //   //         name: "Real Estate Maps",
+  //   //         isNew: true,
+  //   //       },
+  //   //     ],
+  //   //   },
+  //   //   //
+  //   //   {
+  //   //     id: ncNanoId(),
+  //   //     href: "/listing-flights",
+  //   //     name: "Flights listing",
+  //   //     isNew: true,
+  //   //   },
+  //   // ],
+  // },
+  // {
+  //   id: ncNanoId(),
+  //   href: "#",
+  //   name: "Warehouse & Distribution",
+  //   protected: true,
+  //   // type: "dropdown",
+  //   // children: otherPageChildMenus,
+  // },
   {
     id: ncNanoId(),
-    href: "/",
-    name: "Home",
+    href: "#",
+    name: "Custom Clearance",
     protected: true,
     // type: "dropdown",
-    // children: demoChildMenus,
-    isNew: true,
+    // children: otherPageChildMenus,
   },
-
   {
     id: ncNanoId(),
-    href: "/quotes",
-    name: "Quotes",
+    href: "#",
+    name: "Cargo Insuarance",
     protected: true,
     // type: "dropdown",
-    isNew: true,
-    // children: [
-    //   {
-    //     id: ncNanoId(),
-    //     href: "/listing-stay",
-    //     name: "Stay listing",
-    //     type: "dropdown",
-    //     children: [
-    //       { id: ncNanoId(), href: "/listing-stay", name: "Stay page" },
-    //       {
-    //         id: ncNanoId(),
-    //         href: "/listing-stay-map",
-    //         name: "Stay page (map)",
-    //       },
-    //       { id: ncNanoId(), href: "/listing-stay-detail", name: "Stay Detail" },
-    //     ],
-    //   },
-
-    //   {
-    //     id: ncNanoId(),
-    //     href: "/listing-experiences",
-    //     name: "Experiences listing",
-    //     type: "dropdown",
-    //     children: [
-    //       {
-    //         id: ncNanoId(),
-    //         href: "/listing-experiences",
-    //         name: "Experiences page",
-    //       },
-    //       {
-    //         id: ncNanoId(),
-    //         href: "/listing-experiences-map",
-    //         name: "Experiences page (map)",
-    //       },
-    //       {
-    //         id: ncNanoId(),
-    //         href: "/listing-experiences-detail",
-    //         name: "Experiences Detail",
-    //       },
-    //     ],
-    //   },
-
-    //   //
-    //   {
-    //     id: ncNanoId(),
-    //     href: "/listing-car",
-    //     name: "Cars listing",
-    //     type: "dropdown",
-    //     children: [
-    //       { id: ncNanoId(), href: "/listing-car", name: "Cars page" },
-    //       { id: ncNanoId(), href: "/listing-car-map", name: "Cars page (map)" },
-    //       { id: ncNanoId(), href: "/listing-car-detail", name: "Car Detail" },
-    //     ],
-    //   },
-
-    //   //
-    //   {
-    //     id: ncNanoId(),
-    //     href: "/listing-real-estate",
-    //     name: "Real Estate Listings",
-    //     isNew: true,
-    //     type: "dropdown",
-    //     children: [
-    //       {
-    //         id: ncNanoId(),
-    //         href: "/listing-real-estate",
-    //         name: "Real Estate Listings",
-    //         isNew: true,
-    //       },
-    //       {
-    //         id: ncNanoId(),
-    //         href: "/listing-real-estate-map",
-    //         name: "Real Estate Maps",
-    //         isNew: true,
-    //       },
-    //     ],
-    //   },
-    //   //
-    //   {
-    //     id: ncNanoId(),
-    //     href: "/listing-flights",
-    //     name: "Flights listing",
-    //     isNew: true,
-    //   },
-    // ],
+    // children: otherPageChildMenus,
+  },
+  {
+    id: ncNanoId(),
+    href: "#",
+    name: "Finances",
+    type: "dropdown",
+    protected: true,
+    children: financeChildrenMenus,
   },
   {
     id: ncNanoId(),
@@ -315,29 +366,44 @@ export const NAVIGATION_DEMO: NavItemType[] = [
     protected: true,
     children: templatesChildrenMenus,
   },
-  {
-    id: ncNanoId(),
-    href: "/user/bookings",
-    name: "Dashboard",
-    protected: authLogin,
-    // type: "dropdown",
-    // children: otherPageChildMenus,
-  },
+  // {
+  //   id: ncNanoId(),
+  //   href: "/user/bookings",
+  //   name: "Dashboard",
+  //   protected: authLogin,
+  //   // type: "dropdown",
+  //   // children: otherPageChildMenus,
+  // },
+  // {
+  //   id: ncNanoId(),
+  //   href: "/user/bookings",
+  //   name: "Warehouse & Distribution",
+  //   protected: authLogin,
+  //   // type: "dropdown",
+  //   // children: otherPageChildMenus,
+  // },
 
-  {
-    id: ncNanoId(),
-    href: "/about",
-    name: "About Us",
-    protected: true,
-    // type: "dropdown",
-    // children: otherPageChildMenus,
-  },
-  {
-    id: ncNanoId(),
-    href: "https://transpost.co/blog/",
-    targetBlank: true,
-    protected: true,
+  // {
+  //   id: ncNanoId(),
+  //   href: "/about",
+  //   name: "About Us",
+  //   protected: true,
+  //   // type: "dropdown",
+  //   // children: otherPageChildMenus,
+  // },
+  // {
+  //   id: ncNanoId(),
+  //   href: "https://transpost.co/blog/",
+  //   targetBlank: true,
+  //   protected: true,
+  //   name: "Blog",
+  // },
+  // {
+  //   id: ncNanoId(),
+  //   href: "https://transpost.co/blog/",
+  //   targetBlank: true,
+  //   protected: true,
 
-    name: "Blog",
-  },
+  //   name: "Blog",
+  // },
 ];

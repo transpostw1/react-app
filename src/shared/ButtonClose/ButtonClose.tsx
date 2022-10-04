@@ -1,5 +1,5 @@
 import React from "react";
-import { XIcon } from "@heroicons/react/solid";
+// import { XIcon } from "@heroicons/react/20/solid";
 import twFocusClass from "utils/twFocusClass";
 
 export interface ButtonCloseProps {
@@ -20,7 +20,8 @@ const ButtonClose: React.FC<ButtonCloseProps> = ({
       onClick={onClick}
     >
       <span className="sr-only">Close</span>
-      <XIcon className="w-5 h-5" />
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      {/* <XIcon className="w-5 h-5" /> */}
     </button>
   );
 };

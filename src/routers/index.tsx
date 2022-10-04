@@ -51,6 +51,7 @@ import MyRequest from "new_component/MyRequest";
 import BookingDetails from "new_component/Bookings-timeline/BookingDetails";
 import PrivateRoute from "./PrivateRoute";
 import QuotesPage from "new_component/Dashboard/QuotesPage";
+import CommodityInfoPage from "new_component/CommodityInfo/CommodityInfoPage";
 
 export const pages: Page[] = [
   // { path: "/", exact: true, component: PageHome },
@@ -115,6 +116,7 @@ export const pages: Page[] = [
   { path: "/subscription", component: PageSubcription },
   // { path: "/user/bookings", component: Dashboard }, // newly added
   { path: "/bookings", component: Bookings }, // newly added
+  {path: "/booking-info", component:CommodityInfoPage}, // CommodifyInfo
   { path: "/user/quotes", component: QuotesPage }, // newly added
   { path: "/loadcalculator", component: LoadCalculator }, // newly added
   { path: "/quotes", component: DetailedRequest }, // newly added

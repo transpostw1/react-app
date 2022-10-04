@@ -41,7 +41,7 @@ const Bookings = () => {
     return (
       <div className="w-full flex flex-col sm:rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 space-y-8 px-0 sm:p-6 xl:p-8">
         <h2 className="text-3xl lg:text-4xl font-semibold">
-          Congratulations! We have received your booking.
+           We have received your booking.
         </h2>
 
         <div className="border-b border-neutral-200 dark:border-neutral-700"></div>

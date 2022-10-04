@@ -1,4 +1,4 @@
-import { LocationMarkerIcon } from "@heroicons/react/solid";
+// import { LocationMarkerIcon } from "@heroicons/react/20/solid";
 import LocationMarker from "components/AnyReactComponent/LocationMarker";
 import Label from "components/Label/Label";
 import GoogleMapReact from "google-map-react";
@@ -24,7 +24,7 @@ const PageAddListing2: FC<PageAddListing2Props> = () => {
         {/* FORM */}
         <div className="space-y-8">
           <ButtonSecondary>
-            <LocationMarkerIcon className="w-5 h-5 text-neutral-500 dark:text-neutral-400" />
+            {/* <LocationMarkerIcon className="w-5 h-5 text-neutral-500 dark:text-neutral-400" /> */}
             <span className="ml-3">Use current location</span>
           </ButtonSecondary>
           {/* ITEM */}

@@ -96,7 +96,7 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
                 key={index}
                 // href={item.href}
                 onClick={signInWithGoogle}
-                className="nc-will-change-transform flex w-full rounded-lg bg-primary-50 dark:bg-neutral-800 px-4 py-3 transform transition-transform sm:px-6 hover:translate-y-[-2px]"
+                className="nc-will-change-transform flex w-full cursor-pointer rounded-lg bg-primary-50 dark:bg-neutral-800 px-4 py-3 transform transition-transform sm:px-6 hover:translate-y-[-2px]"
               >
                 <img
                   className="flex-shrink-0"

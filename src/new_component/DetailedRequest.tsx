@@ -61,9 +61,9 @@ const DetailedRequest = () => {
   // }, [quoteDetails]);
 
   return (
-    <div className="flex flex-col  md:items-center">
+    <div className="flex flex-col container md:items-center">
       <div className="text-[1.5rem] font-bold my-4 ">
-        <div>Request a Quote</div>
+        <span>Request a Quote</span>
       </div>
       <div className="text-[1.2] font-semibold mb-4">
         And get the best rates from the leading logistics providers.

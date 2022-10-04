@@ -43,7 +43,6 @@ const Dashboard = () => {
   const [completedList, setCompletedList] = useState([]);
   const [activeTab, setActiveTab] = useState("All");
 
-
   const fetchData = async () => {
     axios
       .get(
@@ -162,7 +161,7 @@ const Dashboard = () => {
   const renderSection2 = () => {
     if (bookingList.length === 0) {
       return (
-        <div className="mt-10">
+        <div className="mt-12">
           <Loading className="m-[100px] w-full h-[100px]"></Loading>
         </div>
       );
@@ -171,7 +170,7 @@ const Dashboard = () => {
       <div className="listingSection__wrap bg-white dark:text-neutral-300  dark:bg-neutral-800 ">
         {/* HEADING */}
         {bookingList.length > 0 ? (
-          <>
+          <>  
             {bookingList.map((item, i) => {
               return <BookingCard data={item} key={i} />;
             })}

@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { AuthorType } from "data/types";
-import { StarIcon } from "@heroicons/react/solid";
+// import { StarIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 import Avatar from "shared/Avatar/Avatar";
 import Badge from "shared/Badge/Badge";
@@ -48,7 +48,7 @@ const CardAuthorBox: FC<CardAuthorBoxProps> = ({
       </div>
       <div className="py-2 px-4 mt-4 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center leading-none text-xs font-medium">
         {starRating || 4.9}
-        <StarIcon className="w-5 h-5 text-yellow-600 ml-2" />
+        {/* <StarIcon className="w-5 h-5 text-yellow-600 ml-2" /> */}
       </div>
     </Link>
   );

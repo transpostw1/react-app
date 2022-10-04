@@ -17,6 +17,7 @@ import {
 } from "../../utils/firebase/firebase-config";
 import { useHistory } from "react-router-dom";
 import { createQuote } from "redux/quotes/quotesActions";
+import CommodityInfoPage from "new_component/CommodityInfo/CommodityInfoPage";
 
 export interface RateCardProps {
   className?: string;
@@ -44,29 +45,9 @@ export interface RateCardProps {
       }
     ];
   };
-  // setQuoteList?: (prevState: any) => void;
-  // quote?: any; // redux
-  // createQuote?: any; // redux
 }
 
-// 1 - Display the data of search term overhere
-// 2 - need to pass the api details to this
-
-// export const getLocalStorage = () => {
-//   let quote_list = localStorage.getItem("quote_list");
-//   if (quote_list) {
-//     return (quote_list = JSON.parse(localStorage.getItem("quote_list") || ""));
-//   } else {
-//     return [];
-//   }
-// };
-
-const RateCard: FC<RateCardProps> = ({
-  className = "",
-  data,
-  // quote, // redux
-  // createQuote, // redux
-}) => {
+const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(true); // temporary for testing purpose
   const [currentUser, setCurrentUser] = useState(null);
@@ -74,8 +55,8 @@ const RateCard: FC<RateCardProps> = ({
   const [rate, setRate] = useState<string | undefined>("");
   const [cargo, setCargo] = useState<string>("");
 
-  const [showModal, setShowModal] = useState(false);
-
+  const [showQuoteModal, setShowQuoteModal] = useState(false);
+  const [showInfoModal, setShowInfoModal] = useState(false);
   //context api
   const { addQuote } = useQuoteList();
 
@@ -94,7 +75,7 @@ const RateCard: FC<RateCardProps> = ({
   }, []);
 
   const handleClose = () => {
-    setShowModal(false);
+    setShowQuoteModal(false);
   };
 
   const signOuthandler = () => {
@@ -148,25 +129,24 @@ const RateCard: FC<RateCardProps> = ({
       });
   };
 
- 
-
   // setting up in local storage
 
   const createQuoteHandler = (id: any) => {
     addQuote(id, data);
-    setShowModal(true);
-
+    setShowQuoteModal(true);
   };
 
   const renderDetailTop = () => {
     return (
       <div className="">
+        <CommodityInfoPage
+        data={data}
+        
+        />
         <QuoteModal
           data={data}
-          // quotes={quotes} // remove it 
-          // setQuotes={setQuotes} // remove it
           onclose={handleClose}
-          showModal={showModal}
+          showQuoteModal={showQuoteModal}
         />
         <div className="flex flex-col md:flex-row z-15 ">
           <div className="w-12 mt-8 md:w-20 lg:w-24 flex-shrink-0 md:pt-7">

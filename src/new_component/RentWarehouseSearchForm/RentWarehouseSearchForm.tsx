@@ -42,7 +42,7 @@ const RentWarehouseSearchForm = () => {
                 desc=""
                 autoFocus={fieldFocused === "dropOffInput"}
               />
-              <LocationInput
+              {/* <LocationInput
                 defaultValue={dropOffInputValue}
                 onChange={(e) => {
                   setDropOffInputValue(e);
@@ -51,7 +51,7 @@ const RentWarehouseSearchForm = () => {
                 placeHolder="Location"
                 desc=""
                 autoFocus={fieldFocused === "startDate"}
-              />
+              /> */}
               {/* for single date selector */}
 
               {/* <ExperiencesDateSingleInput

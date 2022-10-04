@@ -1,4 +1,4 @@
-import { DotsHorizontalIcon } from "@heroicons/react/solid";
+// import { DotsHorizontalIcon } from "@heroicons/react/20/solid";
 import React, { FC, Fragment, ReactNode } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import twFocusClass from "utils/twFocusClass";
@@ -36,12 +36,13 @@ const NcDropDown: FC<NcDropDownProps> = ({
         {renderTrigger ? (
           renderTrigger()
         ) : (
-          <DotsHorizontalIcon
-            className={iconClass}
-            aria-hidden="true"
-            stroke="none"
-            fill="currentColor"
-          />
+          ""
+          // <DotsHorizontalIcon
+          //   className={iconClass}
+          //   aria-hidden="true"
+          //   stroke="none"
+          //   fill="currentColor"
+          // />
         )}
       </Menu.Button>
       <Transition
