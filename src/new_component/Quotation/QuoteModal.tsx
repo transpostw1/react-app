@@ -9,7 +9,7 @@ import AdditonalCharge from "./AdditonalCharge";
 import Remarks from "./Remarks";
 
 export interface Modal {
-  showModal: boolean;
+  showQuoteModal: boolean;
   onclose: void;
   data: {
     id?: string;
@@ -58,7 +58,7 @@ export interface IquoteList {
   ];
 }
 
-const QuoteModal = ({ data, onclose, showModal }: any) => {
+const QuoteModal = ({ data, onclose, showQuoteModal }: any) => {
   const { quoteList, addCharge, addQuote } = useQuoteList();
 
 
@@ -92,16 +92,16 @@ const QuoteModal = ({ data, onclose, showModal }: any) => {
       setEditID(index);
     }
 
-    // initial sum
+    // initial sum visible for 1st time 
     if (quoteList?.find((item: any) => item.id === data.id) == null) {
       const buy_array = data.additionalCosts.map((item: any) => item.amount);
       const initial_buy_Sum = sum(buy_array, data.total);
-      console.log("initialSum", initial_buy_Sum);
+      // console.log("initial buy Sum", initial_buy_Sum);
       setTotalBuyRate(initial_buy_Sum);
       const initial_sell_sum = sum(buy_array,freightSellRate)
-      setTotalSellRate(initial_sell_sum);
+      // setTotalSellRate(initial_sell_sum);
 
-      console.log("initial Sum", initial_sell_sum);
+      console.log("initial sell Sum", initial_sell_sum);
     } else {
       const quote = quoteList.find((item: any) => item.id === data.id);
       if (quote?.additionalCosts && quote?.additionalCosts?.length > 0) {
@@ -120,6 +120,16 @@ const QuoteModal = ({ data, onclose, showModal }: any) => {
         console.log("inner Sell_result", typeof sell_result);
         setTotalSellRate(sell_result);
         quote.sum_sell = freightSellRate;
+      }else{
+        // when additional cost is empty
+        const buy_array = data.additionalCosts.map((item: any) => item.amount);
+        const initial_buy_Sum = sum(buy_array, data.total);
+        console.log("initial buy Sum", initial_buy_Sum);
+        setTotalBuyRate(initial_buy_Sum);
+        const initial_sell_sum = sum(buy_array,freightSellRate)
+        setTotalSellRate(initial_sell_sum);
+  
+        console.log("initial sell Sum", initial_sell_sum);
       }
 
     }
@@ -134,7 +144,7 @@ const QuoteModal = ({ data, onclose, showModal }: any) => {
     }
 
     // console.log(quotes[editID]?.additionalCosts);
-  }, [quoteList, showModal]);
+  }, [quoteList, showQuoteModal]);
 
   const onAddHandler = () => {
     addCharge(data.id);
@@ -143,7 +153,7 @@ const QuoteModal = ({ data, onclose, showModal }: any) => {
   const handleOnClose = () => {
     onclose();
   };
-  if (!showModal) {
+  if (!showQuoteModal) {
     return null;
   }
 

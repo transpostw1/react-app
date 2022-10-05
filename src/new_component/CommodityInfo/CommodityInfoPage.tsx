@@ -2,8 +2,54 @@ import React from "react";
 import Select from "shared/Select/Select";
 import Input from "shared/Input/Input";
 import Checkbox from "shared/Checkbox/Checkbox";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 
-const CommodityInfoPage = ({ data }: any) => {
+const CommodityInfoPage = ({
+  data,
+  onclose,
+  showInfoModal,
+  email,
+  cargo,
+}: any) => {
+  const history = useHistory();
+  const handleOnClose = () => {
+    onclose();
+  };
+
+  if (!showInfoModal) {
+    return null;
+  }
+
+  const proccedHandler = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    const postData = { ...data, email };
+    console.log(postData);
+
+    //  let config = {
+    //   headers: {
+    //     "Content-Type": "application/x-www-form-urlencoded",
+    //   },
+    axios
+      .post("https://apis.transpost.co/api/bookings/store", postData)
+      .then((response) => {
+        const fetchedData = response.data;
+        console.log(fetchedData);
+        history.push({
+          pathname: "/bookings",
+          state: {
+            bId: fetchedData?.Booking.id,
+            bookedData: data,
+            cargoType: cargo,
+          },
+        });
+      })
+      .catch((error) => {
+        const errorMsg = error.message;
+      });
+  };
+
   return (
     <div className=" p-10 fixed z-50 inset-0 bg-neutral-200 bg-opacity-10  backdrop-blur-sm border rounded dark:border-neutral-800 ">
       <div className="flex container md:items-center relative h-full flex-col align-center bg-neutral-100 border rounded-lg dark:border-neutral-600 dark:bg-neutral-700">
@@ -37,6 +83,24 @@ const CommodityInfoPage = ({ data }: any) => {
               <Input
                 type="text"
                 placeholder="Enter Number of Containers"
+                className="mt-1 mb-2"
+                //   onChange={(e) => {
+                //     setQuoteDetails({
+                //       ...quoteDetails,
+                //       from_port: e.target.value,
+                //     });
+                //   }}
+                //   value={quoteDetails.from_port}
+              />
+              {/* {<p className="text-[red]">{validation.from_port}</p>} */}
+            </label>
+            <label className="block">
+              <span className="text-neutral-800 dark:text-neutral-200">
+                Weight (in MT) *
+              </span>
+              <Input
+                type="text"
+                placeholder="Enter the weight in MT"
                 className="mt-1 mb-2"
                 //   onChange={(e) => {
                 //     setQuoteDetails({
@@ -90,23 +154,24 @@ const CommodityInfoPage = ({ data }: any) => {
               />
             </label>
             <label className="block">
-
-            <Checkbox
-              className=""
-              name="last_mile"
-              label="Last mile asistance"
+              <Checkbox
+                className=""
+                name="last_mile"
+                label="Last mile asistance"
               />
-              </label>
+            </label>
 
             <button
               className="h-12 w-full rounded-[2.5rem]  md:w-[9rem] my-5 bg-[#2AA996] my-6 hover:bg-[#218778] flex items-center justify-center text-neutral-50 focus:outline-none "
-              type="submit"
+              type="button"
+              onClick={(e) => proccedHandler(e)}
             >
               Proceed
             </button>
             <button
               className="h-12 w-full rounded-[2.5rem]  md:w-[9rem] my-5 bg-[#2AA996] my-6 hover:bg-[#218778] flex items-center justify-center text-neutral-50 focus:outline-none "
-            type="button"
+              type="button"
+              onClick={handleOnClose}
             >
               Cancel
             </button>

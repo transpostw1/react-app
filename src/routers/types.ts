@@ -64,7 +64,7 @@ export interface LocationStates {
   "/loadcalculator"?: {};
   "/quotes"?: {};
   "/booking-details"?: {};
-  "/booking-info"?:{}
+  "/warehousing"?:{}
 }
 
 export type PathName = keyof LocationStates;

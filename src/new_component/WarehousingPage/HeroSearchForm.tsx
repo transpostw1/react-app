@@ -4,10 +4,11 @@ import Loading from "new_component/Loading";
 import RentWarehouseSearchForm from "new_component/RentWarehouseSearchForm/RentWarehouseSearchForm";
 import React, { FC, useState, useRef, useEffect } from "react";
 import "react-dates/initialize";
-import ExperiencesSearchForm from "./ExperiencesSearchForm";
+import ExperiencesSearchForm from "components/HeroSearchForm/ExperiencesSearchForm";
+// import ExperiencesSearchForm from "./ExperiencesSearchForm";
 // import StaySearchForm from "./StaySearchForm";
 // import RentalCarSearchForm from "./RentalCarSearchForm";
-import FlightSearchForm from "./FlightSearchForm";
+// import FlightSearchForm from "./FlightSearchForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAnchor,
@@ -23,7 +24,7 @@ export type SearchTab =
   | "Ocean"
   | "Land"
   | "Air"
-  | "Rent Warehouse";
+  | "Warehousing & Disitribution";
 
 export interface newTab {
   name: SearchTab;
@@ -40,7 +41,7 @@ export interface HeroSearchFormProps {
     | "Ocean"
     | "Land"
     | "Air"
-    | "Rent Warehouse";
+    | "Warehousing & Disitribution";
 }
 
 const HeroSearchForm: FC<HeroSearchFormProps> = ({
@@ -53,20 +54,24 @@ const HeroSearchForm: FC<HeroSearchFormProps> = ({
   const myRef = useRef<null | HTMLDivElement>(null);
 
   const newTab: newTab[] = [
+    // {
+    //   name: "Ocean",
+    //   icon: <FontAwesomeIcon icon={faAnchor} />,
+    // },
+    // {
+    //   name: "Land",
+    //   icon: <FontAwesomeIcon icon={faTruck} />,
+    // },
+    // {
+    //   name: "Air",
+    //   icon: <FontAwesomeIcon icon={faPlaneDeparture} />,
+    // },
+    // {
+    //   name: "Cargo Tracker",
+    //   icon: <FontAwesomeIcon icon={faDiceOne} />,
+    // },
     {
-      name: "Ocean",
-      icon: <FontAwesomeIcon icon={faAnchor} />,
-    },
-    {
-      name: "Land",
-      icon: <FontAwesomeIcon icon={faTruck} />,
-    },
-    {
-      name: "Air",
-      icon: <FontAwesomeIcon icon={faPlaneDeparture} />,
-    },
-    {
-      name: "Cargo Tracker",
+      name: "Warehousing & Disitribution",
       icon: <FontAwesomeIcon icon={faDiceOne} />,
     },
   ];
@@ -113,14 +118,14 @@ const HeroSearchForm: FC<HeroSearchFormProps> = ({
         return <ExperiencesSearchForm haveDefaultValue={isArchivePage} />;
       // case "Cars":
       // return <RentalCarSearchForm haveDefaultValue={isArchivePage} />;
-      case "Ocean":
-        return <FlightSearchForm haveDefaultValue={isArchivePage} />;
+    //   case "Ocean":
+    //     return <FlightSearchForm haveDefaultValue={isArchivePage} />;
       case "Land":
         return <LandSearchForm />;
       case "Air":
         return <AirSearchForm />;
-      // case "Rent Warehouse":
-      // return <RentWarehouseSearchForm/>;
+      case "Warehousing & Disitribution":
+      return <RentWarehouseSearchForm/>;
 
       default:
         return null;

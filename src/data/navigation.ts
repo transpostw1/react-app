@@ -210,12 +210,7 @@ const templatesChildrenMenus: NavItemType[] = [
     targetBlank: true,
     name: "Load Calculator",
   },
-  {
-    id: ncNanoId(),
-    href: "",
-    targetBlank: false,
-    name: "Cargo Tracking",
-  },
+
  
   // { id: ncNanoId(), href: "/pay-done", name: "Pay done" },
   //
@@ -352,12 +347,21 @@ export const NAVIGATION_DEMO: NavItemType[] = [
   },
   {
     id: ncNanoId(),
+    href: "/warehousing",
+    name: "Warehousing",
+    // type: "dropdown",
+    protected: true,
+    children: templatesChildrenMenus,
+  },
+  {
+    id: ncNanoId(),
     href: "#",
     name: "Finances",
     type: "dropdown",
     protected: true,
     children: financeChildrenMenus,
   },
+
   {
     id: ncNanoId(),
     href: "#",
@@ -366,6 +370,7 @@ export const NAVIGATION_DEMO: NavItemType[] = [
     protected: true,
     children: templatesChildrenMenus,
   },
+  
   // {
   //   id: ncNanoId(),
   //   href: "/user/bookings",

@@ -1,11 +1,8 @@
 import React, { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import moment from "moment";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
-import { fetchData } from "../../redux";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
-import { MapStateToProps, MapDispatchToProps, connect } from "react-redux";
 
 import QuoteModal from "new_component/Quotation/QuoteModal";
 import { useQuoteList } from "utils/contexts/quoteListContext";
@@ -16,7 +13,6 @@ import {
   signOutUser,
 } from "../../utils/firebase/firebase-config";
 import { useHistory } from "react-router-dom";
-import { createQuote } from "redux/quotes/quotesActions";
 import CommodityInfoPage from "new_component/CommodityInfo/CommodityInfoPage";
 
 export interface RateCardProps {
@@ -55,8 +51,8 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
   const [rate, setRate] = useState<string | undefined>("");
   const [cargo, setCargo] = useState<string>("");
 
-  const [showQuoteModal, setShowQuoteModal] = useState(false);
-  const [showInfoModal, setShowInfoModal] = useState(false);
+  const [showQuoteModal, setShowQuoteModal] = useState<boolean>(false);
+  const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
   //context api
   const { addQuote } = useQuoteList();
 
@@ -76,6 +72,7 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
 
   const handleClose = () => {
     setShowQuoteModal(false);
+    setShowInfoModal(false);
   };
 
   const signOuthandler = () => {
@@ -99,37 +96,9 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
 
   const history = useHistory();
 
-  const bookNowHandler = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    data: {}
-  ) => {
-    const postData = { ...data, email };
-    console.log(postData);
-
-    //  let config = {
-    //   headers: {
-    //     "Content-Type": "application/x-www-form-urlencoded",
-    //   },
-    axios
-      .post("https://apis.transpost.co/api/bookings/store", postData)
-      .then((response) => {
-        const fetchedData = response.data;
-        console.log(fetchedData);
-        history.push({
-          pathname: "/bookings",
-          state: {
-            bId: fetchedData?.Booking.id,
-            bookedData: data,
-            cargoType: cargo,
-          },
-        });
-      })
-      .catch((error) => {
-        const errorMsg = error.message;
-      });
+  const bookNowHandler = () => {
+    setShowInfoModal(true);
   };
-
-  // setting up in local storage
 
   const createQuoteHandler = (id: any) => {
     addQuote(id, data);
@@ -138,16 +107,7 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
 
   const renderDetailTop = () => {
     return (
-      <div className="">
-        <CommodityInfoPage
-        data={data}
-        
-        />
-        <QuoteModal
-          data={data}
-          onclose={handleClose}
-          showQuoteModal={showQuoteModal}
-        />
+      <div>
         <div className="flex flex-col md:flex-row z-15 ">
           <div className="w-12 mt-8 md:w-20 lg:w-24 flex-shrink-0 md:pt-7">
             <img src={data.sl_logo} className="w-[90%] h-15" alt="" />
@@ -212,7 +172,7 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
                 <>
                   <button
                     className="p-2 border border-black rounded-2xl"
-                    onClick={(e) => bookNowHandler(e, data)}
+                    onClick={bookNowHandler}
                   >
                     Book Now
                   </button>
@@ -260,6 +220,18 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
      dark:border-neutral-800 rounded-2xl overflow-hidden hover:shadow-lg transition-shadow space-y-6 ${className}`}
       data-nc-id="RateCard"
     >
+      <CommodityInfoPage
+        data={data}
+        onclose={handleClose}
+        showInfoModal={showInfoModal}
+        email={email}
+        cargo={cargo}
+      />
+      <QuoteModal
+        data={data}
+        onclose={handleClose}
+        showQuoteModal={showQuoteModal}
+      />
       <div className={` sm:pr-20 relative  ${className}`} data-nc-id="RateCard">
         {/*  eslint-disable-next-line jsx-a11y/anchor-has-content */}
         {/* <Link to="/signup" className="absolute inset-0" /> */}
@@ -343,11 +315,9 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
                 USD {!isLogin ? data.total : "****"}{" "}
               </div>
               {!isLogin ? (
-                <div className="mt-5">
+                <div className="mt-5 ">
                   {/* <ButtonPrimary href="/bookings">Book Now</ButtonPrimary> */}
-                  <button onClick={(e) => bookNowHandler(e, data)}>
-                    Book Now
-                  </button>
+                  <button onClick={bookNowHandler}>Book Now</button>
                 </div>
               ) : (
                 <div className=" mt-5 font-medium underline underline-offset-1">
@@ -355,20 +325,6 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
                 </div>
               )}
             </span>
-
-            {/* <div className="text-xs font-medium underline underline-offset-1 sm:text-sm text-neutral-500 font-medium mt-0.5 ">
-              {isLogin ? (
-                ""
-              ) : (
-             
-                <Link
-                  className="mt-5 font-medium underline underline-offset-1"
-                  to="/signup"
-                >
-                  Sign up to know the rates
-                </Link>
-              )}
-            </div> */}
           </div>
         </div>
       </div>
@@ -379,16 +335,4 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
   );
 };
 
-const mapStateToProps = (state: any) => {
-  return {
-    quote: state.quote,
-  };
-};
-
-const mapDispatchToProps = (dispatch: any, data: any) => {
-  return {
-    createQuote: () => dispatch(createQuote(data)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(RateCard);
+export default RateCard;

@@ -1,5 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faBriefcase,faQuoteLeftAlt,faComment} from "@fortawesome/free-solid-svg-icons"
 
 const CommonSidebar = () => {
   return (
@@ -20,9 +22,10 @@ const CommonSidebar = () => {
           className="block py-1 md:py-2 pl-2 border-l-2 border-transparent flex-shrink-0 "
         >
           <div className="flex items-center space-x-4">
-            <svg
+            <FontAwesomeIcon className="h-5 w-5"  icon={faBriefcase}/>
+            {/* <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className="h-5 w-5"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -33,7 +36,7 @@ const CommonSidebar = () => {
                 stroke-linejoin="round"
                 d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
               />
-            </svg>
+            </svg> */}
             <span className="text-neutral-6000 dark:text-neutral-300">
               Bookings
             </span>
@@ -45,9 +48,11 @@ const CommonSidebar = () => {
           className="block py-1 md:py-2 pl-2 border-b-2 border-transparent flex-shrink-0"
         >
           <div className="flex items-center space-x-4 ">
+          <FontAwesomeIcon  className="h-5 w-5" icon={faComment}/>
+{/* 
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 text-neutral-400"
+              className="h-5 w-5 text-neutral-400"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -55,10 +60,10 @@ const CommonSidebar = () => {
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth={1.5}
+                strokeWidth={2}
                 d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
               />
-            </svg>
+            </svg> */}
             <span className="text-neutral-6000 dark:text-neutral-300 ">
               Inquiries
             </span>
@@ -70,20 +75,8 @@ const CommonSidebar = () => {
           className="block py-1 md:py-2 pl-2 border-b-2 border-transparent flex-shrink-0"
         >
           <div className="flex items-center space-x-4 ">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 text-neutral-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.5}
-                d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
-              />
-            </svg>
+            <FontAwesomeIcon className="h-5 w-5"  icon={faQuoteLeftAlt}/>
+            
             <span className="text-neutral-6000 dark:text-neutral-300">
               Quotes
             </span>
