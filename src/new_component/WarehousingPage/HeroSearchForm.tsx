@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAnchor,
   faPlaneDeparture,
-  faTruck,
+  faWarehouse,
   faDiceOne,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -72,7 +72,7 @@ const HeroSearchForm: FC<HeroSearchFormProps> = ({
     // },
     {
       name: "Warehousing & Disitribution",
-      icon: <FontAwesomeIcon icon={faDiceOne} />,
+      icon: <FontAwesomeIcon icon={faWarehouse} />,
     },
   ];
 

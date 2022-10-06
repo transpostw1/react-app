@@ -94,7 +94,6 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
     }
   }, [data]);
 
-  const history = useHistory();
 
   const bookNowHandler = () => {
     setShowInfoModal(true);

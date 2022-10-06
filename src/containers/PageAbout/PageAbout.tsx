@@ -1,4 +1,4 @@
-import rightImg from "images/transpost images/Aboutus/GroupImage.png";
+import rightImg from "images/transpost images/Aboutus/group.jpg";
 import React, { FC } from "react";
 import SectionFounder from "./SectionFounder";
 import SectionStatistic from "./SectionStatistic";

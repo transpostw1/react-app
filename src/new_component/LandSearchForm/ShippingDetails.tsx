@@ -8,22 +8,22 @@ import { Fragment } from "react";
 export const ShipingDetails = (props: any) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const [inputValue, setInputValue] = useState("FCL,20'Standard");
-  const [isLActive, setIsLActive] = useState(false);
-  const [isBActive, setIsBActive] = useState(false);
-  const [isFActive, setIsFActive] = useState(true);
+  const [inputValue, setInputValue] = useState("FTL,1m3");
+  const [isLTLActive, setIsLTLActive] = useState(false); //LTL
+  const [isFCLActive, setIsFCLActive] = useState(false);
+  const [isFTLActive, setIsFTLActive] = useState(true); // volome
   const [vol, setVol] = useState(1);
   const [weight, setWeight] = useState(1);
   const [gWeight, setGWeight] = useState(1);
-  const [transType, setTransType] = useState("FCL");
-  const [contDetails, setContDetails] = useState("20'Standard");
+  const [transType, setTransType] = useState("FTL");
+  const [contDetails, setContDetails] = useState("1m3");
   const [showPopover, setShowPopover] = useState(false);
 
   const selectHandler = () => {
     if (transType === "Less Truck Load") {
       setContDetails(vol + " M3/" + weight + " MT");
     } else if (transType === "Full Truck Load") {
-      setContDetails(gWeight + " MT");
+      setContDetails(vol + " m3");
     }
     setInputValue(transType + "," + contDetails);
     setShowPopover(!showPopover);
@@ -48,7 +48,7 @@ export const ShipingDetails = (props: any) => {
     if (transType === "Less Truck Load") {
       setContDetails(vol + " M3/" + weight + " MT");
     } else if (transType === "Full Truck Load") {
-      setContDetails(gWeight + " MT");
+      setContDetails(vol + " m3");
     }
   }, [transType, contDetails]);
 
@@ -56,9 +56,9 @@ export const ShipingDetails = (props: any) => {
     setInputValue(transType + "," + contDetails);
   }, [contDetails]);
   const defaultV = () => {
-    setIsFActive(true);
-    setIsLActive(false);
-    setIsBActive(false);
+    setIsFTLActive(true);
+    setIsLTLActive(false);
+    setIsFCLActive(false);
   };
   useEffect(() => {
     defaultV();
@@ -98,15 +98,15 @@ export const ShipingDetails = (props: any) => {
                 // style={{ color: "neutral" }}
                 onClick={() => {
                   setShowPopover(!showPopover);
-                  setTransType("FCL");
-                  setContDetails("20'Standard");
+                  setTransType("FTL");
+                  setContDetails("1m3");
                 }}
               ></input>
               <ChevronDownIcon
                 onClick={() => {
                   setShowPopover(!showPopover);
-                  setTransType("FCL");
-                  setContDetails("20'Standard");
+                  setTransType("FTL");
+                  setContDetails("1m3");
                 }}
                 className={`${open ? "" : "text-opacity-70"}
                   ml-2 h-5 w-5 text-black group-hover:text-opacity-80 transition ease-in-out duration-150`}
@@ -135,27 +135,27 @@ export const ShipingDetails = (props: any) => {
                         onChange={(e) => {
                           let Ttype = e.target.value;
                           setTransType(Ttype);
-                          if (Ttype === "Less Truck Load") {
-                            setIsLActive(true);
-                            setIsBActive(false);
-                            setIsFActive(false);
+                          if (Ttype === "LTL") {
+                            setIsLTLActive(true);
+                            setIsFCLActive(false);
+                            setIsFTLActive(false);
                             setVol(1);
                             setWeight(1);
                           } else if (Ttype === "Full Truck Load") {
-                            setIsBActive(true);
-                            setIsLActive(false);
-                            setIsFActive(false);
+                            setIsFCLActive(false);
+                            setIsLTLActive(false);
+                            setIsFTLActive(true);
                             setGWeight(1);
                           } else if (Ttype === "FCL") {
-                            setIsFActive(true);
-                            setIsLActive(false);
-                            setIsBActive(false);
+                            setIsFTLActive(false);
+                            setIsLTLActive(false);
+                            setIsFCLActive(true);
                           }
                         }}
                       >
                         {[
-                          "Full Container Load",
                           "Full Truck Load",
+                          "Full Container Load",
                           "Less Truck Load",
                         ].map((item) => {
                           return (
@@ -175,11 +175,11 @@ export const ShipingDetails = (props: any) => {
                       </select>
                     </div>
                     {/* <ConatainerType /> */}
-                    {isLActive && (
+                    {isLTLActive && (
                       <div>
                         <h3>WEIGHT, MT</h3>
                         <input
-                        className="block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 rounded-2xl text-sm font-normal h-11 px-4 py-3 mt-1.5"
+                          className="block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 rounded-2xl text-sm font-normal h-11 px-4 py-3 mt-1.5"
                           type="number"
                           min="0"
                           value={weight}
@@ -190,8 +190,7 @@ export const ShipingDetails = (props: any) => {
                             VOLUME, M<sup>3</sup>
                           </h3>
                           <input
-                        className="block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 rounded-2xl text-sm font-normal h-11 px-4 py-3 mt-1.5"
-
+                            className="block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 rounded-2xl text-sm font-normal h-11 px-4 py-3 mt-1.5"
                             type="number"
                             min="0"
                             value={vol}
@@ -200,20 +199,21 @@ export const ShipingDetails = (props: any) => {
                         </div>
                       </div>
                     )}
-                    {isBActive && (
+                    {isFTLActive && (
                       <div>
-                        <h3>GROSS WEIGHT, MT</h3>
+                        <h3>
+                          VOLUME, M<sup>3</sup>
+                        </h3>
                         <input
-                        className="block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 rounded-2xl text-sm font-normal h-11 px-4 py-3 mt-1.5"
-
+                          className="block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 rounded-2xl text-sm font-normal h-11 px-4 py-3 mt-1.5"
                           type="number"
                           min="0"
-                          onChange={(e) => setGWeight(parseInt(e.target.value))}
-                          value={gWeight}
+                          onChange={(e) => setVol(parseInt(e.target.value))}
+                          value={vol}
                         />
                       </div>
                     )}
-                    {isFActive && (
+                    {isFCLActive && (
                       <div>
                         <h3>Type</h3>
                         <select
@@ -229,7 +229,7 @@ export const ShipingDetails = (props: any) => {
                             "45'High Cube",
                           ].map((item) => {
                             return (
-                              <option key={item} value={item}>
+                              <option key={item} defaultValue="20'Standard" value={item}>
                                 {item}
                               </option>
                             );

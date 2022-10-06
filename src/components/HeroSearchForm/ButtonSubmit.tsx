@@ -1,9 +1,11 @@
 import React from "react";
 
 const ButtonSubmit = () => {
-  const submitHandler = (e: { preventDefault: () => void; }) => {
+  const submitHandler = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-  }
+
+
+  };
   return (
     <button
       onClick={submitHandler}

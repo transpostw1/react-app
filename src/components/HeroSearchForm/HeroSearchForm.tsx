@@ -14,6 +14,7 @@ import {
   faPlaneDeparture,
   faTruck,
   faDiceOne,
+  faBoxes
 } from "@fortawesome/free-solid-svg-icons";
 
 export type SearchTab =
@@ -67,7 +68,7 @@ const HeroSearchForm: FC<HeroSearchFormProps> = ({
     },
     {
       name: "Cargo Tracker",
-      icon: <FontAwesomeIcon icon={faDiceOne} />,
+      icon: <FontAwesomeIcon icon={faBoxes} />,
     },
   ];
 

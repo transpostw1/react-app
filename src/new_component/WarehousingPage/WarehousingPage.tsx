@@ -37,8 +37,8 @@ const WarehousingPage:FC<WarehousingPageProps> = (
       />
 
       {/* SECTION */}
-      <SectionGridFilterCard className="pb-24 lg:pb-32" from_port={""} to_port={""} sl_date={undefined} cargo_type={null} />
-
+      {/* <SectionGridFilterCard className="pb-24 lg:pb-32" from_port={""} to_port={""} sl_date={undefined} cargo_type={null} /> */}
+<div className="pb-24 lg:mb-[16rem]"> </div>
 
     </div>
   </div>

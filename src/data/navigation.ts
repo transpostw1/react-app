@@ -331,7 +331,7 @@ export const NAVIGATION_DEMO: NavItemType[] = [
   // },
   {
     id: ncNanoId(),
-    href: "#",
+    href: "/custom-clearance",
     name: "Custom Clearance",
     protected: true,
     // type: "dropdown",

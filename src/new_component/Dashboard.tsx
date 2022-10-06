@@ -4,6 +4,13 @@ import ButtonSecondary from "shared/Button/ButtonSecondary";
 import emptyicon from "../images/transpost images/dashboard/emptyPng.png";
 import axios from "axios";
 
+import { User } from "firebase/auth";
+import {
+  onAuthStateChangedListener,
+  createUserDocumentFromAuth,
+  signOutUser,
+} from "utils/firebase/firebase-config"
+
 import BookingCard from "./BookingCard";
 import Loading from "./Loading";
 import CommonSidebar from "./CommonSidebar";
@@ -43,10 +50,12 @@ const Dashboard = () => {
   const [completedList, setCompletedList] = useState([]);
   const [activeTab, setActiveTab] = useState("All");
 
+const [currentUser,setCurrentUser] = useState<User | null>(null)
+
   const fetchData = async () => {
     axios
       .get(
-        "https://apis.transpost.co/api/bookings/user/?email=pavan@geminitest.com",
+        "https://apis.transpost.co/api/bookings/user/?email=rashidshaikh@transpost.co",
         {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
@@ -56,7 +65,7 @@ const Dashboard = () => {
       )
       .then((response) => {
         const result = response.data;
-        console.log(result.data);
+        console.log("result", result.data);
 
         setBookingList(result.data);
         setAllList(result.data);
@@ -79,7 +88,25 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchData();
+    
   }, []);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChangedListener((user: User) => {
+      if (user) {
+        // createUserDocumentFromAuth(user);
+
+      }
+      setCurrentUser(user);
+      console.log("user in bookingsdetail", user.displayName);
+    });
+
+    return unsubscribe;
+  }, []);
+
+// if(!currentUser){
+//   return null
+// }
 
   // for count set all in initial rendering
 

@@ -5,7 +5,7 @@ import Input from "shared/Input/Input";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { NavLink, useHistory } from "react-router-dom";
 
-const ProfileDropdown = ({ setIsLogin, isLogin }: any) => {
+const ProfileDropdown = ({ setIsLogin, isLogin,currentUser }: any) => {
   const inputRef = React.createRef<HTMLInputElement>();
 
   const history = useHistory();
@@ -15,6 +15,10 @@ const ProfileDropdown = ({ setIsLogin, isLogin }: any) => {
     signOutUser();
     history.push("/login");
   };
+
+if(!currentUser){
+    return null
+}
 
   return (
     <React.Fragment>
@@ -29,7 +33,7 @@ const ProfileDropdown = ({ setIsLogin, isLogin }: any) => {
           return (
             <>
               <Popover.Button className="text-2xl bg-[#9e9e9e] md:text-[28px] w-10 h-10 rounded-full text-neutral-700 dark:text-neutral-300  hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none flex items-center justify-center">
-                {/* <EllipsisVerticalIcon/> */}R
+                {/* <EllipsisVerticalIcon/> */}{currentUser.displayName[0]}
                 {/* <i className="las la-search"></i> */}
               </Popover.Button>
 

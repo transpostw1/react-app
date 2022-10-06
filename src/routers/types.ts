@@ -65,6 +65,7 @@ export interface LocationStates {
   "/quotes"?: {};
   "/booking-details"?: {};
   "/warehousing"?:{}
+  "/custom-clearance"?:{}
 }
 
 export type PathName = keyof LocationStates;

@@ -57,10 +57,10 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
   return (
     <div
       ref={myRef}
-      className={`nc-SectionGridFilterCard md:pt-[10rem] ${className}`}
+      className={`nc-SectionGridFilterCard md:pt-[18rem] ${className}`}
       data-nc-id="SectionGridFilterCard"
     >
-      <div className="lg:p-10 lg:bg-neutral-50 lg:dark:bg-black/20 grid grid-cols-1 gap-6 rounded-3xl">
+      <div className="lg:p-14 lg:mt-14 lg:bg-neutral-50 lg:dark:bg-black/20 grid grid-cols-1 gap-6 rounded-3xl">
         {Array.isArray(shippingData.data) && shippingData.data.length > 0
           ? shippingData?.data?.map((item, index) => {
               return <RateCard key={index} data={item} />;

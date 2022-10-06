@@ -2,9 +2,12 @@ import StartRating from "components/StartRating/StartRating";
 import React, { FC, useEffect, useState, ReactElement } from "react";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import NcImage from "shared/NcImage/NcImage";
-import { StaticContext } from "react-router";
 import { useLocation, RouteComponentProps } from "react-router-dom";
 import moment from "moment";
+import { IcommodityDetails } from "./CommodityInfo/CommodityInfoPage";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faCheckSquare,faAnchorCircleCheck} from "@fortawesome/free-solid-svg-icons"
+
 
 export interface BookingsProps {
   bId: string;
@@ -23,6 +26,7 @@ export interface BookingsProps {
     total?:string
   };
   cargoType: string;
+  commodityDetails?:IcommodityDetails;
 }
 
 const Bookings = () => {
@@ -90,9 +94,9 @@ const Bookings = () => {
               </svg>
 
               <div className="flex flex-col">
-                <span className="text-sm text-neutral-400">Sailing Date</span>
+                <span className="text-sm text-neutral-400">Ready to Load</span>
                 <span className="mt-1.5 text-lg font-semibold">
-                  September 30, 2022
+                   {moment( state.commodityDetails?.loadingDate).format('Do MMMM  YYYY')}
                 </span>
               </div>
             </div>
@@ -122,9 +126,9 @@ const Bookings = () => {
           <h3 className="text-2xl font-semibold">Booking detail</h3>
           <div className="flex flex-col space-y-4">
             <div className="flex text-neutral-6000 dark:text-neutral-300">
-              <span className="flex-1">Booking Number</span>
+              <span className="flex-1">Reference Number</span>
               <span className="flex-1 font-medium text-neutral-900 dark:text-neutral-100">
-                {state.bId}
+                TRA{state.bId}   <FontAwesomeIcon className="h-6 mx-2 text-[#218778]" icon={faAnchorCircleCheck} /> 
               </span>
             </div>
             <div className="flex text-neutral-6000 dark:text-neutral-300">

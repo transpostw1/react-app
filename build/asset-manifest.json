@@ -1,14 +1,13 @@
 {
   "files": {
-    "main.css": "./static/css/main.07b333f7.css",
-    "main.js": "./static/js/main.1ba35e0f.js",
+    "main.css": "./static/css/main.ce32b187.css",
+    "main.js": "./static/js/main.64c6e10e.js",
     "static/js/787.dfd8dd9b.chunk.js": "./static/js/787.dfd8dd9b.chunk.js",
     "static/media/hero-right-3.png": "./static/media/hero-right-3.25e989ed2b6ef0cfb25e.png",
     "static/media/Masood Ahmed - CTO.jpg": "./static/media/Masood Ahmed - CTO.fa77065f2e5703ed3909.jpg",
     "static/media/Vivek Das - Head Of Customer Experience.jpg": "./static/media/Vivek Das - Head Of Customer Experience.f8bdfb9fffd08ad39f9a.jpg",
     "static/media/hero-right-car.png": "./static/media/hero-right-car.3628b224580ee243b1ba.png",
     "static/media/our-features.png": "./static/media/our-features.d69027726b5a972c1b17.png",
-    "static/media/hero-6.png": "./static/media/hero-6.bb16bdb51074a46ca87d.png",
     "static/media/la-brands-400.svg": "./static/media/la-brands-400.331115337bc9be66667a.svg",
     "static/media/la-solid-900.svg": "./static/media/la-solid-900.0f874d69730f8631d632.svg",
     "static/media/15.png": "./static/media/15.e7aafcbed1b69a888ab9.png",
@@ -22,7 +21,6 @@
     "static/media/14.png": "./static/media/14.bbd8d55bc0b34c7967d5.png",
     "static/media/1.png": "./static/media/1.febd68f959b03d39ff5b.png",
     "static/media/8.png": "./static/media/8.a93f0e5224dbfbdcd495.png",
-    "static/media/GroupImage.png": "./static/media/GroupImage.089083a67d3f8fdab550.png",
     "static/media/6.png": "./static/media/6.90d53f8dfe2ef8786062.png",
     "static/media/2.png": "./static/media/2.f3b23c9ef815235f2a35.png",
     "static/media/16.png": "./static/media/16.9f870f62a0081b2fa0d0.png",
@@ -40,6 +38,7 @@
     "static/media/HIW1.png": "./static/media/HIW1.bbef046fd6951afd08a7.png",
     "static/media/HIW3.png": "./static/media/HIW3.b650d652a9db697619b9.png",
     "static/media/HIW2.png": "./static/media/HIW2.f68577684c76e764a351.png",
+    "static/media/hero-7.png": "./static/media/hero-7.3fafe8882205cd29b6b1.png",
     "static/media/Poppins-Light.ttf": "./static/media/Poppins-Light.f41b63c0bb0963ace821.ttf",
     "static/media/Poppins-Regular.ttf": "./static/media/Poppins-Regular.8081832fc5cfbf634aa6.ttf",
     "static/media/Poppins-Medium.ttf": "./static/media/Poppins-Medium.9e1bb626874ed49aa343.ttf",
@@ -63,6 +62,7 @@
     "static/media/la-regular-400.svg": "./static/media/la-regular-400.5b8ad6f4ffe812a4eb26.svg",
     "static/media/Image-17.png": "./static/media/Image-17.855ac95fb0f8906c40ad.png",
     "static/media/Image-19.png": "./static/media/Image-19.b8a551e5fcd0ec5f66f2.png",
+    "static/media/group.jpg": "./static/media/group.4b2fc5b73f6e589fafbb.jpg",
     "static/media/SVG-subcribe2.png": "./static/media/SVG-subcribe2.efb832b25bd6eca32484.png",
     "static/media/Image-9.png": "./static/media/Image-9.d879028d45de09c9ca3b.png",
     "static/media/Kodchasan-SemiBold.ttf": "./static/media/Kodchasan-SemiBold.f531bf1a8af8703e4084.ttf",
@@ -108,12 +108,12 @@
     "static/media/mastercard.svg": "./static/media/mastercard.92c5b76a9ebc565de87902533102fc82.svg",
     "index.html": "./index.html",
     "static/media/VectorHIW.svg": "./static/media/VectorHIW.2a56b4d0aa5690494df25bc0b2bb3bf6.svg",
-    "main.07b333f7.css.map": "./static/css/main.07b333f7.css.map",
-    "main.1ba35e0f.js.map": "./static/js/main.1ba35e0f.js.map",
+    "main.ce32b187.css.map": "./static/css/main.ce32b187.css.map",
+    "main.64c6e10e.js.map": "./static/js/main.64c6e10e.js.map",
     "787.dfd8dd9b.chunk.js.map": "./static/js/787.dfd8dd9b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.07b333f7.css",
-    "static/js/main.1ba35e0f.js"
+    "static/css/main.ce32b187.css",
+    "static/js/main.64c6e10e.js"
   ]
 }

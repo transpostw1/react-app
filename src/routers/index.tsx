@@ -52,6 +52,7 @@ import BookingDetails from "new_component/Bookings-timeline/BookingDetails";
 import PrivateRoute from "./PrivateRoute";
 import QuotesPage from "new_component/Dashboard/QuotesPage";
 import WarehousingPage from "new_component/WarehousingPage/WarehousingPage";
+import CustomClearancePage from "new_component/CustomClearancePage/CustomClearancePage";
 
 
 export const pages: Page[] = [
@@ -124,6 +125,8 @@ export const pages: Page[] = [
   { path: "/user/my-request", component: MyRequest }, // newly added
   //
   { path: "/booking-details", component: BookingDetails }, // newly added
+  { path: "/custom-clearance", component: CustomClearancePage }, // newly added
+
 ];
 
 const MyRouter = () => {

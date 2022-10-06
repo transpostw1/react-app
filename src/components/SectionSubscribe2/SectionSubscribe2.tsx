@@ -7,9 +7,10 @@ import Input from "shared/Input/Input";
 
 export interface SectionSubscribe2Props {
   className?: string;
+  text?:string
 }
 
-const SectionSubscribe2: FC<SectionSubscribe2Props> = ({ className = "" }) => {
+const SectionSubscribe2: FC<SectionSubscribe2Props> = ({ className = "" ,text}) => {
   return (
     <div
       className={`nc-SectionSubscribe2 relative flex flex-col lg:flex-row lg:items-center ${className}`}
@@ -18,7 +19,8 @@ const SectionSubscribe2: FC<SectionSubscribe2Props> = ({ className = "" }) => {
       <div className="flex-shrink-0 mb-10 lg:mb-0 lg:mr-10 lg:w-2/5">
         <h2 className="font-semibold text-4xl">Ready to get started 🎉</h2>
         <span className="block mt-5 text-neutral-500 dark:text-neutral-400">
-        You can consult with us on the journey to deliver your product to the buyer, along with assistance in insuring and financing your trade.
+        {/* You can consult with us on the journey to deliver your product to the buyer, along with assistance in insuring and financing your trade. */}
+        {text}
         </span>
         {/* <ul className="space-y-4 mt-10">
           <li className="flex items-center space-x-4">

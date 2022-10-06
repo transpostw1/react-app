@@ -89,10 +89,11 @@ const ListingFlightsPage: FC<ListingFlightsPageProps> = ({
               {/* <span className="ml-2.5">1599 flights</span> */}
             </>
           }
-          className="pt-10 pb-24 lg:pb-32 lg:pt-16 "
+          className="pt-10 pb-24 lg:pb-32 lg:pt-32 "
         />
 
         {/* SECTION */}
+        {/* <SectionGridFilterCard className="pb-24 lg:pb-32" from_port={""} to_port={""} sl_date={undefined} cargo_type={null} /> */}
         <SectionGridFilterCard className="pb-24 lg:pb-32" from_port={""} to_port={""} sl_date={undefined} cargo_type={null} />
 
         {/* SECTION 1 */}

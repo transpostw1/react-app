@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import Select from "shared/Select/Select";
 import Input from "shared/Input/Input";
 import Checkbox from "shared/Checkbox/Checkbox";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+
+export interface IcommodityDetails {
+  commodityName?: string;
+  containerCount?: number |string;
+  weight?: number | string;
+  loadingDate?: string;
+  desc?: string;
+}
 
 const CommodityInfoPage = ({
   data,
@@ -12,6 +20,8 @@ const CommodityInfoPage = ({
   email,
   cargo,
 }: any) => {
+  const [commodityDetails, setCommodityDetails] = useState<IcommodityDetails>({});
+
   const history = useHistory();
   const handleOnClose = () => {
     onclose();
@@ -24,24 +34,22 @@ const CommodityInfoPage = ({
   const proccedHandler = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    const postData = { ...data, email };
-    console.log(postData);
+    const postData = { ...data, email, commodityDetails };
 
-    //  let config = {
-    //   headers: {
-    //     "Content-Type": "application/x-www-form-urlencoded",
-    //   },
+    console.log("postData", postData);
+
     axios
       .post("https://apis.transpost.co/api/bookings/store", postData)
       .then((response) => {
         const fetchedData = response.data;
-        console.log(fetchedData);
+        console.log("fetchedData",fetchedData);
         history.push({
           pathname: "/bookings",
           state: {
-            bId: fetchedData?.Booking.id,
+            bId: fetchedData?.Booking.ID,
             bookedData: data,
             cargoType: cargo,
+            commodityDetails
           },
         });
       })
@@ -66,13 +74,13 @@ const CommodityInfoPage = ({
                 type="text"
                 placeholder="Enter Comodity Name"
                 className="mt-1 mb-1"
-                //   onChange={(e) => {
-                //     setQuoteDetails({
-                //       ...quoteDetails,
-                //       from_port: e.target.value,
-                //     });
-                //   }}
-                //   value={quoteDetails.from_port}
+                  onChange={(e) => {
+                    setCommodityDetails({
+                      ...commodityDetails,
+                      commodityName: e.target.value,
+                    });
+                  }}
+                  value={commodityDetails.commodityName}
               />
               {/* {<p className="text-[red]">{validation.from_port}</p>} */}
             </label>
@@ -84,31 +92,31 @@ const CommodityInfoPage = ({
                 type="text"
                 placeholder="Enter Number of Containers"
                 className="mt-1 mb-2"
-                //   onChange={(e) => {
-                //     setQuoteDetails({
-                //       ...quoteDetails,
-                //       from_port: e.target.value,
-                //     });
-                //   }}
-                //   value={quoteDetails.from_port}
+                  onChange={(e) => {
+                    setCommodityDetails({
+                      ...commodityDetails,
+                      containerCount: e.target.value,
+                    });
+                  }}
+                  value={commodityDetails.containerCount}
               />
               {/* {<p className="text-[red]">{validation.from_port}</p>} */}
             </label>
             <label className="block">
               <span className="text-neutral-800 dark:text-neutral-200">
-                Weight (in MT) *
+                Weight per container (in MT) *
               </span>
               <Input
                 type="text"
-                placeholder="Enter the weight in MT"
+                placeholder="Enter the weight per container in MT"
                 className="mt-1 mb-2"
-                //   onChange={(e) => {
-                //     setQuoteDetails({
-                //       ...quoteDetails,
-                //       from_port: e.target.value,
-                //     });
-                //   }}
-                //   value={quoteDetails.from_port}
+                  onChange={(e) => {
+                    setCommodityDetails({
+                      ...commodityDetails,
+                      weight: e.target.value,
+                    });
+                  }}
+                  value={commodityDetails.weight}
               />
               {/* {<p className="text-[red]">{validation.from_port}</p>} */}
             </label>
@@ -120,13 +128,13 @@ const CommodityInfoPage = ({
                 type="date"
                 placeholder=""
                 className="mt-1 mb-2"
-                //   onChange={(e) => {
-                //     setQuoteDetails({
-                //       ...quoteDetails,
-                //       sailing_date: e.target.value,
-                //     });
-                //   }}
-                //   value={quoteDetails.sailing_date}
+                  onChange={(e) => {
+                    setCommodityDetails({
+                      ...commodityDetails,
+                      loadingDate: e.target.value,
+                    });
+                  }}
+                  value={commodityDetails.loadingDate}
               />
             </label>
 
@@ -137,13 +145,13 @@ const CommodityInfoPage = ({
               <textarea
                 placeholder="IMO cargo, Temperature control, OG, Overweight, Flexitank, Cargo readiness, CBM, Humidity, etc."
                 className="block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 rounded-[1rem] "
-                // onChange={(e) => {
-                //   setQuoteDetails({
-                //     ...quoteDetails,
-                //     description: e.target.value,
-                //   });
-                // }}
-                // value={quoteDetails.description}
+                onChange={(e) => {
+                  setCommodityDetails({
+                    ...commodityDetails,
+                    desc: e.target.value,
+                  });
+                }}
+                value={commodityDetails.desc}
               />
             </label>
             <label className="block">

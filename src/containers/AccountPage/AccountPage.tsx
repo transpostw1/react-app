@@ -129,7 +129,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
               {/* ---- */}
               <div>
                 <Label>About you</Label>
-                <Textarea className="mt-1.5" placeholder="Your size of Business and Frequently used corridors" />
+                <Textarea className="mt-1.5" placeholder="Size of your Business and Frequently used corridors" />
               </div>
               <div className="pt-2">
                 <ButtonPrimary>Update info</ButtonPrimary>

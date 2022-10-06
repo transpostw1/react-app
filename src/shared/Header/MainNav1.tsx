@@ -31,9 +31,10 @@ const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
       if (user) {
         createUserDocumentFromAuth(user);
         setIsLogin(true);
+
       }
       setCurrentUser(user);
-      console.log(user);
+      console.log("user detail", user.displayName);
     });
 
     return unsubscribe;
@@ -55,28 +56,17 @@ const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
         <div className="flex justify-start flex-grow items-center space-x-4 sm:space-x-10 2xl:space-x-14">
           <Logo />
           <Navigation />
-          {/* {isLogin ? (
-            ""
-          ) : (
-            <Link to={"/dashboard"}>
-              <div>Profile</div>
-            </Link>
-          )} */}
         </div>
         <div className="flex-shrink-0 flex items-center justify-end text-neutral-700 dark:text-neutral-100 space-x-1">
           <div className="hidden items-center xl:flex space-x-1">
             <SwitchDarkMode />
             {/* <SearchDropdown /> */}
-            {isLogin ? (
-              // <ButtonPrimary className="p-0 bg-[#cd512f]" onClick={signOuthandler}>
-              //   Sign Out
-              // </ButtonPrimary>
-              
-                <ProfileDropdown isLogin={isLogin} setIsLogin={setIsLogin} />
-
+            {!isLogin ? (
+              <ButtonPrimary className="bg-[#cd512f]" href="/login">
+                Sign In
+              </ButtonPrimary>
             ) : (
-              <ButtonPrimary className="bg-[#cd512f]" href="/login">Sign In</ButtonPrimary>
-              // <ButtonPrimary onClick={signOuthandler}>{currentUser?.displayName?.charAt(0)}</ButtonPrimary>
+              <ProfileDropdown isLogin={isLogin} currentUser={currentUser} setIsLogin={setIsLogin} />
             )}
             <div className="px-1" />
             {/* <ButtonPrimary href="/login">Sign up</ButtonPrimary> */}
