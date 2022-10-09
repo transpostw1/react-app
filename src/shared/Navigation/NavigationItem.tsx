@@ -3,12 +3,12 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import React, { FC, Fragment, useEffect, useState } from "react";
 import { NavLink, RouteComponentProps, withRouter } from "react-router-dom";
 import NcImage from "shared/NcImage/NcImage";
-
+import { useUserAuth } from "utils/contexts/userContext";
 
 // auth
 import {
   onAuthStateChangedListener,
-  signOutUser
+  signOutUser,
 } from "../../utils/firebase/firebase-config";
 // <--- NavItemType --->
 export interface MegamenuItem {
@@ -40,26 +40,27 @@ const NavigationItem: FC<NavigationItemWithRouterProps> = ({
   history,
 }) => {
   const [menuCurrentHovers, setMenuCurrentHovers] = useState<string[]>([]);
-  const [userIsLogin, setUserIsLogin] = useState(true);
+  // const [userIsLogin, setUserIsLogin] = useState(true);
 
+  const { isLogin } = useUserAuth();
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChangedListener((user: any) => {
-      if (user) {
-        setUserIsLogin(true);
-      }
-     else {
-      setUserIsLogin(false)
-     }
-    });
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChangedListener((user: any) => {
+  //     if (user) {
+  //       setUserIsLogin(true);
+  //     }
+  //    else {
+  //     setUserIsLogin(false)
+  //    }
+  //   });
 
-    return unsubscribe;
-  }, []);
+  //   return unsubscribe;
+  // }, []);
 
-  const signOuthandler = () => {
-    setUserIsLogin(!userIsLogin);
-    signOutUser();
-  };
+  // const signOuthandler = () => {
+  //   setUserIsLogin(!userIsLogin);
+  //   signOutUser();
+  // };
 
   // CLOSE ALL MENU OPENING WHEN CHANGE HISTORY
   useEffect(() => {
@@ -332,7 +333,7 @@ const NavigationItem: FC<NavigationItemWithRouterProps> = ({
     default:
       return (
         <li className="menu-item">
-          {(menuItem.protected || userIsLogin) &&  renderMainItem(menuItem)}
+          {(menuItem.protected || isLogin) && renderMainItem(menuItem)}
         </li>
       );
   }

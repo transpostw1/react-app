@@ -14,12 +14,9 @@ const ProfileDropdown = () => {
   const { isLogin, user, logOut } = useUserAuth();
 
   const signOuthandler = () => {
-    // setIsLogin(!isLogin);
-    // signOutUser();
     logOut();
     history.push("/login");
   };
-console.log("USER ", user);
 
   if (!user) {
     return null;

@@ -14,6 +14,7 @@ import {
 } from "../../utils/firebase/firebase-config";
 import { useHistory } from "react-router-dom";
 import CommodityInfoPage from "new_component/CommodityInfo/CommodityInfoPage";
+import { useUserAuth } from "utils/contexts/userContext";
 
 export interface RateCardProps {
   className?: string;
@@ -45,39 +46,19 @@ export interface RateCardProps {
 
 const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isLogin, setIsLogin] = useState(true); // temporary for testing purpose
-  const [currentUser, setCurrentUser] = useState(null);
-  const [email, setEmail] = useState("");
   const [rate, setRate] = useState<string | undefined>("");
   const [cargo, setCargo] = useState<string>("");
 
   const [showQuoteModal, setShowQuoteModal] = useState<boolean>(false);
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
+
   //context api
   const { addQuote } = useQuoteList();
-
-  // signout should effect here
-  useEffect(() => {
-    const unsubscribe = onAuthStateChangedListener((user: any) => {
-      if (user) {
-        createUserDocumentFromAuth(user);
-        setIsLogin(false);
-      }
-      setCurrentUser(user);
-      setEmail(user.email);
-    });
-
-    return unsubscribe;
-  }, []);
+  const { isLogin, user } = useUserAuth();
 
   const handleClose = () => {
     setShowQuoteModal(false);
     setShowInfoModal(false);
-  };
-
-  const signOuthandler = () => {
-    setIsLogin(!isLogin);
-    signOutUser();
   };
 
   // for Selecting rates
@@ -93,7 +74,6 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
       setCargo("40'High Cube");
     }
   }, [data]);
-
 
   const bookNowHandler = () => {
     setShowInfoModal(true);
@@ -160,13 +140,13 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
           <div className="border-l border-neutral-200 dark:border-neutral-700 md:mx-6 lg:mx-10"></div>
           <div className="flex-[4] whitespace-nowrap sm:text-center">
             <span className="text-xl font-semibold text-secondary-6000">
-              USD {!isLogin ? data.total : "****"}
+              USD {isLogin ? data.total : "****"}
             </span>
             {/* <div className="text-xs sm:text-sm text-neutral-500 font-normal mt-0.5">
               total Cost
             </div> */}
             <div className="mt-5 font-medium">
-              {!isLogin ? (
+              {isLogin ? (
                 // <ButtonPrimary onClick={(e) => bookNowHandler(e, data.ID)} href="/bookings">Book Now</ButtonPrimary>
                 <>
                   <button
@@ -223,7 +203,7 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
         data={data}
         onclose={handleClose}
         showInfoModal={showInfoModal}
-        email={email}
+        email={user?.email}
         cargo={cargo}
       />
       <QuoteModal
@@ -311,9 +291,9 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
             <span className="text-xl font-semibold text-secondary-6000">
               <div className="font text-center">
                 {" "}
-                USD {!isLogin ? data.total : "****"}{" "}
+                USD {isLogin ? data.total : "****"}{" "}
               </div>
-              {!isLogin ? (
+              {isLogin ? (
                 <div className="mt-5 ">
                   {/* <ButtonPrimary href="/bookings">Book Now</ButtonPrimary> */}
                   <button onClick={bookNowHandler}>Book Now</button>
