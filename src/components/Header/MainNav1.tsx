@@ -6,6 +6,10 @@ import ButtonPrimary from "shared/Button/ButtonPrimary";
 import MenuBar from "shared/MenuBar/MenuBar";
 import SwitchDarkMode from "shared/SwitchDarkMode/SwitchDarkMode";
 
+
+
+// NOT IN USE Refer to src\shared\header
+
 export interface MainNav1Props {
   isTop: boolean;
 }

@@ -17,34 +17,14 @@ import { useHistory, Link } from "react-router-dom";
 import AccountPage from "containers/AccountPage/AccountPage";
 import ProfileDropdown from "./ProfileDropdown";
 
+import { useUserAuth } from "utils/contexts/userContext";
+
 export interface MainNav1Props {
   isTop: boolean;
 }
 
 const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
-  const [isLogin, setIsLogin] = useState<boolean>(false);
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const unsubscribe = onAuthStateChangedListener((user: User) => {
-      if (user) {
-        createUserDocumentFromAuth(user);
-        setIsLogin(true);
-
-      }
-      setCurrentUser(user);
-      console.log("user detail", user.displayName);
-    });
-
-    return unsubscribe;
-  }, []);
-  const history = useHistory();
-  const signOuthandler = () => {
-    setIsLogin(!isLogin);
-    signOutUser();
-    history.push("/login");
-  };
+  const { isLogin } = useUserAuth();
 
   return (
     <div
@@ -66,7 +46,7 @@ const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
                 Sign In
               </ButtonPrimary>
             ) : (
-              <ProfileDropdown isLogin={isLogin} currentUser={currentUser} setIsLogin={setIsLogin} />
+              <ProfileDropdown />
             )}
             <div className="px-1" />
             {/* <ButtonPrimary href="/login">Sign up</ButtonPrimary> */}

@@ -5,20 +5,25 @@ import Input from "shared/Input/Input";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { NavLink, useHistory } from "react-router-dom";
 
-const ProfileDropdown = ({ setIsLogin, isLogin,currentUser }: any) => {
+import { useUserAuth } from "utils/contexts/userContext";
+
+const ProfileDropdown = () => {
   const inputRef = React.createRef<HTMLInputElement>();
 
   const history = useHistory();
+  const { isLogin, user, logOut } = useUserAuth();
+
   const signOuthandler = () => {
-    
-    setIsLogin(!isLogin);
-    signOutUser();
+    // setIsLogin(!isLogin);
+    // signOutUser();
+    logOut();
     history.push("/login");
   };
+console.log("USER ", user);
 
-if(!currentUser){
-    return null
-}
+  if (!user) {
+    return null;
+  }
 
   return (
     <React.Fragment>
@@ -33,7 +38,8 @@ if(!currentUser){
           return (
             <>
               <Popover.Button className="text-2xl bg-[#9e9e9e] md:text-[28px] w-10 h-10 rounded-full text-neutral-700 dark:text-neutral-300  hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none flex items-center justify-center">
-                {/* <EllipsisVerticalIcon/> */}{currentUser.displayName[0]}
+                {/* <EllipsisVerticalIcon/> */}
+                {user.displayName[0]}
                 {/* <i className="las la-search"></i> */}
               </Popover.Button>
 
@@ -53,7 +59,7 @@ if(!currentUser){
                   //   className="absolute right-0 z-10  max-w-sm mt-3"
                 >
                   <ul className="rounded-lg p-2 shadow-lg ring-1 ring-black ring-opacity-5 dark:ring-white dark:ring-opacity-10 text-sm relative bg-white dark:bg-neutral-900 py-4 grid space-y-1">
-                    <li onClick={() => close()} >
+                    <li onClick={() => close()}>
                       <NavLink
                         //   activeClassName="!border-primary-500"
                         to="/user/bookings"

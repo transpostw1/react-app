@@ -59,8 +59,8 @@ const CommodityInfoPage = ({
   };
 
   return (
-    <div className=" p-10 fixed z-50 inset-0 bg-neutral-200 bg-opacity-10  backdrop-blur-sm border rounded dark:border-neutral-800 ">
-      <div className="flex container md:items-center relative h-full flex-col align-center bg-neutral-100 border rounded-lg dark:border-neutral-600 dark:bg-neutral-700">
+    <div className="  p-10 fixed z-50 inset-0 bg-neutral-200 bg-opacity-10  backdrop-blur-sm border rounded dark:border-neutral-800 ">
+      <div className=" flex container md:items-center relative h-full flex-col align-center bg-neutral-100 border rounded-lg dark:border-neutral-600 dark:bg-neutral-700">
         <div className="text-[1.2rem] font-bold my-4 ">
           <span>Please fill up the following details before proceeding!</span>
         </div>

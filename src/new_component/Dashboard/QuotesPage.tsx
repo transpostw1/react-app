@@ -34,23 +34,23 @@ const QuotesPage = () => {
 
   const renderSection2 = () => {
     return (
-      <div className="listingSection__wrap bg-white h-screen flex justify-center items-center dark:bg-neutral-800">
+      <div className="listingSection__wrap bg-white dark:text-neutral-300  dark:bg-neutral-800 ">
         {/* HEADING */}
 
-        {
-        // quoteList && quoteList.length > 0 ? (
-        //   quoteList.map((quote: any) => {
-        //     return <QuoteCard key={quote.quoteId} quote={quote} />;
-        //   })
-        // ) : (
+        {quoteList && quoteList.length > 0 ? (
+          quoteList.map((quote: any) => {
+            return <QuoteCard key={quote.quoteId} quote={quote} />;
+          })
+        ) : (
           <>
-            <img src={emptyIcon} className="h-[4rem] w-[4rem]" alt="" />
-            <div className="text-2xl text-centre font-semibold">
-              You haven't made any quotes yet.
+            <div className="h-screen flex flex-col justify-center items-center dark:bg-neutral-800 ">
+              <img src={emptyIcon} className="h-[4rem] w-[4rem]" alt="" />
+              <div className="text-2xl text-centre font-semibold">
+                You haven't made any quotes yet.
+              </div>
             </div>
           </>
-        // )
-        }
+        )}
       </div>
     );
   };

@@ -9,7 +9,7 @@ import {
   onAuthStateChangedListener,
   createUserDocumentFromAuth,
   signOutUser,
-} from "utils/firebase/firebase-config"
+} from "utils/firebase/firebase-config";
 
 import BookingCard from "./BookingCard";
 import Loading from "./Loading";
@@ -50,12 +50,12 @@ const Dashboard = () => {
   const [completedList, setCompletedList] = useState([]);
   const [activeTab, setActiveTab] = useState("All");
 
-const [currentUser,setCurrentUser] = useState<User | null>(null)
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   const fetchData = async () => {
     axios
       .get(
-        "https://apis.transpost.co/api/bookings/user/?email=rashidshaikh@transpost.co",
+        `https://apis.transpost.co/api/bookings/user/?email=rashidshaikh@transpost.co`,
         {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
@@ -88,25 +88,23 @@ const [currentUser,setCurrentUser] = useState<User | null>(null)
 
   useEffect(() => {
     fetchData();
-    
   }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChangedListener((user: User) => {
       if (user) {
-        // createUserDocumentFromAuth(user);
-
+        createUserDocumentFromAuth(user);
       }
       setCurrentUser(user);
-      console.log("user in bookingsdetail", user.displayName);
+      console.log("user in bookingsdetail", user.email);
     });
 
     return unsubscribe;
   }, []);
 
-// if(!currentUser){
-//   return null
-// }
+  // if(!currentUser){
+  //   return null
+  // }
 
   // for count set all in initial rendering
 
@@ -197,7 +195,7 @@ const [currentUser,setCurrentUser] = useState<User | null>(null)
       <div className="listingSection__wrap bg-white dark:text-neutral-300  dark:bg-neutral-800 ">
         {/* HEADING */}
         {bookingList.length > 0 ? (
-          <>  
+          <>
             {bookingList.map((item, i) => {
               return <BookingCard data={item} key={i} />;
             })}

@@ -16,21 +16,17 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "../src/redux/store";
 import { BrowserRouter } from "react-router-dom";
-// import {saveState} from "../src/redux/localstorage"
+import { UserAuthContextProvider } from "./utils/contexts/userContext";
 
-
-// store.subscribe(() => {
-//   saveState({
-//     quotes: store.getState().quote
-//   });
-// });
 
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>
-      {/* <UserProvider> */}
-      <App />
-      {/* </UserProvider> */}
+      <UserAuthContextProvider>
+        {/* <UserProvider> */}
+        <App />
+        {/* </UserProvider> */}
+      </UserAuthContextProvider>
     </Provider>
   </BrowserRouter>,
 

@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import ClearDataButton from "./ClearDataButton";
 import { useRef } from "react";
 import axios from "axios";
+import { useLocalStorage } from "hooks/useLocalStorage";
 
 export interface IPorts {
   id: number;
@@ -39,6 +40,11 @@ const LocationInput: FC<LocationInputProps> = ({
 
   const [value, setValue] = useState(defaultValue);
   const [showPopover, setShowPopover] = useState(autoFocus);
+
+  const [recentSearch, setRecentSearch] = useLocalStorage<string[]>("recent_search", []);
+
+
+  // recent seach should contain all the ports  
 
   useEffect(() => {
     setValue(defaultValue);
@@ -79,8 +85,8 @@ const LocationInput: FC<LocationInputProps> = ({
   };
 
   const handleSelectLocation = (item: string) => {
-    
     setValue(item);
+    setRecentSearch((prevState: string[]) => [...prevState, item]);
     onInputDone && onInputDone(item);
     setShowPopover(false);
   };
@@ -160,7 +166,8 @@ const LocationInput: FC<LocationInputProps> = ({
                 </svg>
               </span>
               <span className="block font-medium text-neutral-700 dark:text-neutral-200">
-                {item.port_name} <span className="text-[red]">({item.port_code})</span>
+                {item.port_name}{" "}
+                <span className="text-[red]">({item.port_code})</span>
               </span>
             </span>
           ))}
