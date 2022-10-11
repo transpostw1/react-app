@@ -5,15 +5,9 @@ import ButtonPrimary from "shared/Button/ButtonPrimary";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
 
 import QuoteModal from "new_component/Quotation/QuoteModal";
-import { useQuoteList } from "utils/contexts/quoteListContext";
-
-import {
-  onAuthStateChangedListener,
-  createUserDocumentFromAuth,
-  signOutUser,
-} from "../../utils/firebase/firebase-config";
-import { useHistory } from "react-router-dom";
 import CommodityInfoPage from "new_component/CommodityInfo/CommodityInfoPage";
+
+import { useQuoteList } from "utils/contexts/quoteListContext";
 import { useUserAuth } from "utils/contexts/userContext";
 
 export interface RateCardProps {

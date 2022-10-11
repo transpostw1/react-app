@@ -7,40 +7,34 @@ import Select from "shared/Select/Select";
 import Textarea from "shared/Textarea/Textarea";
 import CommonLayout from "./CommonLayout";
 import { Helmet } from "react-helmet";
-import {
-  onAuthStateChangedListener,
-  createUserDocumentFromAuth,
-  signOutUser,
-} from "utils/firebase/firebase-config";
 
-import { User } from "firebase/auth";
+import { useUserAuth } from "utils/contexts/userContext";
 
 export interface AccountPageProps {
   className?: string;
 }
 
 const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
-  const [isLogin, setIsLogin] = useState(true);
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [fullName, setFullName] = useState<string | null>("");
-  const [email, setEmail] = useState<string | null>("");
+  // const [isLogin, setIsLogin] = useState(true);
+  // const [currentUser, setCurrentUser] = useState<User | null>(null);
+  // const [fullName, setFullName] = useState<string | null>("");
+  // const [email, setEmail] = useState<string | null>("");
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChangedListener((user: User) => {
-      if (user) {
-        createUserDocumentFromAuth(user);
-        setIsLogin(false);
-      }
-      setCurrentUser(user);
-      setFullName(user.displayName);
-      setEmail(user.email);
-    });
+  const { user } = useUserAuth();
 
-    return unsubscribe;
-  }, []);
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChangedListener((user: User) => {
+  //     if (user) {
+  //       createUserDocumentFromAuth(user);
+  //       setIsLogin(false);
+  //     }
+  //     setCurrentUser(user);
+  //     setFullName(user.displayName);
+  //     setEmail(user.email);
+  //   });
 
-  console.log(currentUser?.displayName);
-  console.log(currentUser?.email);
+  //   return unsubscribe;
+  // }, []);
 
   return (
     <div className={`nc-AccountPage ${className}`} data-nc-id="AccountPage">
@@ -92,8 +86,8 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
               </div>
               <div>
                 <Label>Full Name</Label>
-                {typeof fullName === "string" ? (
-                  <Input className="mt-1.5" value={fullName} />
+                {user ? (
+                  <Input className="mt-1.5" value={user?.displayName} />
                 ) : (
                   ""
                 )}
@@ -105,20 +99,15 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                   <option value="Shipper">Shipper</option>
                   <option value="Freight Forwarder">Freight Forwarder</option>
                   <option value="Custom Broker">Custom Broker</option>
-
                 </Select>
               </div>
 
               {/* ---- */}
               <div>
                 <Label>Email</Label>
-                {typeof email === "string" ? (
-                  <Input className="mt-1.5" value={email} />
-                ) : (
-                  ""
-                )}
+                {user ? <Input className="mt-1.5" value={user?.email} /> : ""}
               </div>
-    
+
               <div>
                 <Label>Phone number</Label>
                 <Input
@@ -129,7 +118,10 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
               {/* ---- */}
               <div>
                 <Label>About you</Label>
-                <Textarea className="mt-1.5" placeholder="Size of your Business and Frequently used corridors" />
+                <Textarea
+                  className="mt-1.5"
+                  placeholder="Size of your Business and Frequently used corridors"
+                />
               </div>
               <div className="pt-2">
                 <ButtonPrimary>Update info</ButtonPrimary>

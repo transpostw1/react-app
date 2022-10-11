@@ -26,7 +26,7 @@ const CustomClearancePage = () => {
           </div>
           {CHA_LIST.map((item) => {
             return (
-              <div className="flex font-medium border-b ">
+              <div key={item.shippingLine} className="flex font-medium border-b ">
                 <span className="w-1/2 p-3 border-r">{item.shippingLine}</span>
                 <a
                   className="w-1/2 p-3 underline underline-offset-1"

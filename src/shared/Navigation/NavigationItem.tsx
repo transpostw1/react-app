@@ -5,11 +5,7 @@ import { NavLink, RouteComponentProps, withRouter } from "react-router-dom";
 import NcImage from "shared/NcImage/NcImage";
 import { useUserAuth } from "utils/contexts/userContext";
 
-// auth
-import {
-  onAuthStateChangedListener,
-  signOutUser,
-} from "../../utils/firebase/firebase-config";
+
 // <--- NavItemType --->
 export interface MegamenuItem {
   id: string;

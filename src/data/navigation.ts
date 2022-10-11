@@ -351,7 +351,7 @@ export const NAVIGATION_DEMO: NavItemType[] = [
     name: "Warehousing",
     // type: "dropdown",
     protected: true,
-    children: templatesChildrenMenus,
+    // children: templatesChildrenMenus,
   },
   {
     id: ncNanoId(),

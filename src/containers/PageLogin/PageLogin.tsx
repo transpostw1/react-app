@@ -6,16 +6,14 @@ import { Helmet } from "react-helmet";
 import Input from "shared/Input/Input";
 import { Link } from "react-router-dom";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
-import { useDispatch,useSelector } from "react-redux";
-import { useHistory,useLocation } from "react-router-dom";
-
-import { googleSignInStart, emailSignInStart, signInSuccess } from "redux/user/userAction";
+import { useHistory, useLocation } from "react-router-dom";
 
 import {
   signInWithGooglePopup,
   createUserDocumentFromAuth,
   signInAuthUserWithEmailAndPassword,
 } from "utils/firebase/firebase-config";
+import { useUserAuth } from "utils/contexts/userContext";
 
 export interface PageLoginProps {
   className?: string;
@@ -40,30 +38,21 @@ const loginSocials = [
 ];
 
 const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
-  const [isLogin,setIsLogin] = useState(true)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation();
 
+  const { logIn, googleSignIn } = useUserAuth();
 
   const signInWithGoogle = async () => {
-    const { user } = await signInWithGooglePopup();
-    await createUserDocumentFromAuth(user);
-
-    // const user = dispatch(googleSignInStart());
-    console.log(user);
+    await googleSignIn();
     history.push("./");
   };
 
   const submitHandler = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
     try {
-      const response = await signInAuthUserWithEmailAndPassword(
-        email,
-        password
-      );
+      const response = await logIn(email, password);
       console.log(response);
       history.push("./");
     } catch (error: any) {
@@ -80,7 +69,7 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
     }
   };
 
-  return  (
+  return (
     <div className={`nc-PageLogin ${className}`} data-nc-id="PageLogin">
       <Helmet>
         <title>Login || Transpost</title>

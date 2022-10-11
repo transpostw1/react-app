@@ -12,8 +12,7 @@ import {
   createUserDocumentFromAuth,
   createAuthUserWithEmailAndPassword,
 } from "utils/firebase/firebase-config";
-// import { signUpStart } from "redux/user/userAction";
-import { useDispatch } from "react-redux";
+
 
 export interface PageSignUpProps {
   className?: string;
@@ -45,7 +44,6 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
   const [companyName, setCompanyName] = useState("");
   const [email, setEmail] = useState("");
 
-  const dispatch = useDispatch();
   const history = useHistory();
 
   const logGoogleUser = async () => {
@@ -87,22 +85,6 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
     }
   };
 
-  // try {
-  //   dispatch(signUpStart(email, password, fullName));
-  //   //    {
-  //   //   displayName
-  //   //   // fullName,
-  //   //   // phoneNumber,
-  //   //   // gstNumber,
-  //   //   // companyName,
-  //   // });
-  // } catch (error: any) {
-  //   if (error.code === "auth/email-already-in-use") {
-  //     alert("Cannot create user, email already in use");
-  //   } else {
-  //     console.log("user creation encountered an error", error);
-  //   }
-  // }
 
   return (
     <div className={`nc-PageSignUp  ${className}`} data-nc-id="PageSignUp">

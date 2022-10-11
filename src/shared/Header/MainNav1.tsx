@@ -5,16 +5,7 @@ import SearchDropdown from "./SearchDropdown";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import MenuBar from "shared/MenuBar/MenuBar";
 import SwitchDarkMode from "shared/SwitchDarkMode/SwitchDarkMode";
-import {
-  onAuthStateChangedListener,
-  createUserDocumentFromAuth,
-  signOutUser,
-} from "utils/firebase/firebase-config";
-import { User } from "firebase/auth";
-import { signOutStart } from "../../redux/user/userAction";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory, Link } from "react-router-dom";
-import AccountPage from "containers/AccountPage/AccountPage";
+
 import ProfileDropdown from "./ProfileDropdown";
 
 import { useUserAuth } from "utils/contexts/userContext";

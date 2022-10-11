@@ -12,6 +12,7 @@ import ButtonPrimary from "shared/Button/ButtonPrimary";
 import HeroSearchForm, {
   SearchTab,
 } from "components/HeroSearchForm/HeroSearchForm";
+import TestCarousel from "new_component/Dashboard/TestCarousel";
 
 export interface SectionHeroArchivePageProps {
   className?: string;
@@ -71,6 +72,9 @@ const SectionHeroArchivePage: FC<SectionHeroArchivePageProps> = ({
         <div className="z-10 lg:-mt-40 xl:-mt-18 w-full">
           <HeroSearchForm currentPage={currentPage} currentTab={currentTab} />
         </div>
+      </div>
+      <div className="mt-10 pt-12">
+        <TestCarousel/>
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import emptyIcon from "../../images/transpost images/dashboard/emptyPng.png";
 import CommonSidebar from "../CommonSidebar";
 import QuoteCard from "./QuoteCard";
 import { useQuoteList } from "utils/contexts/quoteListContext";
+import TestCarousel from "./TestCarousel";
 // import { getLocalStorage } from 'components/RateCard/RateCard'
 
 const QuotesPage = () => {
@@ -65,6 +66,8 @@ const QuotesPage = () => {
         </div>
         <div className="w-full w-[70%] space-y-5 lg:pl-5 flex-shrink-0">
           {renderSection1()}
+          <TestCarousel />
+
           {renderSection2()}
         </div>
       </main>

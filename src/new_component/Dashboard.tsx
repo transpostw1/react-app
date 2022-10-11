@@ -4,16 +4,10 @@ import ButtonSecondary from "shared/Button/ButtonSecondary";
 import emptyicon from "../images/transpost images/dashboard/emptyPng.png";
 import axios from "axios";
 
-import { User } from "firebase/auth";
-import {
-  onAuthStateChangedListener,
-  createUserDocumentFromAuth,
-  signOutUser,
-} from "utils/firebase/firebase-config";
-
 import BookingCard from "./BookingCard";
 import Loading from "./Loading";
 import CommonSidebar from "./CommonSidebar";
+import { useUserAuth } from "utils/contexts/userContext";
 
 export interface BookingCardProps {
   data: {
@@ -50,7 +44,7 @@ const Dashboard = () => {
   const [completedList, setCompletedList] = useState([]);
   const [activeTab, setActiveTab] = useState("All");
 
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const { user } = useUserAuth();
 
   const fetchData = async () => {
     axios
@@ -87,25 +81,14 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    fetchData();
+    if (user) {
+      fetchData();
+    }
   }, []);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChangedListener((user: User) => {
-      if (user) {
-        createUserDocumentFromAuth(user);
-      }
-      setCurrentUser(user);
-      console.log("user in bookingsdetail", user.email);
-    });
-
-    return unsubscribe;
-  }, []);
-
-  // if(!currentUser){
-  //   return null
-  // }
-
+  if (!user) {
+    return null;
+  }
   // for count set all in initial rendering
 
   const pendingBookings = () => {

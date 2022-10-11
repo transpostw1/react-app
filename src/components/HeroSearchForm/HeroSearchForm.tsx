@@ -14,7 +14,7 @@ import {
   faPlaneDeparture,
   faTruck,
   faDiceOne,
-  faBoxes
+  faBoxes,
 } from "@fortawesome/free-solid-svg-icons";
 
 export type SearchTab =
@@ -73,18 +73,20 @@ const HeroSearchForm: FC<HeroSearchFormProps> = ({
   ];
 
   const onclickHandler = () => {
-    myRef.current?.scrollIntoView({ block: "center", behavior: "smooth" });
+    if (window.screen.width > 540) {
+      myRef.current?.scrollIntoView({ block: "center", behavior: "smooth" });
+    }
   };
 
   const renderTab = () => {
     return (
-      <ul className="ml-2 sm:ml-6  flex space-x-5 sm:space-x-8 lg:space-x-11 overflow-x-auto w-fit px-4 py-2 rounded-full  hiddenScrollbar dark:bg-neutral-800">
+      <ul className=" sm:ml-6 flex space-x-3 text-xs sm:space-x-8 lg:space-x-11 overflow-x-auto w-fit px-4 py-2 rounded-full  hiddenScrollbar dark:bg-neutral-800">
         {newTab.map((tab) => {
           const active = tab.name === tabActive;
           return (
             <li
               onClick={() => setTabActive(tab.name)}
-              className={`flex-shrink-0 flex items-center cursor-pointer text-sm lg:text-base font-medium  ${
+              className={`flex-shrink-0 flex items-center cursor-pointer lg:text-base font-medium  ${
                 active
                   ? ""
                   : "text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-300"
@@ -132,7 +134,7 @@ const HeroSearchForm: FC<HeroSearchFormProps> = ({
     <div
       ref={myRef}
       onClick={onclickHandler}
-      className=" lg:shadow-2xl lg:px-10 lg:pb-10 lg:backdrop-blur-[2px]  rounded-3xl  w-full"
+      className="lg:shadow-2xl lg:px-10 lg:pb-10 lg:backdrop-blur-[2px]  rounded-3xl  w-full"
     >
       <div
         className={`nc-HeroSearchForm w-full max-w-6xl py lg:py-2 ${className}`}

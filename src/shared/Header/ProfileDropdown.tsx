@@ -11,12 +11,14 @@ const ProfileDropdown = () => {
   const inputRef = React.createRef<HTMLInputElement>();
 
   const history = useHistory();
-  const { isLogin, user, logOut } = useUserAuth();
+  const { user, logOut } = useUserAuth();
 
   const signOuthandler = () => {
     logOut();
     history.push("/login");
   };
+
+
 
   if (!user) {
     return null;

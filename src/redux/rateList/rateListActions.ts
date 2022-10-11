@@ -54,6 +54,7 @@ export const fetchData = (postData: postDataProps) => {
         const fetchedData = response.data;
         dispatch(fetchDataSuccess(fetchedData)); // dispatching the action
         console.log(fetchedData);
+        
       })
       .catch((error) => {
         const errorMsg = error.message;

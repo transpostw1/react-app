@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import LocationInput, { IPorts } from "./LocationInput";
 import { FocusedInputShape } from "react-dates";
 // import RentalCarDatesRangeInput from "./RentalCarDatesRangeInput";
@@ -17,13 +17,6 @@ import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
 import axios from "axios";
 import { debounce } from "lodash";
-
-// for Authentication
-import {
-  onAuthStateChangedListener,
-  createUserDocumentFromAuth,
-} from "utils/firebase/firebase-config";
-import { User } from "firebase/auth";
 
 // DEFAULT DATA FOR ARCHIVE PAGE
 const defaultLocationValue = "Nhava Sheva";
@@ -107,9 +100,6 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({
   const [contDetails, setContDetails] = useState("FCL,20'Standard");
   const [convDate, setConvDate] = useState<null | string | undefined>(null);
 
-  //current user
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-
   const [dateFocused, setDateFocused] = useState<boolean>(false);
 
   const selectedType = (value: React.SetStateAction<string>) => {
@@ -160,18 +150,6 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({
     // user_email: currentUser ? currentUser.email : "",
   });
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChangedListener((user: User) => {
-      if (user) {
-        createUserDocumentFromAuth(user);
-        // setIsLogin(false);
-      }
-      setCurrentUser(user);
-    });
-
-    return unsubscribe;
-  }, []);
-
   const submitHandler = () => {
     fetchData(postData);
   };
@@ -205,16 +183,20 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({
   });
 
   //find solution for following
-  const fetchDropofflist = (InputValue: string) => {
-    axios
-      .get(
-        `https://apis.transpost.co/api/ajax-autocomplete-search?q=${InputValue}`
-      )
-      .then((response) => {
-        console.log("droppOff", response.data);
+  const fetchDropofflist = async (InputValue: string) => {
+    let cancelToken = axios.CancelToken.source();
+    
+    if (typeof cancelToken != typeof undefined) {
+      cancelToken.cancel("cancel the prev request");
+    }
 
-        setDropOffSearchList(response.data);
-      });
+    const response = await axios.get(
+      `https://apis.transpost.co/api/ajax-autocomplete-search?q=${InputValue}`,
+      { cancelToken: cancelToken.token }
+    );
+    console.log("droppOff", response.data);
+
+    setDropOffSearchList(response.data);
   };
 
   useEffect(() => {
@@ -225,17 +207,14 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({
 
   useEffect(() => {
     if (dropOffInputValue.length % 2 === 0 && dropOffInputValue.length !== 0) {
-      fetchDropofflist(dropOffInputValue);
     }
+    fetchDropofflist(dropOffInputValue);
   }, [dropOffInputValue]);
 
   const pickUpHandler = (e: string) => {
+    
     setPickUpInputValue(e);
-    // fetchPickUpList(e);
   };
-
-
-
 
   const dropOffHandler = (e: string) => {
     setDropOffInputValue(e);
@@ -471,4 +450,4 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => {
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(FlightSearchForm);
+export default connect(mapStateToProps, mapDispatchToProps)(FlightSearchForm);
