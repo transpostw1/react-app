@@ -184,15 +184,15 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({
 
   //find solution for following
   const fetchDropofflist = async (InputValue: string) => {
-    let cancelToken = axios.CancelToken.source();
+    // let cancelToken = axios.CancelToken.source();
     
-    if (typeof cancelToken != typeof undefined) {
-      cancelToken.cancel("cancel the prev request");
-    }
+    // if (typeof cancelToken != typeof undefined) {
+    //   cancelToken.cancel("cancel the prev request");
+    // }
 
     const response = await axios.get(
       `https://apis.transpost.co/api/ajax-autocomplete-search?q=${InputValue}`,
-      { cancelToken: cancelToken.token }
+      // { cancelToken: cancelToken.token }
     );
     console.log("droppOff", response.data);
 
@@ -207,8 +207,8 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({
 
   useEffect(() => {
     if (dropOffInputValue.length % 2 === 0 && dropOffInputValue.length !== 0) {
+      fetchDropofflist(dropOffInputValue);
     }
-    fetchDropofflist(dropOffInputValue);
   }, [dropOffInputValue]);
 
   const pickUpHandler = (e: string) => {

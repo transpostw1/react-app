@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
+
 import { Timeline, TimelineEvent } from "react-event-timeline";
+import moment from "moment";
+import axios from "axios";
+import DOMPurify from "dompurify";
+
 import bookingRcvd from "../../images/transpost images/booking-details/booking-recieved.png";
 
 import { useLocation, RouteComponentProps } from "react-router-dom";
 import Loading from "new_component/Loading";
-import axios from "axios";
 
 export interface BookingsTimelineProps {
   ID: string;
@@ -73,12 +77,14 @@ const BookingDetails = () => {
                   {item.status[0].name}
                 </h1>
               }
-              createdAt={item.time}
+              createdAt={moment(item.time).format("LLLL")}
               // icon={<img className="ml-2 w-5 h-5" src={bookingRcvd}></img>}
             >
               {/* hav to use DOM purifier ref:https://stackoverflow.com/questions/65827431/what-are-the-pros-and-cons-of-using-an-html-parsing-package-like-html-react-pars */}
               <div
-                dangerouslySetInnerHTML={{ __html: item.status[0].template }}
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(item.status[0].template),
+                }}
               />
             </TimelineEvent>
           </Timeline>

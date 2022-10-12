@@ -1,10 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
+
+import Glide from "@glidejs/glide";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faLeftLong,
-  faAngleLeft,
-  faAngleRight,
-} from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 const TestCarousel = () => {
   const cardsData = [
@@ -70,45 +68,73 @@ const TestCarousel = () => {
     },
   ];
 
-  const slideLeft = () => {
-    let slider = document.getElementById("slider");
-    if (slider) {
-      slider.scrollLeft = slider.scrollLeft - 500;
+  const slider = new Glide(".glide", {
+    type: "carousel",
+    gap: 20,
+    perView: 5,
+    startAt: 0,
+    // autoplay: 2000,
+    // hoverpause: true,
+    breakpoints: {
+      800: {
+        perView: 4
+      },
+    600: {
+        perView: 2
+      }
     }
-  };
+  });
 
-  const slideRight = () => {
-    let slider = document.getElementById("slider");
-    if (slider) {
-      slider.scrollLeft = slider.scrollLeft + 500;
-    }
-  };
+  useEffect(() => {
+    slider.mount();
+  }, [slider]);
 
   const renderCard = (item: any) => {
     return (
-      <div className="w-[220px] inline-block p-2 cursor-pointer hover:scale-105 ease-in-out duration-300'">
+      <li className="glide__slide slider w-[220px] inline-block p-2 cursor-pointer hover:scale-105 ease-in-out duration-300'">
         <img src={item.imgUrl} alt="" className=" object-cover" />
         <div className="flex flex-col">
           <span>{item.title}</span>
           <span>{item.content}</span>
         </div>
-      </div>
+      </li>
     );
   };
+
   return (
     <>
-      <div className="relative flex items-center">
-        <FontAwesomeIcon
-          icon={faAngleLeft}
-          className="h-9  opacity-50 cursor-pointer hover:opacity-100"
-          onClick={slideLeft}
-        />
-        {/* <div
-          className="opacity-50 cursor-pointer hover:opacity-100"
-        /> */}
+      <div className="glide bg-neutral-200 p-5 flex items-center">
+          <div className="glide__arrows" data-glide-el="controls">
+            <FontAwesomeIcon
+              icon={faAngleLeft}
+              className="glide__arrow glide__arrow--prev h-9 opacity-50 cursor-pointer hover:opacity-100"
+              data-glide-dir="<"
+            />
+          </div>
+        <div className="glide__track" data-glide-el="track">
+          <ul className="glide__slides">
+            {cardsData.map((item: any) => {
+              return renderCard(item);
+            })}
+          </ul>
+        </div>
+        <div className="glide__arrows" data-glide-el="controls">
+            <FontAwesomeIcon
+              icon={faAngleRight}
+              className="glide__arrow glide__arrow--next h-9 opacity-50 cursor-pointer hover:opacity-100"
+              data-glide-dir=">"
+            />
+          </div>
+      
+      </div>
+
+      {/* 
+      <div className="relative bg-neutral-200 p-5 flex items-center">
+ 
+
         <div
           id="slider"
-          className="w-full h-full  overflow-x-scroll sm:no-scrollbar scroll whitespace-nowrap scroll-smooth scrollbar-hide"
+          className="w-full h-full overflow-x-scroll no-scrollbar sm:no-scrollbar scroll whitespace-nowrap scroll-smooth scrollbar-hide"
         >
           {cardsData.map((item) => renderCard(item))}
         </div>
@@ -116,12 +142,8 @@ const TestCarousel = () => {
           icon={faAngleRight}
           className="h-9 opacity-50 cursor-pointer hover:opacity-100"
           onClick={slideRight}
-        />
-
-        {/* <div
-          className="opacity-50 cursor-pointer hover:opacity-100"
         /> */}
-      </div>
+      {/* </div> */}
     </>
   );
 };

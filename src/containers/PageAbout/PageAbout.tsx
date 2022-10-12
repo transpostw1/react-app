@@ -1,14 +1,16 @@
-import rightImg from "images/transpost images/Aboutus/group.jpg";
 import React, { FC } from "react";
+
+import { Helmet } from "react-helmet";
+
 import SectionFounder from "./SectionFounder";
 import SectionStatistic from "./SectionStatistic";
-import { Helmet } from "react-helmet";
 import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
 import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
-import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import SectionHero from "./SectionHero";
+import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import SectionClientSay from "components/SectionClientSay/SectionClientSay";
 import NcImage from "shared/NcImage/NcImage";
+import rightImg from "images/transpost images/Aboutus/group.jpg";
 
 export interface PageAboutProps {
   className?: string;

@@ -66,8 +66,6 @@ const QuotesPage = () => {
         </div>
         <div className="w-full w-[70%] space-y-5 lg:pl-5 flex-shrink-0">
           {renderSection1()}
-          <TestCarousel />
-
           {renderSection2()}
         </div>
       </main>
