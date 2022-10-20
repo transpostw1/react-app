@@ -49,7 +49,7 @@ const Dashboard = () => {
   const fetchData = async () => {
     axios
       .get(
-        `https://apis.transpost.co/api/bookings/user/?email=rashidshaikh@transpost.co`,
+        `https://apis.transpost.co/api/bookings/user/?email=${user.email}`,
         {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
@@ -59,7 +59,7 @@ const Dashboard = () => {
       )
       .then((response) => {
         const result = response.data;
-        console.log("result", result.data);
+        console.log("Booking List", result.data);
 
         setBookingList(result.data);
         setAllList(result.data);
@@ -81,10 +81,11 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
+    
     if (user) {
       fetchData();
     }
-  }, []);
+  }, [user]);
 
   if (!user) {
     return null;

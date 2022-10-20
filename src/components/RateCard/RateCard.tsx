@@ -1,12 +1,13 @@
 import React, { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import { SingleDatePicker, AnchorDirectionShape } from "react-dates";
+
 import ButtonPrimary from "shared/Button/ButtonPrimary";
-import ButtonSecondary from "shared/Button/ButtonSecondary";
 
 import QuoteModal from "new_component/Quotation/QuoteModal";
 import CommodityInfoPage from "new_component/CommodityInfo/CommodityInfoPage";
-
+import NcModal from "shared/NcModal/NcModal";
 import { useQuoteList } from "utils/contexts/quoteListContext";
 import { useUserAuth } from "utils/contexts/userContext";
 
@@ -44,7 +45,6 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
   const [cargo, setCargo] = useState<string>("");
 
   const [showQuoteModal, setShowQuoteModal] = useState<boolean>(false);
-  const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
 
   //context api
   const { addQuote } = useQuoteList();
@@ -52,7 +52,6 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
 
   const handleClose = () => {
     setShowQuoteModal(false);
-    setShowInfoModal(false);
   };
 
   // for Selecting rates
@@ -68,10 +67,6 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
       setCargo("40'High Cube");
     }
   }, [data]);
-
-  const bookNowHandler = () => {
-    setShowInfoModal(true);
-  };
 
   const createQuoteHandler = (id: any) => {
     addQuote(id, data);
@@ -136,26 +131,35 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
             <span className="text-xl font-semibold text-secondary-6000">
               USD {isLogin ? data.total : "****"}
             </span>
-            {/* <div className="text-xs sm:text-sm text-neutral-500 font-normal mt-0.5">
-              total Cost
-            </div> */}
+
             <div className="mt-5 font-medium">
               {isLogin ? (
-                // <ButtonPrimary onClick={(e) => bookNowHandler(e, data.ID)} href="/bookings">Book Now</ButtonPrimary>
-                <>
-                  <button
-                    className="p-2 border border-black rounded-2xl"
-                    onClick={bookNowHandler}
-                  >
-                    Book Now
-                  </button>
+                <div className="flex">
+                  <NcModal
+                    renderTrigger={(openModal) => (
+                      <button
+                        className="p-2 border border-black rounded-2xl"
+                        onClick={() => openModal()}
+                      >
+                        Book Now
+                      </button>
+                    )}
+                    renderContent={() => (
+                      <CommodityInfoPage
+                        data={data}
+                        email={user?.email}
+                        cargo={cargo}
+                      />
+                    )}
+                  />
+
                   <ButtonPrimary
                     className="ml-2"
                     onClick={() => createQuoteHandler(data.id)}
                   >
                     +Create Quote
                   </ButtonPrimary>
-                </>
+                </div>
               ) : (
                 <Link
                   className="mt-5 font-medium underline underline-offset-1"
@@ -193,13 +197,6 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
      dark:border-neutral-800 rounded-2xl overflow-hidden hover:shadow-lg transition-shadow space-y-6 ${className}`}
       data-nc-id="RateCard"
     >
-      <CommodityInfoPage
-        data={data}
-        onclose={handleClose}
-        showInfoModal={showInfoModal}
-        email={user?.email}
-        cargo={cargo}
-      />
       <QuoteModal
         data={data}
         onclose={handleClose}
@@ -290,7 +287,23 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
               {isLogin ? (
                 <div className="mt-5 ">
                   {/* <ButtonPrimary href="/bookings">Book Now</ButtonPrimary> */}
-                  <button onClick={bookNowHandler}>Book Now</button>
+                  <NcModal
+                    renderTrigger={(openModal) => (
+                      <button
+                        className="p-2 border border-black rounded-2xl"
+                        onClick={() => openModal()}
+                      >
+                        Book Now
+                      </button>
+                    )}
+                    renderContent={() => (
+                      <CommodityInfoPage
+                        data={data}
+                        email={user?.email}
+                        cargo={cargo}
+                      />
+                    )}
+                  />
                 </div>
               ) : (
                 <div className=" mt-5 font-medium underline underline-offset-1">

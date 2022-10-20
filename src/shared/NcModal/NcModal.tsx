@@ -20,7 +20,7 @@ const NcModal: FC<NcModalProps> = ({
   contentExtraClass = "max-w-screen-xl",
   contentPaddingClass = "py-4 px-6 md:py-5",
   triggerText = "Open Modal",
-  modalTitle = "Modal title",
+  modalTitle = "Please fill up the following details before proceeding!",
   isOpenProp,
   onCloseModal,
 }) => {

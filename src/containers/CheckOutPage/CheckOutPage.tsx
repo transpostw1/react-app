@@ -72,7 +72,7 @@ const CheckOutPage: FC<CheckOutPageProps> = ({ className = "" }) => {
         <div>
           <div>
             <h3 className="text-2xl font-semibold">Your trip</h3>
-            <NcModal
+            {/* <NcModal 
               renderTrigger={(openModal) => (
                 <span
                   onClick={() => openModal()}
@@ -82,7 +82,7 @@ const CheckOutPage: FC<CheckOutPageProps> = ({ className = "" }) => {
                 </span>
               )}
               renderContent={renderSidebar}
-            />
+            /> */}
           </div>
           <div className="mt-6 border border-neutral-200 dark:border-neutral-700 rounded-3xl flex flex-col sm:flex-row divide-y sm:divide-x sm:divide-y-0 divide-neutral-200 dark:divide-neutral-700">
             <div className="flex-1 p-5 flex justify-between space-x-5">

@@ -2,69 +2,167 @@ import React, { useEffect } from "react";
 
 import Glide from "@glidejs/glide";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleLeft,
+  faAngleRight,
+  faArrowAltCircleRight,
+  faShip
+} from "@fortawesome/free-solid-svg-icons";
+import NcImage from "shared/NcImage/NcImage";
 
+// TODO : Change file location as per folder structure
 const TestCarousel = () => {
   const cardsData = [
     {
       id: 1,
-      title: "CARD 1",
-      content: "Clark Kent",
-      imgUrl: "https://unsplash.it/200/200",
+      pol: "Jawaharlal Nehru (INNSA)",
+      pod: "Hamburg (DEHAM)",
+      rate: "3250",
+      containerType: "20GP",
+      validity: "31st Oct 2022",
+      imgUrl: "https://launchindia.org/transpost/logos/CMA.png",
+    },
+    {
+      id: 1,
+      pol: "Jawaharlal Nehru (INNSA)",
+      pod: "Hamburg (DEHAM)",
+      rate: "3250",
+      containerType: "20GP",
+      validity: "31st Oct 2022",
+
+      imgUrl: "https://launchindia.org/transpost/logos/CMA.png",
+    },
+    {
+      id: 1,
+      pol: "Jawaharlal Nehru (INNSA)",
+      pod: "Hamburg (DEHAM)",
+      rate: "3250",
+      containerType: "20GP",
+      validity: "31st Oct 2022",
+
+      imgUrl: "https://launchindia.org/transpost/logos/CMA.png",
+    },
+    {
+      id: 1,
+      pol: "Jawaharlal Nehru (INNSA)",
+      pod: "Hamburg (DEHAM)",
+      rate: "3250",
+      containerType: "20GP",
+      validity: "31st Oct 2022",
+
+      imgUrl: "https://launchindia.org/transpost/logos/CMA.png",
     },
     {
       id: 2,
-      title: "CARD 2",
-      content: "Bruce Wayne",
-      imgUrl: "https://unsplash.it/201/200",
+      pol: "Jawaharlal Nehru (INNSA)",
+      pod: "Hamburg (DEHAM)",
+      rate: "3250",
+      containerType: "20GP",
+      validity: "31st Oct 2022",
+
+      imgUrl: "https://launchindia.org/transpost/logos/cosco_logo.png",
     },
     {
-      id: 3,
-      title: "CARD 3",
-      content: "Peter Parker",
-      imgUrl: "https://unsplash.it/200/201",
+      id: 1,
+      pol: "Jawaharlal Nehru (INNSA)",
+      pod: "Hamburg (DEHAM)",
+      rate: "3250",
+      containerType: "20GP",
+      validity: "31st Oct 2022",
+
+      imgUrl: "https://launchindia.org/transpost/logos/CMA.png",
     },
     {
-      id: 4,
-      title: "CARD 4",
-      content: "Tony Stark",
-      imgUrl: "https://unsplash.it/201/201",
+      id: 2,
+      pol: "Jawaharlal Nehru (INNSA)",
+      pod: "Hamburg (DEHAM)",
+      rate: "3250",
+      containerType: "20GP",
+      validity: "31st Oct 2022",
+
+      imgUrl: "https://launchindia.org/transpost/logos/cosco_logo.png",
     },
     {
-      id: 5,
-      title: "CARD 5",
-      content: "Reed Richards",
-      imgUrl: "https://unsplash.it/202/200",
+      id: 2,
+      pol: "Jawaharlal Nehru (INNSA)",
+      pod: "Hamburg (DEHAM)",
+      rate: "3250",
+      containerType: "20GP",
+      validity: "31st Oct 2022",
+
+      imgUrl: "https://launchindia.org/transpost/logos/cosco_logo.png",
     },
     {
-      id: 6,
-      title: "CARD 6",
-      content: "Wade Wilson",
-      imgUrl: "https://unsplash.it/200/199",
+      id: 1,
+      pol: "Jawaharlal Nehru (INNSA)",
+      pod: "Hamburg (DEHAM)",
+      rate: "3250",
+      containerType: "20GP",
+      validity: "31st Oct 2022",
+
+      imgUrl: "https://launchindia.org/transpost/logos/CMA.png",
     },
     {
-      id: 7,
-      title: "CARD 7",
-      content: "Peter Quill",
-      imgUrl: "https://unsplash.it/199/199",
+      id: 2,
+      pol: "Jawaharlal Nehru (INNSA)",
+      pod: "Hamburg (DEHAM)",
+      rate: "3250",
+      containerType: "20GP",
+      validity: "31st Oct 2022",
+
+      imgUrl: "https://launchindia.org/transpost/logos/cosco_logo.png",
     },
     {
-      id: 8,
-      title: "CARD 8",
-      content: "Steven Rogers",
-      imgUrl: "https://unsplash.it/199/200",
+      id: 2,
+      pol: "Jawaharlal Nehru (INNSA)",
+      pod: "Hamburg (DEHAM)",
+      rate: "3250",
+      containerType: "20GP",
+
+      validity: "31st Oct 2022",
+
+      imgUrl: "https://launchindia.org/transpost/logos/cosco_logo.png",
     },
     {
-      id: 9,
-      title: "CARD 9",
-      content: "Bruce Banner",
-      imgUrl: "https://unsplash.it/200/198",
+      id: 1,
+      pol: "Jawaharlal Nehru (INNSA)",
+      pod: "Hamburg (DEHAM)",
+      rate: "3250",
+      containerType: "20GP",
+      validity: "31st Oct 2022",
+
+      imgUrl: "https://launchindia.org/transpost/logos/CMA.png",
     },
     {
-      id: 10,
-      title: "CARD 10",
-      content: "Vincent Strange",
-      imgUrl: "https://unsplash.it/198/199",
+      id: 2,
+      pol: "Jawaharlal Nehru (INNSA)",
+      pod: "Hamburg (DEHAM)",
+      rate: "3250",
+      containerType: "20GP",
+
+      validity: "31st Oct 2022",
+
+      imgUrl: "https://launchindia.org/transpost/logos/cosco_logo.png",
+    },
+    {
+      id: 1,
+      pol: "Jawaharlal Nehru (INNSA)",
+      pod: "Hamburg (DEHAM)",
+      rate: "3250",
+      containerType: "20GP",
+      validity: "31st Oct 2022",
+
+      imgUrl: "https://launchindia.org/transpost/logos/CMA.png",
+    },
+    {
+      id: 2,
+      pol: "Jawaharlal Nehru (INNSA)",
+      pod: "Hamburg (DEHAM)",
+      rate: "3250",
+      containerType: "20GP",
+      validity: "31st Oct 2022",
+
+      imgUrl: "https://launchindia.org/transpost/logos/cosco_logo.png",
     },
   ];
 
@@ -77,12 +175,12 @@ const TestCarousel = () => {
     // hoverpause: true,
     breakpoints: {
       800: {
-        perView: 4
+        perView: 4,
       },
-    600: {
-        perView: 2
-      }
-    }
+      600: {
+        perView: 2,
+      },
+    },
   });
 
   useEffect(() => {
@@ -91,11 +189,28 @@ const TestCarousel = () => {
 
   const renderCard = (item: any) => {
     return (
-      <li className="glide__slide slider w-[220px] inline-block p-2 cursor-pointer hover:scale-105 ease-in-out duration-300'">
-        <img src={item.imgUrl} alt="" className=" object-cover" />
-        <div className="flex flex-col">
-          <span>{item.title}</span>
-          <span>{item.content}</span>
+      <li className="glide__slide slider w-[220px] inline-block  p-2 cursor-pointer hover:scale-105 border bg-white rounded-2xl ease-in-out duration-300'">
+        {/* <NcImage src={item.imgUrl} className="object-cover "/> */}
+        <div className="flex flex-col  gap-2">
+          <img
+            src={item.imgUrl}
+            alt=""
+            className="self-center object-cover h-12 w-15"
+          />
+          <div className="grid grid-cols-3 max-w-screen text-[#5c5c5c] ">
+            <span className="text-[0.8rem] font-bold">{item.pol}</span>
+            <span className="text-center">
+              <FontAwesomeIcon icon={faShip} />
+            </span>
+            <span className="text-[0.8rem] font-bold ">{item.pod}</span>
+          </div>
+          <div className="grid grid-cols-2">
+            <span>{item.containerType}</span>
+            <span className="">USD {item.rate}</span>
+          </div>
+          <span className="font-semibold text-center text-[#5c5c5c]">
+            Valid till {item.validity}
+          </span>
         </div>
       </li>
     );
@@ -103,15 +218,17 @@ const TestCarousel = () => {
 
   return (
     <>
-      <div className="glide bg-neutral-200 p-5 flex items-center">
-          <div className="glide__arrows" data-glide-el="controls">
-            <FontAwesomeIcon
-              icon={faAngleLeft}
-              className="glide__arrow glide__arrow--prev h-9 opacity-50 cursor-pointer hover:opacity-100"
-              data-glide-dir="<"
-            />
-          </div>
+      <span className="text-2xl pl-3  font-bold ">Recent Searches</span>
+      <div className=" glide  bg-neutral-300 rounded-2xl p-5 flex items-center">
+        <div className="glide__arrows" data-glide-el="controls">
+          <FontAwesomeIcon
+            icon={faAngleLeft}
+            className="glide__arrow glide__arrow--prev h-9 opacity-50 cursor-pointer hover:opacity-100"
+            data-glide-dir="<"
+          />
+        </div>
         <div className="glide__track" data-glide-el="track">
+          {/* <span>Recent Searches</span> */}
           <ul className="glide__slides">
             {cardsData.map((item: any) => {
               return renderCard(item);
@@ -119,31 +236,13 @@ const TestCarousel = () => {
           </ul>
         </div>
         <div className="glide__arrows" data-glide-el="controls">
-            <FontAwesomeIcon
-              icon={faAngleRight}
-              className="glide__arrow glide__arrow--next h-9 opacity-50 cursor-pointer hover:opacity-100"
-              data-glide-dir=">"
-            />
-          </div>
-      
-      </div>
-
-      {/* 
-      <div className="relative bg-neutral-200 p-5 flex items-center">
- 
-
-        <div
-          id="slider"
-          className="w-full h-full overflow-x-scroll no-scrollbar sm:no-scrollbar scroll whitespace-nowrap scroll-smooth scrollbar-hide"
-        >
-          {cardsData.map((item) => renderCard(item))}
+          <FontAwesomeIcon
+            icon={faAngleRight}
+            className="glide__arrow glide__arrow--next h-9 opacity-50 cursor-pointer hover:opacity-100"
+            data-glide-dir=">"
+          />
         </div>
-        <FontAwesomeIcon
-          icon={faAngleRight}
-          className="h-9 opacity-50 cursor-pointer hover:opacity-100"
-          onClick={slideRight}
-        /> */}
-      {/* </div> */}
+      </div>
     </>
   );
 };

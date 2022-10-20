@@ -11,8 +11,8 @@ import {
   signInWithGooglePopup,
   createUserDocumentFromAuth,
   createAuthUserWithEmailAndPassword,
+  auth,
 } from "utils/firebase/firebase-config";
-
 
 export interface PageSignUpProps {
   className?: string;
@@ -46,25 +46,31 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
 
   const history = useHistory();
 
-  const logGoogleUser = async () => {
-    // const response = await signInWithGooglePopup();
-    const { user } = await signInWithGooglePopup();
-    const userDocRef = await createUserDocumentFromAuth(user);
-    console.log(userDocRef?.exists());
-    if (userDocRef?.exists()) {
-      console.log("User Already Exist");
-      // return;
-    }
 
+  const authenticateUser = async (user:any) => {
+    console.log("Inside authenticate ", user.email );
+    
+  };
+
+  // Google SignUp
+  const logGoogleUser = async () => {
+    const { user } = await signInWithGooglePopup();
+    await authenticateUser(user);
+    
+    const userDocRef = await createUserDocumentFromAuth(user);
+    if (userDocRef?.exists()) {
+      alert("User Already Exist");
+      console.log("User Already Exist");
+      return;
+    }
     history.push("./");
   };
 
+  
+
+  // Create user with form
   const submitHandler = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    // if (password !== confirmPassword) {
-    //   alert('passwords do not match');
-    //   return;
-    // }
 
     try {
       const response = await createAuthUserWithEmailAndPassword(
@@ -82,9 +88,9 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
       history.push("./");
     } catch (error) {
       console.log("user creation encountered an error", error);
+      alert(error);
     }
   };
-
 
   return (
     <div className={`nc-PageSignUp  ${className}`} data-nc-id="PageSignUp">
@@ -151,13 +157,12 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
                 Business Type
               </span>
               <Select className="mt-1.5">
-                  <option value="Shipper">Shipper</option>
-                  <option value="Freight Forwarder">Freight Forwarder</option>
-                  <option value="Custom Broker">Custom Broker</option>
-                </Select>
-         
+                <option value="Shipper">Shipper</option>
+                <option value="Freight Forwarder">Freight Forwarder</option>
+                <option value="Custom Broker">Custom Broker</option>
+              </Select>
             </label>
-           
+
             <label className="block">
               <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
                 GST Number

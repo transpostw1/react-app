@@ -1,10 +1,11 @@
 import React, { FC, useEffect } from "react";
 import { BookingCardProps } from "./Dashboard";
 import moment from "moment";
-import axios from "axios";
 import { useHistory } from "react-router-dom";
 
 const BookingCard: FC<BookingCardProps> = ({ data }) => {
+
+  // TODO: Error Handling for all proper data
   const {
     DateOfBooking,
     name,
@@ -121,9 +122,9 @@ const BookingCard: FC<BookingCardProps> = ({ data }) => {
           </div>
           <div className="flex-shrink-0 flex">
             <span className="block w-5 mr-[260px] font-semibold">
-              {pol.port_name}
+              { !!pol && pol.port_name}
             </span>
-            <span className="block w-5 font-semibold">{pod.port_name}</span>
+            <span className="block w-5 font-semibold">{!!pod && pod.port_name}</span>
           </div>
         </div>
         <div className="flex pl-2 gap-x-4">
@@ -163,7 +164,7 @@ const BookingCard: FC<BookingCardProps> = ({ data }) => {
             <span className="text-center">
               Status <br />
               <span className="text-center font-semibold">
-                {cs_status.name}
+                {/* {cs_status.name} */}
               </span>
             </span>
           </div>

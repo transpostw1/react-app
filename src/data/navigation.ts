@@ -134,12 +134,12 @@ const otherPageChildMenus: NavItemType[] = [
 const  financeChildrenMenus:NavItemType[] = [
   {
     id: ncNanoId(),
-    href: "#",
+    href: "/trade-finance",
     name: "Trade Finance",
   },
   {
     id: ncNanoId(),
-    href: "#",
+    href: "freight-finance",
     name: "Freight Finance",
   }
 ]

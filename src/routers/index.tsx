@@ -53,6 +53,8 @@ import PrivateRoute from "./PrivateRoute";
 import QuotesPage from "new_component/Dashboard/QuotesPage";
 import WarehousingPage from "new_component/WarehousingPage/WarehousingPage";
 import CustomClearancePage from "new_component/CustomClearancePage/CustomClearancePage";
+import PageTradeFinance from "new_component/Trade-Finance/PageTradeFinance";
+import PageFreightFinance from "new_component/Freight-Finance/PageFreightFinance";
 
 
 export const pages: Page[] = [
@@ -126,6 +128,8 @@ export const pages: Page[] = [
   //
   { path: "/booking-details", component: BookingDetails }, // newly added
   { path: "/custom-clearance", component: CustomClearancePage }, // newly added
+  { path: "/trade-finance", component: PageTradeFinance }, // newly added
+  { path: "/freight-finance", component: PageFreightFinance }, // newly added
 
 ];
 

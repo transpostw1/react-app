@@ -6,6 +6,7 @@ import CommonSidebar from "../CommonSidebar";
 import QuoteCard from "./QuoteCard";
 import { useQuoteList } from "utils/contexts/quoteListContext";
 import TestCarousel from "./TestCarousel";
+import NcModal from "shared/NcModal/NcModal";
 // import { getLocalStorage } from 'components/RateCard/RateCard'
 
 const QuotesPage = () => {
