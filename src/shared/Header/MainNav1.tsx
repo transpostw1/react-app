@@ -9,6 +9,7 @@ import SwitchDarkMode from "shared/SwitchDarkMode/SwitchDarkMode";
 import ProfileDropdown from "./ProfileDropdown";
 
 import { useUserAuth } from "utils/contexts/userContext";
+import Notification from "new_component/Notification/Notification";
 
 export interface MainNav1Props {
   isTop: boolean;
@@ -30,7 +31,8 @@ const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
         </div>
         <div className="flex-shrink-0 flex items-center justify-end text-neutral-700 dark:text-neutral-100 space-x-1">
           <div className="hidden items-center xl:flex space-x-1">
-            <SwitchDarkMode />
+            {/* <SwitchDarkMode /> */}
+            <Notification/>
             {/* <SearchDropdown /> */}
             {!isLogin ? (
               <ButtonPrimary className="bg-[#cd512f]" href="/login">

@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "./static/css/main.ce32b187.css",
-    "main.js": "./static/js/main.64c6e10e.js",
+    "main.css": "./static/css/main.83ef12f3.css",
+    "main.js": "./static/js/main.bc49dd07.js",
     "static/js/787.dfd8dd9b.chunk.js": "./static/js/787.dfd8dd9b.chunk.js",
     "static/media/hero-right-3.png": "./static/media/hero-right-3.25e989ed2b6ef0cfb25e.png",
     "static/media/Masood Ahmed - CTO.jpg": "./static/media/Masood Ahmed - CTO.fa77065f2e5703ed3909.jpg",
@@ -10,6 +10,7 @@
     "static/media/our-features.png": "./static/media/our-features.d69027726b5a972c1b17.png",
     "static/media/la-brands-400.svg": "./static/media/la-brands-400.331115337bc9be66667a.svg",
     "static/media/la-solid-900.svg": "./static/media/la-solid-900.0f874d69730f8631d632.svg",
+    "static/media/Trade-Finance_Illustration.png": "./static/media/Trade-Finance_Illustration.b57147191951ccf32f33.png",
     "static/media/15.png": "./static/media/15.e7aafcbed1b69a888ab9.png",
     "static/media/4.png": "./static/media/4.2cf54da6b78fa4b13bdf.png",
     "static/media/11.png": "./static/media/11.2f13e528e87a53012e94.png",
@@ -64,6 +65,7 @@
     "static/media/Image-19.png": "./static/media/Image-19.b8a551e5fcd0ec5f66f2.png",
     "static/media/group.jpg": "./static/media/group.4b2fc5b73f6e589fafbb.jpg",
     "static/media/SVG-subcribe2.png": "./static/media/SVG-subcribe2.efb832b25bd6eca32484.png",
+    "static/media/Freight-Finance_Illustration.png": "./static/media/Freight-Finance_Illustration.f71b3278b48bd8986fbf.png",
     "static/media/Image-9.png": "./static/media/Image-9.d879028d45de09c9ca3b.png",
     "static/media/Kodchasan-SemiBold.ttf": "./static/media/Kodchasan-SemiBold.f531bf1a8af8703e4084.ttf",
     "static/media/Image-7.png": "./static/media/Image-7.c88583919650f636b191.png",
@@ -108,12 +110,12 @@
     "static/media/mastercard.svg": "./static/media/mastercard.92c5b76a9ebc565de87902533102fc82.svg",
     "index.html": "./index.html",
     "static/media/VectorHIW.svg": "./static/media/VectorHIW.2a56b4d0aa5690494df25bc0b2bb3bf6.svg",
-    "main.ce32b187.css.map": "./static/css/main.ce32b187.css.map",
-    "main.64c6e10e.js.map": "./static/js/main.64c6e10e.js.map",
+    "main.83ef12f3.css.map": "./static/css/main.83ef12f3.css.map",
+    "main.bc49dd07.js.map": "./static/js/main.bc49dd07.js.map",
     "787.dfd8dd9b.chunk.js.map": "./static/js/787.dfd8dd9b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ce32b187.css",
-    "static/js/main.64c6e10e.js"
+    "static/css/main.83ef12f3.css",
+    "static/js/main.bc49dd07.js"
   ]
 }

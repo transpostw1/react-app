@@ -5,7 +5,7 @@ import emptyIcon from "../../images/transpost images/dashboard/emptyPng.png";
 import CommonSidebar from "../CommonSidebar";
 import QuoteCard from "./QuoteCard";
 import { useQuoteList } from "utils/contexts/quoteListContext";
-import TestCarousel from "./TestCarousel";
+import TestCarousel from "../RecentSearches/RecentSearches";
 import NcModal from "shared/NcModal/NcModal";
 // import { getLocalStorage } from 'components/RateCard/RateCard'
 

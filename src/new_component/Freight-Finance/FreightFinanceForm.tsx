@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Checkbox from "shared/Checkbox/Checkbox";
 import Input from "shared/Input/Input";
@@ -7,6 +7,7 @@ import ButtonPrimary from "shared/Button/ButtonPrimary";
 
 import axios from "axios";
 import { IcommodityDetails } from "new_component/CommodityInfo/CommodityInfoPage";
+import { Label } from "@headlessui/react/dist/components/label/label";
 
 export interface IfinanceFormDetails {
   fullName?: string;
@@ -21,9 +22,8 @@ const FreightFinanceForm = () => {
   const [financeFormDetails, setFinanceFormDetails] =
     useState<IfinanceFormDetails>({});
 
-  const [commodityDetails, setCommodityDetails] = useState<IcommodityDetails>(
-    {}
-  );
+  const [isShipper, setIsShipper] = useState(true);
+  const [isForwarder, setIsForwarder] = useState(false);
 
   const submitHandler = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -54,6 +54,12 @@ const FreightFinanceForm = () => {
         console.log(errorMsg);
       });
   };
+
+  useEffect(() => {
+    if (isShipper === false && isForwarder === false) {
+      setIsShipper(true);
+    }
+  }, [isShipper, isForwarder]);
 
   //   TODO Inputs not working
 
@@ -100,55 +106,106 @@ const FreightFinanceForm = () => {
             />
             {/* {<p className="text-[red]">{validation.from_port}</p>} */}
           </label>
-   
-         
 
           <label className="block">
             <span className="text-neutral-800 dark:text-neutral-200">
               What describes you best?
             </span>
             <div className="pt-5 flex gap-8">
-              <Checkbox
-                // defaultChecked={true}
-                className=""
+              <input
+                id="shipper"
                 name="shipper"
-                label="Shipper"
+                type="checkbox"
+                checked={isShipper}
+                className="focus:ring-action-primary h-6 w-6 text-primary-500 border-primary rounded border-neutral-500 bg-white dark:bg-neutral-700  dark:checked:bg-primary-500 focus:ring-primary-500"
+                onChange={(e) => {
+                  setIsShipper(e.target.checked);
+                  setIsForwarder(false);
+                }}
               />
-              <Checkbox className="" name="forwarder" label="Forwarder" />
+              <label
+                className="text-neutral-900 dark:text-neutral-100"
+                htmlFor="shipper"
+              >
+                Shipper
+              </label>
+
+              <input
+                id="forwarder"
+                name="forwarder"
+                type="checkbox"
+                checked={isForwarder}
+                className="focus:ring-action-primary h-6 w-6 text-primary-500 border-primary rounded border-neutral-500 bg-white dark:bg-neutral-700  dark:checked:bg-primary-500 focus:ring-primary-500"
+                onChange={(e) => {
+                  setIsForwarder(e.target.checked);
+                  setIsShipper(false);
+                }}
+              />
+              <label
+                className="text-neutral-900 dark:text-neutral-100"
+                htmlFor="forwarder"
+              >
+                Forwader
+              </label>
+
+              {/* <Checkbox className="" name="forwarder" label="Forwarder" /> */}
             </div>
           </label>
-          <label className="block">
-            <span className="text-neutral-800 dark:text-neutral-200">
-              GST/IEC
-            </span>
-            <Input
-              type="text"
-              className="mt-1"
-              name="gst_itc"
-              value={financeFormDetails.gst}
-              onChange={(e) => {
-                setFinanceFormDetails({
-                  ...financeFormDetails,
-                  gst: e.target.value,
-                });
-              }}
-            />
-          </label>
+          {isShipper && (
+            <label className="block">
+              <span className="text-neutral-800 dark:text-neutral-200">
+                GST
+              </span>
+              <Input
+                type="text"
+                placeholder="Enter your GST number"
+                className="mt-1"
+                name="gst"
+                value={financeFormDetails.gst}
+                onChange={(e) => {
+                  setFinanceFormDetails({
+                    ...financeFormDetails,
+                    gst: e.target.value,
+                  });
+                }}
+              />
+            </label>
+          )}
+          {isForwarder && (
+            <label className="block  transition ease-in-out duration-3000">
+              <span className="text-neutral-800 dark:text-neutral-200">
+                IEC
+              </span>
+              <Input
+                type="text"
+                placeholder="Enter your IEC number"
+                className="mt-1"
+                name="iec"
+                value={financeFormDetails.iec}
+                onChange={(e) => {
+                  setFinanceFormDetails({
+                    ...financeFormDetails,
+                    iec: e.target.value,
+                  });
+                }}
+              />
+            </label>
+          )}
           <label className="block">
             <span className="text-neutral-800 dark:text-neutral-200">
               Annual Turnover
             </span>
             <Input
               type="text"
-              placeholder="Enter the weight per container in MT"
+              placeholder=""
               className="mt-1 mb-2"
               onChange={(e) => {
-                setCommodityDetails({
-                  ...commodityDetails,
-                  weight: e.target.value,
+                setFinanceFormDetails({
+                  ...financeFormDetails,
+                  annualTurnover: e.target.value,
                 });
               }}
-              value={commodityDetails.weight}
+              value={financeFormDetails.annualTurnover}
             />
             {/* {<p className="text-[red]">{validation.from_port}</p>} */}
           </label>
@@ -183,18 +240,17 @@ const FreightFinanceForm = () => {
               <option value="10">above 10 Years</option>
             </Select>
           </label>
-          </div>
+        </div>
 
-          <button
-            className="h-12 w-full rounded-[2.5rem]  md:w-[9rem] my-5 bg-[#2AA996] my-6 hover:bg-[#218778] flex items-center justify-center text-neutral-50 focus:outline-none "
-            type="button"
-            onClick={(e) => submitHandler(e)}
-          >
-            Proceed
-          </button>
+        <button
+          className="h-12 w-full rounded-[2.5rem]  md:w-[9rem] my-5 bg-[#2AA996] my-6 hover:bg-[#218778] flex items-center justify-center text-neutral-50 focus:outline-none "
+          type="button"
+          onClick={(e) => submitHandler(e)}
+        >
+          Proceed
+        </button>
       </form>
     </div>
-    
   );
 };
 

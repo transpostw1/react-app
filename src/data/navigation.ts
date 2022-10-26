@@ -132,11 +132,11 @@ const otherPageChildMenus: NavItemType[] = [
 ];
 
 const  financeChildrenMenus:NavItemType[] = [
-  {
-    id: ncNanoId(),
-    href: "/trade-finance",
-    name: "Trade Finance",
-  },
+  // {
+  //   id: ncNanoId(),
+  //   href: "/trade-finance",
+  //   name: "Trade Finance",
+  // },
   {
     id: ncNanoId(),
     href: "freight-finance",
@@ -204,12 +204,12 @@ const templatesChildrenMenus: NavItemType[] = [
     // ],
   },
   //
-  {
-    id: ncNanoId(),
-    href: "https://transpost.co/load-calculator/",
-    targetBlank: true,
-    name: "Load Calculator",
-  },
+  // {
+  //   id: ncNanoId(),
+  //   href: "https://transpost.co/load-calculator/",
+  //   targetBlank: true,
+  //   name: "Load Calculator",
+  // },
 
  
   // { id: ncNanoId(), href: "/pay-done", name: "Pay done" },
