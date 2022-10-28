@@ -69,12 +69,12 @@ const SectionHeroArchivePage: FC<SectionHeroArchivePageProps> = ({
 
       <div className="flow-root w-full">
         {/* for moving the search bar up and down */}
-        <div className="z-10 lg:-mt-40 xl:-mt-18 w-full">
+        <div className="z-max lg:-mt-40 xl:-mt-18 w-full">
           <HeroSearchForm currentPage={currentPage} currentTab={currentTab} />
         </div>
       </div>
-      <div className="mt-10 pt-12">
-        {/* <TestCarousel/> */}
+      <div className=" mt-10 pt-12">
+        <TestCarousel/>
       </div>
     </div>
   );

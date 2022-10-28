@@ -11,11 +11,15 @@ import { Label } from "@headlessui/react/dist/components/label/label";
 
 export interface IfinanceFormDetails {
   fullName?: string;
+  companyName?: string;
   commodity?: string;
   gst?: string;
   iec?: string;
+  pan?: string;
   product?: string;
   annualTurnover?: string;
+  isShipper?: boolean;
+  isForwarder?: boolean;
 }
 
 const FreightFinanceForm = () => {
@@ -69,10 +73,10 @@ const FreightFinanceForm = () => {
           <span>Please fill up the following details before proceeding!</span>
         </div> */}
       <form className=" md:w-[80%]">
-        <div className="flex-col  md:grid grid-cols-2 gap-6 my-2">
+        <div className=" flex-col  md:grid grid-cols-2 gap-6 my-2">
           <label className="block">
             <span className="text-neutral-800 dark:text-neutral-200">
-              Full Name
+              Full Name <span className="text-red-600">*</span>
             </span>
             <Input
               type="text"
@@ -88,13 +92,13 @@ const FreightFinanceForm = () => {
             />
             {/* {<p className="text-[red]">{validation.from_port}</p>} */}
           </label>
-          <label className="block">
+          <label className="block ">
             <span className="text-neutral-800 dark:text-neutral-200">
-              Commodity Name
+              Commodity Name <span className="text-red-600">*</span>
             </span>
             <Input
               type="text"
-              placeholder="Enter your Commodity"
+              placeholder="Enter your Commodity Name"
               className="mt-1 mb-2"
               onChange={(e) => {
                 setFinanceFormDetails({
@@ -109,7 +113,7 @@ const FreightFinanceForm = () => {
 
           <label className="block">
             <span className="text-neutral-800 dark:text-neutral-200">
-              What describes you best?
+              What describes you best? <span className="text-red-600">*</span>
             </span>
             <div className="pt-5 flex gap-8">
               <input
@@ -151,49 +155,93 @@ const FreightFinanceForm = () => {
               {/* <Checkbox className="" name="forwarder" label="Forwarder" /> */}
             </div>
           </label>
-          {isShipper && (
-            <label className="block">
-              <span className="text-neutral-800 dark:text-neutral-200">
-                GST
-              </span>
-              <Input
-                type="text"
-                placeholder="Enter your GST number"
-                className="mt-1"
-                name="gst"
-                value={financeFormDetails.gst}
-                onChange={(e) => {
-                  setFinanceFormDetails({
-                    ...financeFormDetails,
-                    gst: e.target.value,
-                  });
-                }}
-              />
-            </label>
-          )}
+          <label className="block">
+            <span className="text-neutral-800 dark:text-neutral-200">
+              Company Name <span className="text-red-600">*</span>
+            </span>
+            <Input
+              type="text"
+              placeholder="Enter your Company Name"
+              className="mt-1"
+              name="company_name"
+              value={financeFormDetails.companyName}
+              onChange={(e) => {
+                setFinanceFormDetails({
+                  ...financeFormDetails,
+                  companyName: e.target.value,
+                });
+              }}
+            />
+          </label>
           {isForwarder && (
-            <label className="block  transition ease-in-out duration-3000">
-              <span className="text-neutral-800 dark:text-neutral-200">
-                IEC
-              </span>
-              <Input
-                type="text"
-                placeholder="Enter your IEC number"
-                className="mt-1"
-                name="iec"
-                value={financeFormDetails.iec}
-                onChange={(e) => {
-                  setFinanceFormDetails({
-                    ...financeFormDetails,
-                    iec: e.target.value,
-                  });
-                }}
-              />
-            </label>
+            <div
+              // className={`top-0 left-0 ease-in-out bg-blue-400 duration-100 flex gap-4 ${
+              //   isForwarder ? "translate-x-full" : "translate-x-0"
+              // }`}
+            >
+              <label className={`block `}>
+                <span className="text-neutral-800 dark:text-neutral-200">
+                  GST <span className="text-red-600">*</span>
+                </span>
+                <Input
+                  type="text"
+                  placeholder="Enter your GST number"
+                  className="mt-1"
+                  name="gst"
+                  value={financeFormDetails.gst}
+                  onChange={(e) => {
+                    setFinanceFormDetails({
+                      ...financeFormDetails,
+                      gst: e.target.value,
+                    });
+                  }}
+                />
+              </label>
+              <label className="block  transition ease-in-out duration-3000">
+                <span className="text-neutral-800 dark:text-neutral-200">
+                  PAN <span className="text-red-600">*</span>
+                </span>
+                <Input
+                  type="text"
+                  placeholder="Enter your PAN number"
+                  className="mt-1"
+                  name="pan"
+                  value={financeFormDetails.iec}
+                  onChange={(e) => {
+                    setFinanceFormDetails({
+                      ...financeFormDetails,
+                      pan: e.target.value,
+                    });
+                  }}
+                />
+              </label>
+            </div>
+          )}
+          {isShipper && (
+            <>
+              <label className="block  transition ease-in-out duration-3000">
+                <span className="text-neutral-800 dark:text-neutral-200">
+                  IEC Code <span className="text-red-600">*</span>
+                </span>
+                <Input
+                  type="text"
+                  placeholder="Enter your IEC number"
+                  className="mt-1"
+                  name="iec"
+                  value={financeFormDetails.iec}
+                  onChange={(e) => {
+                    setFinanceFormDetails({
+                      ...financeFormDetails,
+                      iec: e.target.value,
+                    });
+                  }}
+                />
+              </label>
+            </>
           )}
           <label className="block">
             <span className="text-neutral-800 dark:text-neutral-200">
-              Annual Turnover
+              Annual Turnover <span className="text-red-600">*</span>
             </span>
             <Input
               type="text"
@@ -211,7 +259,7 @@ const FreightFinanceForm = () => {
           </label>
           <label className="block">
             <span className="text-neutral-800 dark:text-neutral-200">
-              Product
+              Product <span className="text-red-600">*</span>
             </span>
             <Input
               type="text"
@@ -229,7 +277,7 @@ const FreightFinanceForm = () => {
           </label>
           <label className="block">
             <span className="text-neutral-800 dark:text-neutral-200">
-              How old is your Company?
+              How old is your Company? <span className="text-red-600">*</span>
             </span>
             <Select placeholder="Years">
               <option value="0_1">0-1 Years</option>

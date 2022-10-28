@@ -74,7 +74,12 @@ const HeroSearchForm: FC<HeroSearchFormProps> = ({
 
   const onclickHandler = () => {
     if (window.screen.width > 540) {
-      myRef.current?.scrollIntoView({ block: "center", behavior: "smooth" });
+      window.scrollTo({
+        top: 370, 
+        left: 0, 
+        behavior: 'smooth'
+      });
+      // myRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
     }
   };
 

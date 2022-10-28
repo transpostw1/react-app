@@ -199,11 +199,18 @@ const QuoteModal = ({ data, onclose, showQuoteModal }: any) => {
               Remarks
             </button>
           </div>
-
+{/* TODO translate animation */}
           {showRemarks ? (
+            <div 
+            className={`top-0 left-0 w-full ease-in-out duration-300 ${showRemarks ? "translate-x-0" : "translate-x-full " }`}
+            >
             <Remarks data={data} />
+            </div>
           ) : (
-            <div>
+            <div 
+            className={`top-0 left-0 w-full ease-in-out duration-300 ${showRemarks ? "translate-x-full " : "translate-x-0" }`}
+            >
+            
               <div className="flex border rounded-2xl mx-5 my-3 mt-10 w-max">
                 <span className="flex px-4 items-center border-r-2">
                   Freight

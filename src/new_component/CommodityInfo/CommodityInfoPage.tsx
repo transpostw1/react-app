@@ -3,33 +3,55 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 
 import Input from "shared/Input/Input";
+import Loading from "new_component/Loading";
 import Checkbox from "shared/Checkbox/Checkbox";
 
 export interface IcommodityDetails {
   commodityName?: string;
-  containerCount?: number | string;
+  containerCount?: string;
   weight?: number | string;
   loadingDate?: string;
   desc?: string;
+  isFirstMile?: boolean;
+  isLastMile?: boolean;
 }
 
+const defaultValue = {
+  commodityName: "",
+  containerCount: "",
+  weight: "",
+  loadingDate: "",
+  desc: "",
+  isFirstMile: false,
+  isLastMile: false,
+};
+
 const CommodityInfoPage = ({ data, email, cargo }: any) => {
-  const [commodityDetails, setCommodityDetails] = useState<IcommodityDetails>(
-    {}
-  );
+  const [commodityDetails, setCommodityDetails] =
+    useState<IcommodityDetails>(defaultValue);
+  const [isLoading, setIsLoading] = useState(false);
 
   const history = useHistory();
 
   const proceedHandler = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    const postData = { ...data, email, commodityDetails };
+    const stringCommodityDetails = JSON.stringify(commodityDetails);
+    const postData = {
+      ...data,
+      email,
+      commodityDetails: stringCommodityDetails,
+    };
 
     console.log("postData", postData);
-
+    // console.log("ParsedData", JSON.parse(postData));
+setIsLoading(true)
     axios
-      .post("https://apis.transpost.co/api/bookings/store", postData)
+      .post("https://apis.transpost.co/api/bookings/store", postData, {
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+      })
       .then((response) => {
+        setIsLoading(false)
         const fetchedData = response.data;
         console.log("fetchedData", fetchedData);
         history.push({
@@ -49,10 +71,18 @@ const CommodityInfoPage = ({ data, email, cargo }: any) => {
 
   return (
     // <div className="  p-10 fixed z-50 inset-0 bg-neutral-200 bg-opacity-10  backdrop-blur-sm border rounded dark:border-neutral-800 ">
-    <div className=" flex container md:items-center relative h-full flex-col align-center  dark:border-neutral-600 dark:bg-neutral-700">
+    <div className=" flex container md:items-center relative h-full flex-col align-center  dark:border-neutral-600 dark:bg-neutral-700  transition-linear ease-in-out delay-150 ">
       {/* <div className="text-[1.2rem] font-bold my-4 ">
           <span>Please fill up the following details before proceeding!</span>
         </div> */}
+      <div
+        className={` p-10 fixed flex z-50  items-center justify-center inset-0 bg-neutral-200 bg-opacity-10  backdrop-blur-sm border rounded dark:border-neutral-800  ${
+          isLoading ? "" : "hidden"
+          // hidden
+        }`}
+      >
+        <Loading className={`w-8 h-8 `} />
+      </div>
       <form className=" md:w-[80%]">
         <div className="flex-col  md:grid grid-cols-2 gap-6 my-2">
           <label className="block">
@@ -144,18 +174,50 @@ const CommodityInfoPage = ({ data, email, cargo }: any) => {
             />
           </label>
           <label className="block">
-            <Checkbox
-              className=""
-              name="first_mile"
-              label="First mile assitance"
-            />
+            <div className="flex gap-4">
+              <input
+                id="first_mile"
+                name="first_mile"
+                type="checkbox"
+                className="focus:ring-action-primary h-6 w-6 text-primary-500 border-primary rounded border-neutral-500 bg-white dark:bg-neutral-700  dark:checked:bg-primary-500 focus:ring-primary-500"
+                checked={commodityDetails.isFirstMile}
+                onChange={(e) => {
+                  setCommodityDetails({
+                    ...commodityDetails,
+                    isFirstMile: e.target.checked,
+                  });
+                }}
+              />
+              <label
+                className="text-neutral-900 dark:text-neutral-100"
+                htmlFor="first_mile"
+              >
+                First mile assitance
+              </label>
+            </div>
           </label>
           <label className="block">
-            <Checkbox
-              className=""
-              name="last_mile"
-              label="Last mile asistance"
-            />
+            <div className="flex gap-4">
+              <input
+                id="last_mile"
+                name="last_mile"
+                type="checkbox"
+                className="focus:ring-action-primary h-6 w-6 text-primary-500 border-primary rounded border-neutral-500 bg-white dark:bg-neutral-700  dark:checked:bg-primary-500 focus:ring-primary-500"
+                checked={commodityDetails.isLastMile}
+                onChange={(e) => {
+                  setCommodityDetails({
+                    ...commodityDetails,
+                    isLastMile: e.target.checked,
+                  });
+                }}
+              />
+              <label
+                className="text-neutral-900 dark:text-neutral-100"
+                htmlFor="last_mile"
+              >
+                Last mile assitance
+              </label>
+            </div>
           </label>
 
           <button

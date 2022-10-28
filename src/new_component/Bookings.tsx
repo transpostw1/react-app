@@ -6,8 +6,10 @@ import { useLocation, RouteComponentProps } from "react-router-dom";
 import moment from "moment";
 import { IcommodityDetails } from "./CommodityInfo/CommodityInfoPage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faCheckSquare,faAnchorCircleCheck} from "@fortawesome/free-solid-svg-icons"
-
+import {
+  faCheckSquare,
+  faAnchorCircleCheck,
+} from "@fortawesome/free-solid-svg-icons";
 
 export interface BookingsProps {
   bId: string;
@@ -23,29 +25,36 @@ export interface BookingsProps {
     to_port?: string;
     via?: string;
     sl_logo?: string;
-    total?:string
+    total?: number;
   };
   cargoType: string;
-  commodityDetails?:IcommodityDetails;
+  commodityDetails?: IcommodityDetails;
 }
 
 const Bookings = () => {
   const [bookingsData, setBookingsData] = useState<
     RouteComponentProps | null | {} | string
   >("");
+  const [netTotal, setNetTotal] = useState<number | null>(null);
 
   const location = useLocation<BookingsProps>();
   const { state } = location;
 
   useEffect(() => {
     setBookingsData(state);
+    if (!!state.bookedData.total && !!state.commodityDetails?.containerCount) {
+      const total = state.bookedData.total;
+      const num = parseInt(state.commodityDetails.containerCount);
+      const grandTotal = total * num;
+      setNetTotal(grandTotal);
+    }
   }, []);
 
   const renderContent = () => {
     return (
       <div className="w-full flex flex-col sm:rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 space-y-8 px-0 sm:p-6 xl:p-8">
         <h2 className="text-3xl lg:text-4xl font-semibold">
-           We have received your booking.
+          We have received your booking.
         </h2>
 
         <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
@@ -96,7 +105,9 @@ const Bookings = () => {
               <div className="flex flex-col">
                 <span className="text-sm text-neutral-400">Ready to Load</span>
                 <span className="mt-1.5 text-lg font-semibold">
-                   {moment( state.commodityDetails?.loadingDate).format('Do MMMM  YYYY')}
+                  {moment(state.commodityDetails?.loadingDate).format(
+                    "Do MMMM  YYYY"
+                  )}
                 </span>
               </div>
             </div>
@@ -128,7 +139,11 @@ const Bookings = () => {
             <div className="flex text-neutral-6000 dark:text-neutral-300">
               <span className="flex-1">Reference Number</span>
               <span className="flex-1 font-medium text-neutral-900 dark:text-neutral-100">
-                TRA{state.bId}   <FontAwesomeIcon className="h-6 mx-2 text-[#218778]" icon={faAnchorCircleCheck} /> 
+                TRA{state.bId}{" "}
+                <FontAwesomeIcon
+                  className="h-6 mx-2 text-[#218778]"
+                  icon={faAnchorCircleCheck}
+                />
               </span>
             </div>
             <div className="flex text-neutral-6000 dark:text-neutral-300">
@@ -140,13 +155,7 @@ const Bookings = () => {
             <div className="flex text-neutral-6000 dark:text-neutral-300">
               <span className="flex-1">Total</span>
               <span className="flex-1 font-medium text-neutral-900 dark:text-neutral-100">
-                {/* $
-                {state.bookedData._20gp
-                  ? state.bookedData._20gp
-                  : state.bookedData._40gp
-                  ? state.bookedData._40gp
-                  : state.bookedData._40hc} */}
-                  ${state.bookedData.total}
+                ${netTotal}
               </span>
             </div>
             {/* <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">

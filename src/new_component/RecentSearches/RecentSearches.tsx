@@ -216,9 +216,9 @@ const RecentSearches = () => {
   };
 
   return (
-    <div className="z-[-1]">
+    <div >
       <span className="text-2xl pl-3  font-bold ">Recent Searches</span>
-      <div className=" glide  bg-transparent rounded-2xl p-5 flex items-center">
+      <div className=" glide  bg-neutral-200 rounded-2xl p-5 flex items-center">
         <div className="glide__arrows" data-glide-el="controls">
           <FontAwesomeIcon
             icon={faAngleLeft}
