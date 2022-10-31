@@ -66,16 +66,18 @@ const SectionHeroArchivePage: FC<SectionHeroArchivePageProps> = ({
           <img className="w-full object-fill" src={rightImage} alt="hero" />
         </div>
       </div>
+<div className="relative">
 
-      <div className="flow-root w-full">
+      <div className="flow-root w-full absolute z-10">
         {/* for moving the search bar up and down */}
         <div className="z-max lg:-mt-40 xl:-mt-18 w-full">
           <HeroSearchForm currentPage={currentPage} currentTab={currentTab} />
         </div>
       </div>
-      <div className=" mt-10 pt-12">
+      <div className=" mt-10 pt-12 z-5">
         <TestCarousel/>
       </div>
+</div>
     </div>
   );
 };

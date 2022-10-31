@@ -188,7 +188,7 @@ const RecentSearches = () => {
 
   const renderCard = (item: any) => {
     return (
-      <li className="glide__slide slider w-[220px] inline-block  p-2 cursor-pointer hover:scale-105 border bg-white rounded-2xl ease-in-out duration-300'">
+      <li className="glide__slide slider w-[220px]  inline-block  p-2 cursor-pointer hover:scale-105 border bg-white rounded-2xl ease-in-out duration-300'">
         {/* <NcImage src={item.imgUrl} className="object-cover "/> */}
         <div className="flex flex-col  gap-2">
           <img
@@ -227,7 +227,7 @@ const RecentSearches = () => {
           />
         </div>
         <div className="glide__track" data-glide-el="track">
-          <ul className="glide__slides">
+          <ul className="glide__slides ">
             {cardsData.map((item: any) => {
               return renderCard(item);
             })}

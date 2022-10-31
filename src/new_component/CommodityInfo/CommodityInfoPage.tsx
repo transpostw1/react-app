@@ -30,6 +30,7 @@ const CommodityInfoPage = ({ data, email, cargo }: any) => {
   const [commodityDetails, setCommodityDetails] =
     useState<IcommodityDetails>(defaultValue);
   const [isLoading, setIsLoading] = useState(false);
+  const [error,setError] = useState("")
 
   const history = useHistory();
 
@@ -66,6 +67,8 @@ setIsLoading(true)
       })
       .catch((error) => {
         const errorMsg = error.message;
+        setError(errorMsg);
+        window.alert(errorMsg)
       });
   };
 
@@ -76,13 +79,13 @@ setIsLoading(true)
           <span>Please fill up the following details before proceeding!</span>
         </div> */}
       <div
-        className={` p-10 fixed flex z-50  items-center justify-center inset-0 bg-neutral-200 bg-opacity-10  backdrop-blur-sm border rounded dark:border-neutral-800  ${
+        className={` p-10 fixed flex z-50 items-center justify-center inset-0 bg-neutral-200 bg-opacity-10  backdrop-blur-sm border rounded dark:border-neutral-800  ${
           isLoading ? "" : "hidden"
-          // hidden
         }`}
       >
-        <Loading className={`w-8 h-8 `} />
+        <Loading className={`w-8 h-8`} />
       </div>
+
       <form className=" md:w-[80%]">
         <div className="flex-col  md:grid grid-cols-2 gap-6 my-2">
           <label className="block">

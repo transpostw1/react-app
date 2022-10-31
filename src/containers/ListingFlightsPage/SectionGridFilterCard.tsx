@@ -10,7 +10,7 @@ import { ThunkDispatch } from "redux-thunk";
 import QuickRequest from "new_component/QuickRequest";
 import Loading from "new_component/Loading";
 import { postDataProps } from "components/HeroSearchForm/FlightSearchForm";
-
+import { isArray } from "lodash";
 
 export interface SectionGridFilterCardProps {
   className?: string;
@@ -60,7 +60,11 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
       className={`nc-SectionGridFilterCard md:pt-[18rem] ${className}`}
       data-nc-id="SectionGridFilterCard"
     >
-      <div className="lg:p-14 lg:mt-14 lg:bg-neutral-50 lg:dark:bg-black/20 grid grid-cols-1 gap-6 rounded-3xl">
+      <div
+        className={`lg:p-14 lg:mt-14 lg:bg-neutral-50 lg:dark:bg-black/20 grid grid-cols-1 gap-6 rounded-3xl
+       
+        `}
+      >
         {Array.isArray(shippingData.data) && shippingData.data.length > 0
           ? shippingData?.data?.map((item, index) => {
               return <RateCard key={index} data={item} />;
