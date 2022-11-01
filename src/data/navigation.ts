@@ -370,6 +370,14 @@ export const NAVIGATION_DEMO: NavItemType[] = [
     protected: true,
     children: templatesChildrenMenus,
   },
+    {
+    id: ncNanoId(),
+    href: "https://calendly.com/masoodahmed-1",
+    targetBlank: true,
+    protected: true,
+    name: "Talk to us",
+    className: "text-white bg-neutral-700"
+  },
   
   // {
   //   id: ncNanoId(),

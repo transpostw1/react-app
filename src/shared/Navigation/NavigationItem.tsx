@@ -23,6 +23,7 @@ export interface NavItemType {
   children?: NavItemType[];
   megaMenu?: MegamenuItem[];
   type?: "dropdown" | "megaMenu" | "none";
+  className?:string
 }
 
 export interface NavigationItemProps {
@@ -36,27 +37,10 @@ const NavigationItem: FC<NavigationItemWithRouterProps> = ({
   history,
 }) => {
   const [menuCurrentHovers, setMenuCurrentHovers] = useState<string[]>([]);
-  // const [userIsLogin, setUserIsLogin] = useState(true);
 
   const { isLogin } = useUserAuth();
 
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChangedListener((user: any) => {
-  //     if (user) {
-  //       setUserIsLogin(true);
-  //     }
-  //    else {
-  //     setUserIsLogin(false)
-  //    }
-  //   });
 
-  //   return unsubscribe;
-  // }, []);
-
-  // const signOuthandler = () => {
-  //   setUserIsLogin(!userIsLogin);
-  //   signOutUser();
-  // };
 
   // CLOSE ALL MENU OPENING WHEN CHANGE HISTORY
   useEffect(() => {
@@ -304,7 +288,7 @@ const NavigationItem: FC<NavigationItemWithRouterProps> = ({
         strict
         target={item.targetBlank ? "_blank" : undefined}
         rel="noopener noreferrer"
-        className="inline-flex items-center text-sm xl:text-base font-normal text-neutral-700 dark:text-neutral-300 py-2 px-4 xl:px-5 rounded-full hover:text-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
+        className={`inline-flex items-center text-sm xl:text-base font-normal ${item.className}  dark:text-neutral-300 py-2 px-4 xl:px-5 rounded-full hover:text-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:hover:text-neutral-200`}
         to={{
           pathname: item.href || undefined,
         }}
