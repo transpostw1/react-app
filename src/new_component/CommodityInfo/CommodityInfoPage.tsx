@@ -29,8 +29,10 @@ const defaultValue = {
 const CommodityInfoPage = ({ data, email, cargo }: any) => {
   const [commodityDetails, setCommodityDetails] =
     useState<IcommodityDetails>(defaultValue);
+
+  const [focused, setFocused] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [error,setError] = useState("")
+  const [error, setError] = useState("");
 
   const history = useHistory();
 
@@ -46,13 +48,13 @@ const CommodityInfoPage = ({ data, email, cargo }: any) => {
 
     console.log("postData", postData);
     // console.log("ParsedData", JSON.parse(postData));
-setIsLoading(true)
+    setIsLoading(true);
     axios
       .post("https://apis.transpost.co/api/bookings/store", postData, {
         headers: { "Content-type": "application/json; charset=UTF-8" },
       })
       .then((response) => {
-        setIsLoading(false)
+        setIsLoading(false);
         const fetchedData = response.data;
         console.log("fetchedData", fetchedData);
         history.push({
@@ -68,7 +70,7 @@ setIsLoading(true)
       .catch((error) => {
         const errorMsg = error.message;
         setError(errorMsg);
-        window.alert(errorMsg)
+        window.alert(errorMsg);
       });
   };
 
@@ -88,6 +90,7 @@ setIsLoading(true)
 
       <form className=" md:w-[80%]">
         <div className="flex-col  md:grid grid-cols-2 gap-6 my-2">
+     
           <label className="block">
             <span className="text-neutral-800 dark:text-neutral-200">
               Commodity Name*

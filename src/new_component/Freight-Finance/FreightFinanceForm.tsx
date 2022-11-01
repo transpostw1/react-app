@@ -22,10 +22,44 @@ export interface IfinanceFormDetails {
   isForwarder?: boolean;
 }
 
+const errors = {
+  fullName: "Full Name field is Empty",
+  companyName: "Company Name field is Empty",
+  commodity: "Commodity Field is Empty",
+  gst: "Please enter proper GST details",
+  iec: "Please enter proper IEC details",
+  pan: "Please enter proper PAN details",
+  product: "Product field is empty",
+  annualTurnover: "Annual turnover field is Empty",
+};
+
+const defaultValue = {
+  fullName: "",
+  companyName: "",
+  commodity: "",
+  gst: "",
+  iec: "",
+  pan: "",
+  product: "",
+  annualTurnover: "",
+};
+
 const FreightFinanceForm = () => {
   const [financeFormDetails, setFinanceFormDetails] =
-    useState<IfinanceFormDetails>({});
+    useState<IfinanceFormDetails>(defaultValue);
 
+  const [focused, setFocused] = useState({
+    fullName: false,
+    commodity: false,
+    companyName: false,
+    annualTurnover: false,
+    product: false,
+    gst: false,
+    iec: false,
+    pan: false,
+  });
+
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [isShipper, setIsShipper] = useState(true);
   const [isForwarder, setIsForwarder] = useState(false);
 
@@ -34,6 +68,7 @@ const FreightFinanceForm = () => {
   ) => {
     // event.preventDefault();
 
+    setIsSubmitted(true);
     let config = {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -55,7 +90,7 @@ const FreightFinanceForm = () => {
       })
       .catch((error) => {
         const errorMsg = error.message;
-        console.log(errorMsg);
+        alert(errorMsg);
       });
   };
 
@@ -64,8 +99,6 @@ const FreightFinanceForm = () => {
       setIsShipper(true);
     }
   }, [isShipper, isForwarder]);
-
-  //   TODO Inputs not working
 
   return (
     <div className=" flex border-t pt-24 md:items-center relative h-full  flex-col align-center  dark:border-neutral-600 dark:bg-neutral-700">
@@ -80,7 +113,7 @@ const FreightFinanceForm = () => {
             </span>
             <Input
               type="text"
-              placeholder="Enter your Full Name"
+              placeholder="Feild is Empty"
               className="mt-1 mb-1"
               onChange={(e) => {
                 setFinanceFormDetails({
@@ -89,8 +122,20 @@ const FreightFinanceForm = () => {
                 });
               }}
               value={financeFormDetails.fullName}
+              required={true}
             />
-            {/* {<p className="text-[red]">{validation.from_port}</p>} */}
+            {
+              <p
+                className={`text-[red] ${
+                  financeFormDetails.fullName?.length === 0 &&
+                  (focused.fullName || isSubmitted)
+                    ? ""
+                    : "hidden"
+                } `}
+              >
+                {errors.fullName}
+              </p>
+            }
           </label>
           <label className="block ">
             <span className="text-neutral-800 dark:text-neutral-200">
@@ -107,8 +152,20 @@ const FreightFinanceForm = () => {
                 });
               }}
               value={financeFormDetails.commodity}
+              required={true}
             />
-            {/* {<p className="text-[red]">{validation.from_port}</p>} */}
+            {
+              <p
+                className={`text-[red] ${
+                  financeFormDetails.commodity?.length === 0 &&
+                  (focused.commodity || isSubmitted)
+                    ? ""
+                    : "hidden"
+                } `}
+              >
+                {errors.commodity}
+              </p>
+            }
           </label>
 
           <label className="block">
@@ -127,6 +184,7 @@ const FreightFinanceForm = () => {
                   setIsForwarder(false);
                 }}
               />
+
               <label
                 className="text-neutral-900 dark:text-neutral-100"
                 htmlFor="shipper"
@@ -171,7 +229,20 @@ const FreightFinanceForm = () => {
                   companyName: e.target.value,
                 });
               }}
+              required={true}
             />
+            {
+              <p
+                className={`text-[red] ${
+                  financeFormDetails.companyName?.length === 0 &&
+                  (focused.companyName || isSubmitted)
+                    ? ""
+                    : "hidden"
+                } `}
+              >
+                {errors.companyName}
+              </p>
+            }
           </label>
 
           <label className={`block ${isForwarder ? "" : "hidden"}`}>
@@ -191,6 +262,18 @@ const FreightFinanceForm = () => {
                 });
               }}
             />
+            {
+              <p
+                className={`text-[red] ${
+                  financeFormDetails.gst?.length === 0 &&
+                  (focused.gst || isSubmitted)
+                    ? ""
+                    : "hidden"
+                } `}
+              >
+                {errors.gst}
+              </p>
+            }
           </label>
           <label className={`block ${isForwarder ? "" : "hidden"}`}>
             <span className="text-neutral-800 dark:text-neutral-200">
@@ -201,7 +284,7 @@ const FreightFinanceForm = () => {
               placeholder="Enter your PAN number"
               className="mt-1"
               name="pan"
-              value={financeFormDetails.iec}
+              value={financeFormDetails.pan}
               onChange={(e) => {
                 setFinanceFormDetails({
                   ...financeFormDetails,
@@ -209,6 +292,18 @@ const FreightFinanceForm = () => {
                 });
               }}
             />
+            {
+              <p
+                className={`text-[red] ${
+                  financeFormDetails.pan?.length === 0 &&
+                  (focused.pan || isSubmitted)
+                    ? ""
+                    : "hidden"
+                } `}
+              >
+                {errors.pan}
+              </p>
+            }
           </label>
 
           <label className={`block ${isShipper ? "" : "hidden"}`}>
@@ -228,6 +323,18 @@ const FreightFinanceForm = () => {
                 });
               }}
             />
+            {
+              <p
+                className={`text-[red] ${
+                  financeFormDetails.iec?.length === 0 &&
+                  (focused.iec || isSubmitted)
+                    ? ""
+                    : "hidden"
+                } `}
+              >
+                {errors.iec}
+              </p>
+            }
           </label>
 
           <label className="block">
@@ -246,7 +353,18 @@ const FreightFinanceForm = () => {
               }}
               value={financeFormDetails.annualTurnover}
             />
-            {/* {<p className="text-[red]">{validation.from_port}</p>} */}
+            {
+              <p
+                className={`text-[red] ${
+                  financeFormDetails.annualTurnover?.length === 0 &&
+                  (focused.annualTurnover || isSubmitted)
+                    ? ""
+                    : "hidden"
+                } `}
+              >
+                {errors.annualTurnover}
+              </p>
+            }
           </label>
           <label className="block">
             <span className="text-neutral-800 dark:text-neutral-200">
@@ -265,6 +383,18 @@ const FreightFinanceForm = () => {
                 });
               }}
             />
+            {
+              <p
+                className={`text-[red] ${
+                  financeFormDetails.product?.length === 0 &&
+                  (focused.product || isSubmitted)
+                    ? ""
+                    : "hidden"
+                } `}
+              >
+                {errors.product}
+              </p>
+            }
           </label>
           <label className="block">
             <span className="text-neutral-800 dark:text-neutral-200">
