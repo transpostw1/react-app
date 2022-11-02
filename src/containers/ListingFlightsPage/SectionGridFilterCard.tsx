@@ -18,58 +18,41 @@ export interface SectionGridFilterCardProps {
   shippingData: { data: [] | {}; loading: string; error: string };
 }
 
-const getLocalStorage = () => {
-  let quote_list = localStorage.getItem("quote_list");
-  if (quote_list) {
-    return (quote_list = JSON.parse(
-      localStorage.getItem("quote_list") || "[]"
-    ));
-  } else {
-    return [];
-  }
-};
-
 const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
   className = "",
   fetchData,
   shippingData,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [show, setShow] = useState(false);
 
   const myRef = useRef<null | HTMLDivElement>(null);
 
   useEffect(() => {
     if (!Array.isArray(shippingData.data)) {
-      setIsOpen(true);
+      setShow(true);
     } else {
-      setIsOpen(false);
+      setShow(false);
     }
     if (Array.isArray(shippingData.data) && shippingData.data.length > 0) {
-      myRef.current?.scrollIntoView({ block: "center", behavior: "smooth" });
+      myRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
     }
   }, [shippingData.data]);
-
-  // useEffect(() => {
-  //   // localStorage.setItem("quote_list", JSON.stringify(quoteList));
-  //   setQuote(quoteList)
-  // }, [quoteList]);
 
   return (
     <div
       ref={myRef}
-      className={`nc-SectionGridFilterCard md:pt-[18rem] ${className}`}
+      className={`nc-SectionGridFilterCard  ${  (Array.isArray(shippingData.data) && shippingData.data.length > 0) ? className : "hidden  "}`}
       data-nc-id="SectionGridFilterCard"
     >
       <div
         className={`lg:p-14 lg:mt-14 lg:bg-neutral-50 lg:dark:bg-black/20 grid grid-cols-1 gap-6 rounded-3xl
-       
         `}
       >
         {Array.isArray(shippingData.data) && shippingData.data.length > 0
           ? shippingData?.data?.map((item, index) => {
               return <RateCard key={index} data={item} />;
             })
-          : isOpen && <QuickRequest />}
+          : show && <QuickRequest />}
 
         {/* <div className="flex mt-12 justify-center items-center">
           <ButtonPrimary loading>Show more</ButtonPrimary>

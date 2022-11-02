@@ -29,7 +29,7 @@ export const fetchDatafailure = (error: any) => {
 export const fetchData = (postData: postDataProps) => {
   return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     // specify by importing the action
-    console.log(postData);
+    console.log("redux",postData);
     let config = {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",

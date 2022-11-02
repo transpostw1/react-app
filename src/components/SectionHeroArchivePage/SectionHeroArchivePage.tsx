@@ -1,18 +1,12 @@
 import React, { FC, ReactNode } from "react";
 import imagePng from "images/Hero-illustration-main-1.png";
 
-import hero1 from "images/transpost images/heros/hero-1.jpeg";
-import hero2 from "images/transpost images/heros/hero-2.jpeg";
-import hero3 from "images/transpost images/heros/hero-3.jpeg";
-import hero4 from "images/transpost images/heros/hero-4.jpeg";
-import hero5 from "images/transpost images/heros/hero-5.jpeg";
-import hero6 from "images/transpost images/heros/hero-6.png";
 import hero7 from "images/transpost images/heros/hero-7.png";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import HeroSearchForm, {
   SearchTab,
 } from "components/HeroSearchForm/HeroSearchForm";
-import TestCarousel from "new_component/RecentSearches/RecentSearches";
+import RecentSearches from "new_component/RecentSearches/RecentSearches";
 
 export interface SectionHeroArchivePageProps {
   className?: string;
@@ -69,17 +63,21 @@ const SectionHeroArchivePage: FC<SectionHeroArchivePageProps> = ({
           <img className="w-full object-fill" src={rightImage} alt="hero" />
         </div>
       </div>
-      <div className="relative">
-        <div className="flow-root w-full absolute z-10">
+      <div className="relative ">
+        <div className="flow-root w-full md:absolute z-10">
           {/* for moving the search bar up and down */}
           <div className="z-max lg:-mt-40 xl:-mt-18 w-full">
             <HeroSearchForm currentPage={currentPage} currentTab={currentTab} />
           </div>
         </div>
         <div className=" mt-12 pt-[5rem]">
-          
-          <TestCarousel />
+
+          <RecentSearches from_port={"INNSA"} to_port={"DEHAM"} sl_date={""} cargo_type={"20gp"} />
         </div>
+
+      </div>
+      <div>
+        
       </div>
     </div>
   );
