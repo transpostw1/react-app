@@ -6,6 +6,8 @@ import { TaxonomyType } from "data/types";
 import React, { FC } from "react";
 import SectionGridFilterCard from "./SectionGridFilterCard";
 import { Helmet } from "react-helmet";
+import VideoContainer from "new_component/VideoContainer/VideoContainer";
+import SectionSolutions from "new_component/SectionSolutions/SectionSolutions";
 
 export interface ListingFlightsPageProps {
   className?: string;
@@ -64,8 +66,6 @@ const DEMO_CATS: TaxonomyType[] = [
   },
 ];
 
-
-
 const ListingFlightsPage: FC<ListingFlightsPageProps> = ({
   className = "",
 }) => {
@@ -85,16 +85,26 @@ const ListingFlightsPage: FC<ListingFlightsPageProps> = ({
           currentPage="Ocean"
           currentTab="Ocean"
           listingType={
-            <>
-              {/* <span className="ml-2.5">1599 flights</span> */}
-            </>
+            <>{/* <span className="ml-2.5">1599 flights</span> */}</>
           }
           className="pt-10 pb-24 lg:pb-32 lg:pt-32 "
         />
 
         {/* SECTION */}
         {/* <SectionGridFilterCard className="pb-24 lg:pb-32" from_port={""} to_port={""} sl_date={undefined} cargo_type={null} /> */}
-        <SectionGridFilterCard className="pb-24 lg:pb-32" from_port={""} to_port={""} sl_date={undefined} cargo_type={null} />
+        <SectionGridFilterCard
+          className="pb-24 lg:pb-32"
+          from_port={""}
+          to_port={""}
+          sl_date={undefined}
+          cargo_type={null}
+        />
+        {/* Video Section */}
+        <VideoContainer />
+
+        {/* Soltuions Sections */}
+
+        <SectionSolutions />
 
         {/* SECTION 1 */}
         {/* <SectionSliderNewCategories

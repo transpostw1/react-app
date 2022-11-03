@@ -7,6 +7,7 @@ import HeroSearchForm, {
   SearchTab,
 } from "components/HeroSearchForm/HeroSearchForm";
 import RecentSearches from "new_component/RecentSearches/RecentSearches";
+import VideoContainer from "new_component/VideoContainer/VideoContainer";
 
 export interface SectionHeroArchivePageProps {
   className?: string;
@@ -71,14 +72,16 @@ const SectionHeroArchivePage: FC<SectionHeroArchivePageProps> = ({
           </div>
         </div>
         <div className=" mt-12 pt-[5rem]">
-
-          <RecentSearches from_port={"INNSA"} to_port={"DEHAM"} sl_date={""} cargo_type={"20gp"} />
+          {/* TODO redux call for recent searches */}
+          <RecentSearches
+            from_port={"INNSA"}
+            to_port={"DEHAM"}
+            sl_date={""}
+            cargo_type={"20gp"}
+          />
         </div>
-
       </div>
-      <div>
-        
-      </div>
+   
     </div>
   );
 };

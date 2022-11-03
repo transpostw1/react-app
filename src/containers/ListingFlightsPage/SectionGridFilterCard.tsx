@@ -10,7 +10,7 @@ import { ThunkDispatch } from "redux-thunk";
 import QuickRequest from "new_component/QuickRequest";
 import Loading from "new_component/Loading";
 import { postDataProps } from "components/HeroSearchForm/FlightSearchForm";
-import { isArray } from "lodash";
+
 
 export interface SectionGridFilterCardProps {
   className?: string;
