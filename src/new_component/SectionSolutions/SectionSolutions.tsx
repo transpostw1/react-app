@@ -59,12 +59,12 @@ const SOLUTIONS_ARRAY = [
 
 const SectionSolutions = () => {
   return (
-    <div className="flex flex-col">
-      <div className="mx-auto text-4xl my-10 font-bold">
+    <div className="flex flex-col gap-5">
+      <div className="mx-auto text-4xl  my-10 font-bold">
         <span className="text-[#01a77e] ">Solutions</span>
         <span> we offer</span>
       </div>
-      <div className="mx-auto w-[26rem] text-center ">
+      <div className="mx-auto lg:w-[26rem] w-full pb-10 text-center ">
         Our services and products support your supply chain and logistics needs
         for ocean shipments, cargo insurance and trade finance.
       </div>
@@ -72,15 +72,15 @@ const SectionSolutions = () => {
       {SOLUTIONS_ARRAY.map((item: SolutionsIType) => {
         const { id, imgHref, iconHref, title, subtitle } = item;
         return (
-          <div key={id} className={`flex ${ (id % 2 == 0) ? "flex-row-reverse" : "" }  w-full py-12`}>
-            <div className="w-1/2">
+          <div key={id} className={`flex flex-col sm:flex-row ${ (id % 2 == 0) ? "sm:flex-row-reverse" : "" }  w-full py-12`}>
+            <div className=" sm:w-1/2 ">
               <img src={imgHref} alt="IMAGE" />
             </div>
-            <div className="w-1/2 p-5 flex flex-col gap-8">
-              <img src={iconHref} alt="" className="w-[6rem] pt-4" />
+            <div className="sm:w-1/2 p-5 flex flex-col gap-8">
+              <img src={iconHref} alt="" className="w-[6rem] hidden  lg:block pt-4" />
               <span className="font-bold text-4xl">{title}</span>
               <span>{subtitle}</span>
-              <ButtonPrimary className="w-1/3">Learn more</ButtonPrimary>
+              <ButtonPrimary className=" w-1/2 lg:w-1/3">Learn more</ButtonPrimary>
             </div>
           </div>
         );

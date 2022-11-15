@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "./static/css/main.83ef12f3.css",
-    "main.js": "./static/js/main.bc49dd07.js",
+    "main.css": "./static/css/main.0e5c30c8.css",
+    "main.js": "./static/js/main.ee80329f.js",
     "static/js/787.dfd8dd9b.chunk.js": "./static/js/787.dfd8dd9b.chunk.js",
     "static/media/hero-right-3.png": "./static/media/hero-right-3.25e989ed2b6ef0cfb25e.png",
     "static/media/Masood Ahmed - CTO.jpg": "./static/media/Masood Ahmed - CTO.fa77065f2e5703ed3909.jpg",
@@ -33,13 +33,17 @@
     "static/media/Inter-Medium.ttf": "./static/media/Inter-Medium.18b8c68e64126db9ce88.ttf",
     "static/media/Inter-Light.ttf": "./static/media/Inter-Light.e7dd1399358ca04ed457.ttf",
     "static/media/Inter-Regular.ttf": "./static/media/Inter-Regular.9cd7588f47651215d52f.ttf",
+    "static/media/image-cargo-insurance@2x.png": "./static/media/image-cargo-insurance@2x.c884fbd373b3256428d4.png",
     "static/media/Hero-illustration-main-1.png": "./static/media/Hero-illustration-main-1.51d0cecb1e955bd7d01d.png",
+    "static/media/image-trade-finance@2x.png": "./static/media/image-trade-finance@2x.d71a5370acbdfd1f88ab.png",
     "static/media/la-solid-900.eot": "./static/media/la-solid-900.4184d740eae2fb727bfe.eot",
     "static/media/la-solid-900.ttf": "./static/media/la-solid-900.279f38601f1d1655255f.ttf",
     "static/media/HIW1.png": "./static/media/HIW1.bbef046fd6951afd08a7.png",
     "static/media/HIW3.png": "./static/media/HIW3.b650d652a9db697619b9.png",
     "static/media/HIW2.png": "./static/media/HIW2.f68577684c76e764a351.png",
     "static/media/hero-7.png": "./static/media/hero-7.3fafe8882205cd29b6b1.png",
+    "static/media/image-ocean-shipment@2x.png": "./static/media/image-ocean-shipment@2x.653afb3f7c674812cb7d.png",
+    "static/media/image-freight-finance@2x.png": "./static/media/image-freight-finance@2x.a899ca14d7e27d0649a3.png",
     "static/media/Poppins-Light.ttf": "./static/media/Poppins-Light.f41b63c0bb0963ace821.ttf",
     "static/media/Poppins-Regular.ttf": "./static/media/Poppins-Regular.8081832fc5cfbf634aa6.ttf",
     "static/media/Poppins-Medium.ttf": "./static/media/Poppins-Medium.9e1bb626874ed49aa343.ttf",
@@ -106,16 +110,18 @@
     "static/media/Brand-element-1.png": "./static/media/Brand-element-1.a67229df0e6ca1f4bace.png",
     "static/media/la-regular-400.woff": "./static/media/la-regular-400.aa859c0d08b8193d6586.woff",
     "static/media/la-regular-400.woff2": "./static/media/la-regular-400.8dc1cedf1f4987f82b72.woff2",
+    "static/media/icon-ocean-shipment-large@2x.png": "./static/media/icon-ocean-shipment-large@2x.fa8d9d16f71a1931315c.png",
+    "static/media/icon-freight-finance-large@2x-1.png": "./static/media/icon-freight-finance-large@2x-1.0978ef5b6cdcb09c88ae.png",
     "static/media/Google.svg": "./static/media/Google.14c804f8c298e718f222f1e6e52b1067.svg",
     "static/media/mastercard.svg": "./static/media/mastercard.92c5b76a9ebc565de87902533102fc82.svg",
     "index.html": "./index.html",
     "static/media/VectorHIW.svg": "./static/media/VectorHIW.2a56b4d0aa5690494df25bc0b2bb3bf6.svg",
-    "main.83ef12f3.css.map": "./static/css/main.83ef12f3.css.map",
-    "main.bc49dd07.js.map": "./static/js/main.bc49dd07.js.map",
+    "main.0e5c30c8.css.map": "./static/css/main.0e5c30c8.css.map",
+    "main.ee80329f.js.map": "./static/js/main.ee80329f.js.map",
     "787.dfd8dd9b.chunk.js.map": "./static/js/787.dfd8dd9b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.83ef12f3.css",
-    "static/js/main.bc49dd07.js"
+    "static/css/main.0e5c30c8.css",
+    "static/js/main.ee80329f.js"
   ]
 }

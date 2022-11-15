@@ -19,7 +19,7 @@ const SectionHero: FC<SectionHeroProps> = ({
   clickHandler,
 }) => {
   return (
-    // TODO border-b xl:pb-28 ADD IN CLASSNAME FOR BORDER
+    // TODO border-b xl:pb-28 ADD IN CLASSNAME FOR BORDER 
     <div
       className={`nc-SectionHero relative  ${className}`}
       data-nc-id="SectionHero"

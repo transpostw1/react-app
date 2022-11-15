@@ -207,7 +207,7 @@ const FreightFinanceForm = () => {
                 className="text-neutral-900 dark:text-neutral-100"
                 htmlFor="forwarder"
               >
-                Forwader
+                Forwarder
               </label>
 
               {/* <Checkbox className="" name="forwarder" label="Forwarder" /> */}
