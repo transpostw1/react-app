@@ -82,8 +82,8 @@ const AdditonalCharge = ({
   };
 
   return (
-    <div className="grid mx-3 mt-0 px-2 grid-cols-10 font-light">
-      <div className="border col-start-1 col-end-3 border-zinc-500 ">
+    <div className="grid mx-3 mt-0  grid-cols-10 font-light border-b border-x border-zinc-500 gap-[1px] bg-zinc-500">
+      <div className=" col-start-1 col-end-3  bg-white ">
         <input
           type="text"
           className="w-full px-3  border-0 focus:ring-0 focus:outline-none dark:bg-transparent"
@@ -93,7 +93,7 @@ const AdditonalCharge = ({
         />
       </div>
 
-      <div className="border border-zinc-500">
+      <div className="bg-white">
         <select
           onChange={selectHandler}
           value={item.basis}
@@ -146,10 +146,10 @@ const AdditonalCharge = ({
           </option>
         </select>
       </div>
-      <div className="flex px-3 outline-none items-center border border-zinc-500">
+      <div className="flex px-3 outline-none items-center bg-white">
         N/A
       </div>
-      <div className="flex items-center border border-zinc-500">
+      <div className="flex items-center bg-white">
         <input
           type="number"
           defaultValue={quantity}
@@ -158,7 +158,7 @@ const AdditonalCharge = ({
           className="border-transparent  focus:border-transparent focus:ring-0 outline-none border-0 w-full dark:bg-transparent"
         />
       </div>
-      <div className="flex px-3 outline-none items-center border border-zinc-500">
+      <div className="flex px-3 outline-none items-center bg-white">
         <span>USD</span>
         <input
           type="number"
@@ -170,10 +170,10 @@ const AdditonalCharge = ({
           className="border-b-[1px] my-1 focus:border-transparent focus:ring-0 outline-none border-0 w-full dark:bg-transparent"
         ></input>
       </div>
-      <div className="flex px-3 outline-none items-center border  border-zinc-500">
+      <div className="flex px-3 outline-none items-center bg-white">
         USD {netBuyRate || item.netBuyRate}
       </div>
-      <div className="flex px-3 outline-none items-center border border-zinc-500">
+      <div className="flex px-3 outline-none items-center bg-white">
         <span>USD</span>
         <input
           type="number"
@@ -183,7 +183,7 @@ const AdditonalCharge = ({
           className=" border-b-[1px] my-1 focus:border-transparent focus:ring-0 outline-none border-0 w-full dark:bg-transparent"
         ></input>
       </div>
-      <div className="flex px-3 outline-none items-center border border-zinc-500">
+      <div className="flex px-3 outline-none items-center bg-white">
         USD {netSellRate || item.netSellRate}
       </div>
       <button
@@ -191,7 +191,7 @@ const AdditonalCharge = ({
         onClick={() => {
           removeCharge(item.id, data.id);
         }}
-        className="flex px-3 outline-none items-center border border-zinc-500"
+        className="flex px-3 outline-none items-center bg-white"
       >
         Delete
       </button>

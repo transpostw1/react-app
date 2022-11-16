@@ -139,11 +139,16 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
           <div className="border-l border-neutral-200 dark:border-neutral-700 md:mx-6 lg:mx-10"></div>
           <div className="flex-[4] whitespace-nowrap sm:text-center">
             <span className="text-xl font-semibold text-secondary-6000">
-              USD {isLogin ? (quoteList[editId].isEditing ? quoteList[editId].sum_sell :  data.total) : "****"}
+              USD{" "}
+              {isLogin
+                ? quoteList[editId] && quoteList[editId].isEditing
+                  ? quoteList[editId].sum_sell
+                  : data.total
+                : "****"}
             </span>
 
             <div className="mt-5 font-medium">
-              {isLogin ? (
+              {isLogin ? (                        
                 <div className="flex">
                   <NcModal
                     renderTrigger={(openModal) => (
@@ -167,7 +172,9 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
                     className="ml-2"
                     onClick={() => createQuoteHandler(data.id)}
                   >
-                   {quoteList[editId] && quoteList[editId].isEditing? "Edit Quote" : "+Create Quote"} 
+                    {quoteList[editId] && quoteList[editId].isEditing
+                      ? "Edit Quote"
+                      : "+Create Quote"}
                   </ButtonPrimary>
                 </div>
               ) : (

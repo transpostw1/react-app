@@ -73,12 +73,12 @@ const SectionHeroArchivePage: FC<SectionHeroArchivePageProps> = ({
         </div>
         <div className=" mt-12 pt-[5rem]">
           {/* TODO redux call for recent searches */}
-          <RecentSearches
+          {/* <RecentSearches
             from_port={"INNSA"}
             to_port={"DEHAM"}
             sl_date={""}
             cargo_type={"20gp"}
-          />
+          /> */}
         </div>
       </div>
    

@@ -218,59 +218,59 @@ const QuoteModal = ({ data, onclose, showQuoteModal }: any) => {
                 </select>
                 <div className="w-5"></div>
               </div>{" "}
-              <div className="grid mx-3 mb-0 pt-2 px-2 grid-cols-10 font-semibold overscroll-y-auto">
-                <div className="border p-[2rem] col-start-1 col-end-3 border-zinc-500 row-span-2 flex px-3 items-center">
+              <div className="grid border-t border-x border-zinc-500 gap-[1px] bg-zinc-500  mx-3 mb-0   grid-cols-10 font-semibold overscroll-y-auto">
+                <div className=" p-[2rem] col-start-1 col-end-3 bg-white row-span-2 flex px-3 items-center">
                   Charges
                 </div>
-                <div className="flex px-3 items-center border border-zinc-500 row-span-2 ">
+                <div className="flex px-3 items-center bg-white row-span-2 ">
                   Basis
                 </div>
-                <div className="flex px-3 items-center border border-zinc-500  row-span-2">
+                <div className="flex px-3 items-center bg-white  row-span-2">
                   Equipment Type
                 </div>
-                <div className="flex px-3 items-center border border-zinc-500 row-span-2">
+                <div className="flex px-3 items-center bg-white row-span-2">
                   Quantity
                 </div>
-                <div className="flex pl-3 items-center border border-zinc-500 col-span-2">
+                <div className="flex pl-3 items-center bg-white col-span-2">
                   Buy Rates (Total: USD {totalBuyRate})
                 </div>
-                <div className="flex pl-3 items-center border border-zinc-500 col-span-2">
+                <div className="flex pl-3 items-center bg-white col-span-2">
                   Sell Rates (Total: USD {totalSellRate})
                 </div>
-                <div className="border border-zinc-500 row-span-2"></div>
-                <div className="flex px-3 items-center border border-zinc-500">
+                <div className="bg-white row-span-2"></div>
+                <div className="flex px-3 items-center bg-white">
                   Unit Price
                 </div>
-                <div className="flex px-3 items-center border border-zinc-500">
+                <div className="flex px-3 items-center bg-white">
                   Amount
                 </div>
-                <div className="flex px-3 items-center border border-zinc-500">
+                <div className="flex px-3 items-center bg-white">
                   Unit Price
                 </div>
-                <div className="flex px-3 items-center border border-zinc-500">
+                <div className="flex px-3 items-center bg-white">
                   Amount
                 </div>
               </div>
-              <div className="grid mx-3 mt-0 px-2 grid-cols-10 font-light">
-                <div className="flex col-start-1 col-end-3 px-3 items-center border border-zinc-500">
+              <div className="grid border border-zinc-500 gap-[1px] bg-zinc-500 mx-3 mt-0  grid-cols-10 font-light">
+                <div className="flex col-start-1 col-end-3 px-3 items-center bg-white">
                   Basic Ocean Freight
                 </div>
-                <div className="flex pl-3 items-center border border-zinc-500">
+                <div className="flex pl-3 items-center bg-white">
                   per equipnment
                 </div>
-                <div className="flex px-3 items-center border border-zinc-500">
+                <div className="flex px-3 items-center bg-white">
                   20GP
                 </div>
-                <div className="flex px-3 items-center border border-zinc-500">
+                <div className="flex px-3 items-center bg-white">
                   1.00
                 </div>
-                <div className="flex px-3 items-center border border-zinc-500">
+                <div className="flex px-3 items-center bg-white">
                   USD {freightBuyRate}
                 </div>
-                <div className="flex px-3 items-center border border-zinc-500">
+                <div className="flex px-3 items-center bg-white">
                   USD {freightBuyRate}
                 </div>
-                <div className="flex px-3 items-center border border-zinc-500">
+                <div className="flex px-3 items-center bg-white">
                   <span>USD</span>
                   <input
                     type={"number"}
@@ -281,10 +281,10 @@ const QuoteModal = ({ data, onclose, showQuoteModal }: any) => {
                     value={freightSellRate}
                   ></input>
                 </div>
-                <div className="flex px-3 items-center border border-zinc-500">
+                <div className="flex px-3 items-center bg-white">
                   USD {freightSellRate}
                 </div>
-                <div className="flex px-3 items-center border border-zinc-500"></div>
+                <div className="flex px-3 items-center bg-white"></div>
               </div>
               {quoteList.length > 0 &&
               quoteList[editID] &&
