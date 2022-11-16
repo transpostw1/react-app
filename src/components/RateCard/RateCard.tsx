@@ -43,11 +43,12 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [rate, setRate] = useState<string | undefined>("");
   const [cargo, setCargo] = useState<string>("");
+  const [editId, setEditId] = useState(-1);
 
   const [showQuoteModal, setShowQuoteModal] = useState<boolean>(false);
 
   //context api
-  const { addQuote } = useQuoteList();
+  const { addQuote, quoteList } = useQuoteList();
   const { isLogin, user } = useUserAuth();
 
   const handleClose = () => {
@@ -67,6 +68,15 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
       setCargo("40'High Cube");
     }
   }, [data]);
+
+  useEffect(() => {
+    if (quoteList.length > 0) {
+      const index = quoteList.findIndex((item: any) => {
+        return item?.id === data.id;
+      });
+      setEditId(index);
+    }
+  });
 
   const createQuoteHandler = (id: any) => {
     addQuote(id, data);
@@ -129,7 +139,7 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
           <div className="border-l border-neutral-200 dark:border-neutral-700 md:mx-6 lg:mx-10"></div>
           <div className="flex-[4] whitespace-nowrap sm:text-center">
             <span className="text-xl font-semibold text-secondary-6000">
-              USD {isLogin ? data.total : "****"}
+              USD {isLogin ? (quoteList[editId].isEditing ? quoteList[editId].sum_sell :  data.total) : "****"}
             </span>
 
             <div className="mt-5 font-medium">
@@ -157,7 +167,7 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
                     className="ml-2"
                     onClick={() => createQuoteHandler(data.id)}
                   >
-                    +Create Quote
+                   {quoteList[editId] && quoteList[editId].isEditing? "Edit Quote" : "+Create Quote"} 
                   </ButtonPrimary>
                 </div>
               ) : (

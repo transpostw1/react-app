@@ -76,7 +76,7 @@ export const QuoteListProvider = ({ children }: QuoteListProviderProps) => {
   const addQuote = (id: string, data: any) => {
     setQuoteList((prevState: any) => {
       if (prevState?.find((item: any) => item.id === id) == null) {
-        console.log("prevState in", prevState);
+        // console.log("prevState in", prevState);
 
         return [
           ...prevState,
@@ -84,11 +84,12 @@ export const QuoteListProvider = ({ children }: QuoteListProviderProps) => {
             quoteId: id,
             sum_buy: data.total,
             sum_sell: data.total,
+            isEditing: true,
             ...data,
           },
         ];
       } else {
-        console.log("prevState out", prevState);
+        // console.log("prevState out", prevState);
 
         return prevState;
       }

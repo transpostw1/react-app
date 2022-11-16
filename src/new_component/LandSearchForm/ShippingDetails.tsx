@@ -1,29 +1,26 @@
-import React, {Fragment, useEffect, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 
 import { Popover, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
-// 1 => select focus\ auto focus
+// 1 => select focus auto focus
 
 export const ShipingDetails = (props: any) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const [inputValue, setInputValue] = useState("FTL,1m3");
+  const [inputValue, setInputValue] = useState("FCL,20'Standard");
   const [isLTLActive, setIsLTLActive] = useState(false); //LTL
-  const [isFCLActive, setIsFCLActive] = useState(false);
-  const [isFTLActive, setIsFTLActive] = useState(true); // volome
+  const [isFCLActive, setIsFCLActive] = useState(true);
   const [vol, setVol] = useState(1);
   const [weight, setWeight] = useState(1);
   const [gWeight, setGWeight] = useState(1);
-  const [transType, setTransType] = useState("FTL");
-  const [contDetails, setContDetails] = useState("1m3");
+  const [transType, setTransType] = useState("FCL");
+  const [contDetails, setContDetails] = useState("20'Standard");
   const [showPopover, setShowPopover] = useState(false);
 
   const selectHandler = () => {
-    if (transType === "Less Truck Load") {
+    if (transType === "LTL") {
       setContDetails(vol + " M3/" + weight + " MT");
-    } else if (transType === "Full Truck Load") {
-      setContDetails(vol + " m3");
     }
     setInputValue(transType + "," + contDetails);
     setShowPopover(!showPopover);
@@ -45,10 +42,10 @@ export const ShipingDetails = (props: any) => {
   }, [inputValue]);
 
   useEffect(() => {
-    if (transType === "Less Truck Load") {
+    console.log("TType", transType);
+
+    if (transType === "LTL") {
       setContDetails(vol + " M3/" + weight + " MT");
-    } else if (transType === "Full Truck Load") {
-      setContDetails(vol + " m3");
     }
   }, [transType, contDetails]);
 
@@ -56,9 +53,8 @@ export const ShipingDetails = (props: any) => {
     setInputValue(transType + "," + contDetails);
   }, [contDetails]);
   const defaultV = () => {
-    setIsFTLActive(true);
     setIsLTLActive(false);
-    setIsFCLActive(false);
+    setIsFCLActive(true);
   };
   useEffect(() => {
     defaultV();
@@ -95,18 +91,17 @@ export const ShipingDetails = (props: any) => {
               <input
                 className=" bg-transparent rounded border+- block font-bold text-neutral-800 focus:outline-none  dark:text-neutral-200"
                 value={inputValue}
-                // style={{ color: "neutral" }}
                 onClick={() => {
                   setShowPopover(!showPopover);
-                  setTransType("FTL");
-                  setContDetails("1m3");
+                  setTransType("FCL");
+                  setContDetails("20'Standard");
                 }}
               ></input>
               <ChevronDownIcon
                 onClick={() => {
                   setShowPopover(!showPopover);
-                  setTransType("FTL");
-                  setContDetails("1m3");
+                  setTransType("FCL");
+                  setContDetails("20'Standard");
                 }}
                 className={`${open ? "" : "text-opacity-70"}
                   ml-2 h-5 w-5 text-black group-hover:text-opacity-80 transition ease-in-out duration-150`}
@@ -138,40 +133,32 @@ export const ShipingDetails = (props: any) => {
                           if (Ttype === "LTL") {
                             setIsLTLActive(true);
                             setIsFCLActive(false);
-                            setIsFTLActive(false);
                             setVol(1);
                             setWeight(1);
-                          } else if (Ttype === "Full Truck Load") {
-                            setIsFCLActive(false);
-                            setIsLTLActive(false);
-                            setIsFTLActive(true);
-                            setGWeight(1);
                           } else if (Ttype === "FCL") {
-                            setIsFTLActive(false);
                             setIsLTLActive(false);
                             setIsFCLActive(true);
+                            setContDetails("20'Standard");
                           }
                         }}
                       >
-                        {[
-                          "Full Truck Load",
-                          "Full Container Load",
-                          "Less Truck Load",
-                        ].map((item) => {
-                          return (
-                            <option
-                              defaultValue={transType}
-                              key={item}
-                              value={
-                                item === "Full Truck Load"
-                                  ? "Full Truck Load"
-                                  : item.match(/[A-Z]/g)?.join("")
-                              }
-                            >
-                              {item}
-                            </option>
-                          );
-                        })}
+                        {["Full Container Load", "Less Truck Load"].map(
+                          (item) => {
+                            return (
+                              <option
+                                defaultValue={transType}
+                                key={item}
+                                value={
+                                  item === "Full Truck Load"
+                                    ? "Full Truck Load"
+                                    : item.match(/[A-Z]/g)?.join("")
+                                }
+                              >
+                                {item}
+                              </option>
+                            );
+                          }
+                        )}
                       </select>
                     </div>
                     {/* <ConatainerType /> */}
@@ -199,42 +186,58 @@ export const ShipingDetails = (props: any) => {
                         </div>
                       </div>
                     )}
-                    {isFTLActive && (
-                      <div>
-                        <h3>
-                          VOLUME, M<sup>3</sup>
-                        </h3>
-                        <input
-                          className="block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 rounded-2xl text-sm font-normal h-11 px-4 py-3 mt-1.5"
-                          type="number"
-                          min="0"
-                          onChange={(e) => setVol(parseInt(e.target.value))}
-                          value={vol}
-                        />
-                      </div>
-                    )}
+
                     {isFCLActive && (
-                      <div>
-                        <h3>Type</h3>
-                        <select
-                          className="nc-Select h-11 mt-1.5 block w-full text-sm rounded-2xl border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700  dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-800"
-                          onChange={(e) => setContDetails(e.target.value)}
-                        >
-                          {[
-                            "20'Standard",
-                            "40'Standard",
-                            "40'High Cube",
-                            "20'Refrigerated",
-                            "40'Refrigerated",
-                            "45'High Cube",
-                          ].map((item) => {
-                            return (
-                              <option key={item} defaultValue="20'Standard" value={item}>
-                                {item}
-                              </option>
-                            );
-                          })}
-                        </select>
+                      <div className="space-y-5">
+                        <div>
+                          <h3>Type</h3>
+                          <select
+                            className="nc-Select h-11 mt-1.5 block w-full text-sm rounded-2xl border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700  dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-800"
+                            onChange={(e) => setContDetails(e.target.value)}
+                          >
+                            {[
+                              "20'Standard",
+                              "40'Standard",
+                              "40'High Cube",
+                              "20'Refrigerated",
+                              "40'Refrigerated",
+                              "45'High Cube",
+                            ].map((item) => {
+                              return (
+                                <option
+                                  key={item}
+                                  defaultValue="20'Standard"
+                                  value={item}
+                                >
+                                  {item}
+                                </option>
+                              );
+                            })}
+                          </select>
+                        </div>
+                        <div>
+                          <h3>Weight</h3>
+                          <select
+                            className="nc-Select h-11 mt-1.5 block w-full text-sm rounded-2xl border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700  dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-800"
+                            // onChange={(e) => setContDetails(e.target.value)}
+                          >
+                            {[
+                              "0 Kg to 11700 Kg",
+                              "11700 Kg to 23700 Kg",
+                              "23700 Kg to 27700 Kg",
+                            ].map((item) => {
+                              return (
+                                <option
+                                  key={item}
+                                  defaultValue="20'Standard"
+                                  value={item}
+                                >
+                                  {item}
+                                </option>
+                              );
+                            })}
+                          </select>
+                        </div>
                       </div>
                     )}
                     <button

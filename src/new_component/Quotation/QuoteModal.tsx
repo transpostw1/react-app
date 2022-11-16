@@ -13,7 +13,6 @@ export interface Modal {
   onclose: void;
   data: {
     id?: string;
-
     sl_name?: string;
     expiry_date?: string;
     from_port?: string;
@@ -45,8 +44,9 @@ export interface IquoteList {
   sl_logo?: string;
   total?: number;
   cargo_size?: string;
-  sum_buy?:number;
-  sum_sell:number;
+  sum_buy?: number;
+  sum_sell: number;
+  isEditing?:boolean;
   additionalCosts?: [
     {
       id: any;
@@ -59,8 +59,7 @@ export interface IquoteList {
 }
 
 const QuoteModal = ({ data, onclose, showQuoteModal }: any) => {
-  const { quoteList, addCharge, addQuote } = useQuoteList();
-
+  const { quoteList, addCharge } = useQuoteList();
 
   const [freightBuyRate, setFreightBuyRate] = useState(data.total);
   const [freightSellRate, setFreightSellRate] = useState<number>(data.total);
@@ -68,7 +67,6 @@ const QuoteModal = ({ data, onclose, showQuoteModal }: any) => {
   const [totalSellRate, setTotalSellRate] = useState(0);
   const [showRemarks, setShowRemarks] = useState(false);
   const [editID, setEditID] = useState(-1);
-
 
   const sum = (arr: any[], initialvalue: number) => {
     if (arr.length > 0) {
@@ -92,13 +90,13 @@ const QuoteModal = ({ data, onclose, showQuoteModal }: any) => {
       setEditID(index);
     }
 
-    // initial sum visible for 1st time 
+    // initial sum visible for 1st time
     if (quoteList?.find((item: any) => item.id === data.id) == null) {
       const buy_array = data.additionalCosts.map((item: any) => item.amount);
       const initial_buy_Sum = sum(buy_array, data.total);
       // console.log("initial buy Sum", initial_buy_Sum);
       setTotalBuyRate(initial_buy_Sum);
-      const initial_sell_sum = sum(buy_array,freightSellRate)
+      const initial_sell_sum = sum(buy_array, freightSellRate);
       // setTotalSellRate(initial_sell_sum);
 
       console.log("initial sell Sum", initial_sell_sum);
@@ -106,34 +104,31 @@ const QuoteModal = ({ data, onclose, showQuoteModal }: any) => {
       const quote = quoteList.find((item: any) => item.id === data.id);
       if (quote?.additionalCosts && quote?.additionalCosts?.length > 0) {
         const buy_array = quote?.additionalCosts?.map(
-          (charge: any) => (charge.netBuyRate || charge.amount) 
+          (charge: any) => charge.netBuyRate || charge.amount
         );
-        // console.log("cost array", buy_array);
         const buy_result = sum(buy_array, data.total);
         console.log("inner Result", buy_result);
         setTotalBuyRate(buy_result);
         // for sell rate
         const sell_array = quote?.additionalCosts?.map(
-          (charge: any) => (charge.netSellRate || charge.amount)
+          (charge: any) => charge.netSellRate || charge.amount
         );
         const sell_result = sum(sell_array, freightSellRate);
-        console.log("inner Sell_result", typeof sell_result);
         setTotalSellRate(sell_result);
         quote.sum_sell = freightSellRate;
-      }else{
+      } else {
         // when additional cost is empty
         const buy_array = data.additionalCosts.map((item: any) => item.amount);
         const initial_buy_Sum = sum(buy_array, data.total);
         console.log("initial buy Sum", initial_buy_Sum);
         setTotalBuyRate(initial_buy_Sum);
-        const initial_sell_sum = sum(buy_array,freightSellRate)
+        const initial_sell_sum = sum(buy_array, freightSellRate);
         setTotalSellRate(initial_sell_sum);
-  
+
         console.log("initial sell Sum", initial_sell_sum);
       }
-
     }
-  }, [quoteList,freightSellRate]);
+  }, [quoteList, freightSellRate]);
 
   useEffect(() => {
     if (quoteList.length > 0) {
@@ -180,7 +175,7 @@ const QuoteModal = ({ data, onclose, showQuoteModal }: any) => {
             </svg>
           </button>
         </div>
-        <div className="flex relative  h-[75%] flex-col align-center bg-white overflow-y-auto dark:bg-neutral-700">
+        <div className="flex relative h-[75%] flex-col align-center bg-white overflow-y-auto dark:bg-neutral-700">
           <div className="flex justify-center my-4 px-3 w-full">
             <button
               onClick={() => setShowRemarks(false)}
@@ -199,18 +194,21 @@ const QuoteModal = ({ data, onclose, showQuoteModal }: any) => {
               Remarks
             </button>
           </div>
-{/* TODO translate animation */}
+          {/* TODO translate animation */}
           {showRemarks ? (
-            <div 
-            className={`top-0 left-0 w-full ease-in-out duration-300 ${showRemarks ? "translate-x-0" : "translate-x-full " }`}
+            <div
+              className={`top-0 left-0 w-full ease-in-out duration-300 ${
+                showRemarks ? "translate-x-0" : "translate-x-full "
+              }`}
             >
-            <Remarks data={data} />
+              <Remarks data={data} />
             </div>
           ) : (
-            <div 
-            className={`top-0 left-0 w-full ease-in-out duration-300 ${showRemarks ? "translate-x-full " : "translate-x-0" }`}
+            <div
+              className={`top-0 left-0 w-full ease-in-out duration-300 ${
+                showRemarks ? "translate-x-full " : "translate-x-0"
+              }`}
             >
-            
               <div className="flex border rounded-2xl mx-5 my-3 mt-10 w-max">
                 <span className="flex px-4 items-center border-r-2">
                   Freight
@@ -275,18 +273,18 @@ const QuoteModal = ({ data, onclose, showQuoteModal }: any) => {
                 <div className="flex px-3 items-center border border-zinc-500">
                   <span>USD</span>
                   <input
-                  type={"number"}
+                    type={"number"}
                     className="border-transparent  focus:border-transparent focus:ring-0 outline-none border-0 w-full dark:bg-transparent"
-                    onChange={(e) => setFreightSellRate(parseInt(e.target.value))}
+                    onChange={(e) =>
+                      setFreightSellRate(parseInt(e.target.value))
+                    }
                     value={freightSellRate}
                   ></input>
                 </div>
                 <div className="flex px-3 items-center border border-zinc-500">
                   USD {freightSellRate}
                 </div>
-                <div className="flex px-3 items-center border border-zinc-500">
-                  
-                </div>
+                <div className="flex px-3 items-center border border-zinc-500"></div>
               </div>
               {quoteList.length > 0 &&
               quoteList[editID] &&
