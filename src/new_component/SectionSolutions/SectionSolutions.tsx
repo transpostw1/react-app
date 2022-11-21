@@ -80,7 +80,7 @@ const SectionSolutions = () => {
               <img src={iconHref} alt="" className="w-[6rem] hidden  lg:block pt-4" />
               <span className="font-bold text-4xl">{title}</span>
               <span>{subtitle}</span>
-              <ButtonPrimary className=" w-1/2 lg:w-1/3">Learn more</ButtonPrimary>
+              <ButtonPrimary className=" w-1/2 lg:w-1/3 transition-all ease-in-out">Learn more</ButtonPrimary>
             </div>
           </div>
         );

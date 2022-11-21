@@ -93,11 +93,11 @@ const AdditonalCharge = ({
         />
       </div>
 
-      <div className="bg-white">
+      <div className="bg-white outline-none">
         <select
           onChange={selectHandler}
           value={item.basis}
-          className="border-0 focus:outline-none w-full dark:bg-transparent"
+          className="border-0 focus:ring-0 focus:outline-none w-full dark:bg-transparent"
         >
           <option label="" value="">
             

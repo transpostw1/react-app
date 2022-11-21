@@ -197,15 +197,17 @@ const QuoteModal = ({ data, onclose, showQuoteModal }: any) => {
           {/* TODO translate animation */}
           {showRemarks ? (
             <div
-              className={`top-0 left-0 w-full ease-in-out duration-300 ${
+
+              className={`top-0 left-0 w-full transition-all duration-[600ms] ${
                 showRemarks ? "translate-x-0" : "translate-x-full "
               }`}
+              data-taos-offset="400"
             >
               <Remarks data={data} />
             </div>
           ) : (
             <div
-              className={`top-0 left-0 w-full ease-in-out duration-300 ${
+              className={`top-0 left-0 w-full transiton-all ease-in-out duration-300 ${
                 showRemarks ? "translate-x-full " : "translate-x-0"
               }`}
             >

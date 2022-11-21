@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "./static/css/main.0e5c30c8.css",
-    "main.js": "./static/js/main.ee80329f.js",
+    "main.css": "./static/css/main.46584655.css",
+    "main.js": "./static/js/main.c52148c4.js",
     "static/js/787.dfd8dd9b.chunk.js": "./static/js/787.dfd8dd9b.chunk.js",
     "static/media/hero-right-3.png": "./static/media/hero-right-3.25e989ed2b6ef0cfb25e.png",
     "static/media/Masood Ahmed - CTO.jpg": "./static/media/Masood Ahmed - CTO.fa77065f2e5703ed3909.jpg",
@@ -116,12 +116,12 @@
     "static/media/mastercard.svg": "./static/media/mastercard.92c5b76a9ebc565de87902533102fc82.svg",
     "index.html": "./index.html",
     "static/media/VectorHIW.svg": "./static/media/VectorHIW.2a56b4d0aa5690494df25bc0b2bb3bf6.svg",
-    "main.0e5c30c8.css.map": "./static/css/main.0e5c30c8.css.map",
-    "main.ee80329f.js.map": "./static/js/main.ee80329f.js.map",
+    "main.46584655.css.map": "./static/css/main.46584655.css.map",
+    "main.c52148c4.js.map": "./static/js/main.c52148c4.js.map",
     "787.dfd8dd9b.chunk.js.map": "./static/js/787.dfd8dd9b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0e5c30c8.css",
-    "static/js/main.ee80329f.js"
+    "static/css/main.46584655.css",
+    "static/js/main.c52148c4.js"
   ]
 }
