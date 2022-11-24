@@ -26,6 +26,7 @@ export interface RateCardProps {
     via?: string;
     sl_logo?: string;
     total?: string;
+    base_rate?: string;
     cargo_size?: string;
     additionalCosts?: [
       {
@@ -139,16 +140,22 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
           <div className="border-l border-neutral-200 dark:border-neutral-700 md:mx-6 lg:mx-10"></div>
           <div className="flex-[4] whitespace-nowrap sm:text-center">
             <span className="text-xl font-semibold text-secondary-6000">
-              USD{" "}
-              {isLogin
-                ? quoteList[editId] && quoteList[editId].isEditing
-                  ? quoteList[editId].sum_sell
-                  : data.total
-                : "****"}
+              
+              {isLogin ? (
+                // quoteList[editId] && quoteList[editId].isEditing
+                // ? quoteList[editId].sum_sell
+                // :
+                <div className="flex flex-col">
+                  <span className="text-sm font-normal text-black"> Total Cost</span>
+                  <span>USD{" "}{`${data.total}`}</span>
+                </div>
+              ) : (
+                "****"
+              )}
             </span>
 
             <div className="mt-5 font-medium">
-              {isLogin ? (                        
+              {isLogin ? (
                 <div className="flex">
                   <NcModal
                     renderTrigger={(openModal) => (
@@ -299,7 +306,13 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
             <span className="text-xl font-semibold text-secondary-6000">
               <div className="font text-center">
                 {" "}
-                USD {isLogin ? data.total : "****"}{" "}
+                {isLogin ?
+                
+                <div className="flex flex-col space-x-2 align-self">
+                  <span className="text-sm text-normal font-normal text-black">Freight Cost </span>
+                  <span>USD {data.base_rate}</span>
+                  </div>
+                 : "****"}{" "}
               </div>
               {isLogin ? (
                 <div className="mt-5 ">
