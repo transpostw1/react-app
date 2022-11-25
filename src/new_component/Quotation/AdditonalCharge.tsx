@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useQuoteList } from "utils/contexts/quoteListContext";
+import Tooltip from "rc-tooltip";
 
 import IquoteList from "./QuoteModal";
 
@@ -49,15 +50,13 @@ const AdditonalCharge = ({
   }, [sellRate]);
 
   const sum = (arr: number[], initialvalue: number) => {
-    if(arr.length>0) {
-
+    if (arr.length > 0) {
       return arr.reduce((pv: number, cv: number) => {
         return pv + cv;
       }, initialvalue);
-    }else {
+    } else {
       return initialvalue;
     }
-    
   };
 
   // after changing buy rates and sell rates
@@ -94,61 +93,70 @@ const AdditonalCharge = ({
       </div>
 
       <div className="bg-white outline-none">
-        <select
-          onChange={selectHandler}
-          value={item.basis}
-          className="border-0 focus:ring-0 focus:outline-none w-full dark:bg-transparent"
-        >
-          <option label="" value="">
-            
-          </option>
-          <option label="per equipment" value="per equipment">
-            per equipment
-          </option>
-          <option label="per B/L" value="per B/L">
-            per B/L
-          </option>
-          <option label="per shipment" value="per shipment">
-            per shipment
-          </option>
-          <option label="per shipping bill" value="per shipping bill">
-            per shipping bill
-          </option>
-          <option label="per container" value="per container">
-            per container
-          </option>
-          <option
-            label="per shipping bill / per container"
-            value="per shipping bill / per container"
+        {/* <Tooltip
+          placement="top"
+          align={{
+            points: ['tl', 'tr'],      
+            offset: [10, 20],           
+            // targetOffset: ['30%','40%'],
+            overflow: { adjustX: true, adjustY: true }, 
+          }}
+          trigger={["hover"]}
+          overlay={<span>{item.basis}</span>}
+          // overlayClassName="z-max border "
+        > */}
+          <select
+            onChange={selectHandler}
+            value={item.basis}
+            className="border-0 focus:ring-0 focus:outline-none w-full dark:bg-transparent"
           >
-            per shipping bill / per container
-          </option>
-          <option label="per carton" value="per carton">
-            per carton
-          </option>
-          <option label="per pallet" value="per pallet">
-            per pallet
-          </option>
-          <option label="per vehicle" value="per vehicle">
-            per vehicle
-          </option>
-          <option label="per shift" value="per shift">
-            per shift
-          </option>
-          <option label="per package" value="per package">
-            per package
-          </option>
-          <option label="per invoice" value="per invoice">
-            per invoice
-          </option>
-          <option label="N/A" value="N/A">
-            N/A
-          </option>
-        </select>
+            <option label="" value=""></option>
+            <option label="per equipment" value="per equipment">
+              per equipment
+            </option>
+            <option label="per B/L" value="per B/L">
+              per B/L
+            </option>
+            <option label="per shipment" value="per shipment">
+              per shipment
+            </option>
+            <option label="per shipping bill" value="per shipping bill">
+              per shipping bill
+            </option>
+            <option label="per container" value="per container">
+              per container
+            </option>
+            <option
+              label="per shipping bill / per container"
+              value="per shipping bill / per container"
+            >
+              per shipping bill / per container
+            </option>
+            <option label="per carton" value="per carton">
+              per carton
+            </option>
+            <option label="per pallet" value="per pallet">
+              per pallet
+            </option>
+            <option label="per vehicle" value="per vehicle">
+              per vehicle
+            </option>
+            <option label="per shift" value="per shift">
+              per shift
+            </option>
+            <option label="per package" value="per package">
+              per package
+            </option>
+            <option label="per invoice" value="per invoice">
+              per invoice
+            </option>
+            <option label="N/A" value="N/A">
+              N/A
+            </option>
+          </select>
+        {/* </Tooltip> */}
       </div>
-      <div className="flex px-3 outline-none items-center bg-white">
-        N/A
-      </div>
+      <div className="flex px-3 outline-none items-center bg-white">N/A</div>
       <div className="flex items-center bg-white">
         <input
           type="number"

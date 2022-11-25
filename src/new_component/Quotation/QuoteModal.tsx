@@ -1,10 +1,13 @@
-import { useLocalStorage } from "hooks/useLocalStorage";
-import Loading from "new_component/Loading";
 import React, { ReactComponentElement, useEffect, useState } from "react";
+import axios from "axios";
+
 import {
   QuoteListProvider,
   useQuoteList,
 } from "utils/contexts/quoteListContext";
+import { useLocalStorage } from "hooks/useLocalStorage";
+
+import Loading from "new_component/Loading";
 import AdditonalCharge from "./AdditonalCharge";
 import Remarks from "./Remarks";
 
@@ -47,6 +50,8 @@ export interface IquoteList {
   sum_buy?: number;
   sum_sell: number;
   isEditing?:boolean;
+  remarks?:string;
+  terms?:string;
   additionalCosts?: [
     {
       id: any;
@@ -61,8 +66,8 @@ export interface IquoteList {
 const QuoteModal = ({ data, onclose, showQuoteModal }: any) => {
   const { quoteList, addCharge } = useQuoteList();
 
-  const [freightBuyRate, setFreightBuyRate] = useState(data.total);
-  const [freightSellRate, setFreightSellRate] = useState<number>(data.total);
+  const [freightBuyRate, setFreightBuyRate] = useState(data.base_rate);
+  const [freightSellRate, setFreightSellRate] = useState<number>(data.base_rate);
   const [totalBuyRate, setTotalBuyRate] = useState(0);
   const [totalSellRate, setTotalSellRate] = useState(0);
   const [showRemarks, setShowRemarks] = useState(false);
@@ -93,7 +98,7 @@ const QuoteModal = ({ data, onclose, showQuoteModal }: any) => {
     // initial sum visible for 1st time
     if (quoteList?.find((item: any) => item.id === data.id) == null) {
       const buy_array = data.additionalCosts.map((item: any) => item.amount);
-      const initial_buy_Sum = sum(buy_array, data.total);
+      const initial_buy_Sum = sum(buy_array, data.base_rate);
       // console.log("initial buy Sum", initial_buy_Sum);
       setTotalBuyRate(initial_buy_Sum);
       const initial_sell_sum = sum(buy_array, freightSellRate);
@@ -106,7 +111,7 @@ const QuoteModal = ({ data, onclose, showQuoteModal }: any) => {
         const buy_array = quote?.additionalCosts?.map(
           (charge: any) => charge.netBuyRate || charge.amount
         );
-        const buy_result = sum(buy_array, data.total);
+        const buy_result = sum(buy_array, data.base_rate);
         console.log("inner Result", buy_result);
         setTotalBuyRate(buy_result);
         // for sell rate
@@ -145,9 +150,38 @@ const QuoteModal = ({ data, onclose, showQuoteModal }: any) => {
     addCharge(data.id);
   };
 
-  const handleOnClose = () => {
+  // Create PDF
+  const generateQuote = () => {
+
+console.log("INDIVIDUAL QUOTE", quoteList[editID]);
+
+
+// TESTING
+
+
+axios.post("https://apis.transpost.co/api/rates/pdf",quoteList[editID],{
+  headers: { "Content-type": "application/json; charset=UTF-8","Accept": 'application/pdf' },
+}).then((response)=>{
+// console.log("LINK", `{https://apis.transpost.co/storageapp/files/${response.data}}`);
+console.log("LINK", `https://apis.transpost.co/storage/quotes/${response.data}`);
+// window.location.replace(`https://apis.transpost.co/storage/quotes/${response.data}`)
+  // const url = window.URL.createObjectURL(new Blob([`https://apis.transpost.co/storage/quotes/${response.data}`]));
+      const link = document.createElement('a');
+      
+      link.href = `https://apis.transpost.co/storage/quotes/${response.data}`;
+      link.setAttribute('download', `${link.href}`);
+      document.body.appendChild(link);
+      window.open(`https://apis.transpost.co/storage/quotes/${response.data}`)
+      // link.click();
+})
     onclose();
+
   };
+const handleOnClose = () =>{
+  onclose();
+
+}
+
   if (!showQuoteModal) {
     return null;
   }
@@ -203,7 +237,7 @@ const QuoteModal = ({ data, onclose, showQuoteModal }: any) => {
               }`}
               data-taos-offset="400"
             >
-              <Remarks data={data} />
+              <Remarks data={data} quote={quoteList[editID]} />
             </div>
           ) : (
             <div
@@ -346,10 +380,10 @@ const QuoteModal = ({ data, onclose, showQuoteModal }: any) => {
             on this rate
           </div>
           <button
-            onClick={handleOnClose}
+            onClick={generateQuote}
             className="order-last bg-blue p-2 px-6 border border-1 rounded-2xl bg-indigo-500 text-white"
           >
-            Done
+            Generate PDF
           </button>
         </div>
       </div>

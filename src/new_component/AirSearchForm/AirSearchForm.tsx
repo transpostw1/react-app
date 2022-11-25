@@ -15,9 +15,22 @@ const AirSearchForm = () => {
 
   const submitHandler = () => {};
 
-  const selectedType = () =>{
+  const selectedType = () => {};
 
-  }
+  // useEffect(() => {
+  //   fetch("https://dummyjson.com/products/1")
+  //     .then((res) => res.json())
+  //     .then((json) => {
+  //       console.log(json);
+  //       const url = window.URL.createObjectURL(new Blob(["https://gndec.ac.in/~inderjeetsinghit/im_notes/im_theory/second_sessional/http_request_response.pdf"]));
+  //         const link = document.createElement('a');
+  //         link.href = url;
+          
+  //         // link.setAttribute('download', 'file.pdf');
+  //         document.body.appendChild(link);
+  //         link.click();
+  //     });
+  // });
 
   const renderForm = () => {
     return (
@@ -31,7 +44,6 @@ const AirSearchForm = () => {
                 onChange={(e) => {
                   setPickUpInputValue(e);
                 }}
-                
                 onInputDone={() => setFieldFocused("dropOffInput")}
                 placeHolder="Origin"
                 desc="From"
@@ -94,6 +106,6 @@ const AirSearchForm = () => {
   };
 
   return renderForm();
-}
+};
 
-export default AirSearchForm
+export default AirSearchForm;

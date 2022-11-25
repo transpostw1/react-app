@@ -153,7 +153,7 @@ const Bookings = () => {
               </span>
             </div>
             <div className="flex text-neutral-6000 dark:text-neutral-300">
-              <span className="flex-1">Total</span>
+              <span className="flex-1">Total Freight Cost</span>
               <span className="flex-1 font-medium text-neutral-900 dark:text-neutral-100">
                 ${netTotal}
               </span>

@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "./static/css/main.46584655.css",
-    "main.js": "./static/js/main.c52148c4.js",
-    "static/js/787.dfd8dd9b.chunk.js": "./static/js/787.dfd8dd9b.chunk.js",
+    "main.js": "./static/js/main.c7656069.js",
+    "static/js/787.a9f8f745.chunk.js": "./static/js/787.a9f8f745.chunk.js",
     "static/media/hero-right-3.png": "./static/media/hero-right-3.25e989ed2b6ef0cfb25e.png",
     "static/media/Masood Ahmed - CTO.jpg": "./static/media/Masood Ahmed - CTO.fa77065f2e5703ed3909.jpg",
     "static/media/Vivek Das - Head Of Customer Experience.jpg": "./static/media/Vivek Das - Head Of Customer Experience.f8bdfb9fffd08ad39f9a.jpg",
@@ -117,11 +117,11 @@
     "index.html": "./index.html",
     "static/media/VectorHIW.svg": "./static/media/VectorHIW.2a56b4d0aa5690494df25bc0b2bb3bf6.svg",
     "main.46584655.css.map": "./static/css/main.46584655.css.map",
-    "main.c52148c4.js.map": "./static/js/main.c52148c4.js.map",
-    "787.dfd8dd9b.chunk.js.map": "./static/js/787.dfd8dd9b.chunk.js.map"
+    "main.c7656069.js.map": "./static/js/main.c7656069.js.map",
+    "787.a9f8f745.chunk.js.map": "./static/js/787.a9f8f745.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.46584655.css",
-    "static/js/main.c52148c4.js"
+    "static/js/main.c7656069.js"
   ]
 }

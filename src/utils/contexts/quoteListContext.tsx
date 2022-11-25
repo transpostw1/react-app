@@ -13,10 +13,10 @@ type QuoteListProviderProps = {
   children: ReactNode;
 };
 
-
 type quoteListContext = {
   addQuote: (id: string, data: any) => void;
   quoteList: IquoteList[];
+  addRemarks: (id: string, data: any) => void;
   addCharge: (id: any) => void;
   editCharge: (
     id: string,
@@ -68,9 +68,7 @@ export const QuoteListProvider = ({ children }: QuoteListProviderProps) => {
     }, initialvalue);
   };
 
-  const calculatingTotal = () => {
-
-  }
+  const calculatingTotal = () => {};
 
   // adding new quote
   const addQuote = (id: string, data: any) => {
@@ -85,6 +83,7 @@ export const QuoteListProvider = ({ children }: QuoteListProviderProps) => {
             sum_buy: data.total,
             sum_sell: data.total,
             isEditing: true,
+            
             ...data,
           },
         ];
@@ -94,6 +93,30 @@ export const QuoteListProvider = ({ children }: QuoteListProviderProps) => {
         return prevState;
       }
     });
+  };
+
+  // add remarks and inclusions
+  const addRemarks = (id: string, remark: string) => {
+    setQuoteList(addRemarksHandler(id, remark));
+  };
+
+  const addRemarksHandler = (id: string, remark: string) => {
+    if (quoteList.length > 0) {
+      const result = quoteList.map((quote: any) => {
+        if (quote?.id === id) {
+          return {
+            ...quote,
+            remarks: remark,
+          };
+        } else {
+          return quote;
+        }
+      });
+      console.log("Remarks reuslt", result);
+      return result;
+    } else {
+      return [];
+    }
   };
 
   // function for adding charges
@@ -128,6 +151,7 @@ export const QuoteListProvider = ({ children }: QuoteListProviderProps) => {
     }
   };
 
+  // add additional charge
   const addCharge = (id: string) => {
     setQuoteList(addChargeHandler(id));
   };
@@ -196,6 +220,7 @@ export const QuoteListProvider = ({ children }: QuoteListProviderProps) => {
       value={{
         quoteList,
         addQuote,
+        addRemarks,
         addCharge,
         editCharge,
         removeCharge,

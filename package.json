@@ -1,5 +1,5 @@
 {
-  "name": "chisfis",
+  "name": "transpost",
   "version": "1.2.0",
   "private": true,
   "proxy": "http://localhost:3000/",
@@ -40,7 +40,7 @@
     "html-to-draftjs": "^1.5.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
-    "node-sass": "^7.0.1",
+    "node-sass": "^8.0.0",
     "rc-slider": "^9.7.4",
     "react": "^17.0.2",
     "react-dates": "^21.8.0",

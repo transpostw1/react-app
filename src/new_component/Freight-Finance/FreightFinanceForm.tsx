@@ -42,6 +42,8 @@ const defaultValue = {
   pan: "",
   product: "",
   annualTurnover: "",
+  isShipper:true,
+  isForwarder:false,
 };
 
 const FreightFinanceForm = () => {
@@ -74,17 +76,13 @@ const FreightFinanceForm = () => {
         "Content-Type": "application/x-www-form-urlencoded",
       },
     };
-    // const postData = {
-    //   commodity,
-    //   fullName,
-    //   phone,
-    //   email,
-    //   description,
-    // };
+
 
     axios
-      .post("", config)
+      .post("https://apis.transpost.co/api/freight-finance/store", financeFormDetails,config)
       .then((response) => {
+        console.log(financeFormDetails);
+        
         const fetchedData = response.data;
         console.log(fetchedData);
       })

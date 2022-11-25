@@ -1,27 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
-import { EditorState, convertToRaw, ContentState,convertFromHTML } from "draft-js";
+import {
+  EditorState,
+  convertToRaw,
+  ContentState,
+  convertFromHTML,
+} from "draft-js";
 import htmlToDraft from "html-to-draftjs";
 
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { useQuoteList } from "utils/contexts/quoteListContext";
 
-const Remarks = ({ data }: any) => {
+const Remarks = ({ data, quote }: any) => {
   const [remarkState, setRemarkState] = useState(EditorState.createEmpty());
-  const [termsState, setTermsState] = useState(
-    EditorState.createEmpty()
-  );
+  const [termsState, setTermsState] = useState(EditorState.createEmpty());
+
+  const [rem,setRem] = useState(data?.remarks)
+
+  const { addRemarks } = useQuoteList();
 
   const htmltodraftconvertor = (blocksFromHTML: any) => {
     if (blocksFromHTML) {
       const contentState = ContentState.createFromBlockArray(
         blocksFromHTML.contentBlocks,
-        blocksFromHTML.entityMap,
+        blocksFromHTML.entityMap
       );
       const state = EditorState.createWithContent(contentState);
       return state;
-    }
-    else {
-      return EditorState.createEmpty()
+    } else {
+      return EditorState.createEmpty();
     }
   };
 
@@ -33,33 +40,39 @@ const Remarks = ({ data }: any) => {
     //   );
     //   const state = EditorState.createWithContent(contentState);
     // }
-    const remarksblock = convertFromHTML(data?.remarks)
-    const termsblock = convertFromHTML(data?.terms)
+    const remarksblock = convertFromHTML(data?.remarks);
+    const termsblock = convertFromHTML(data?.terms);
     setRemarkState(htmltodraftconvertor(remarksblock));
     setTermsState(htmltodraftconvertor(termsblock));
   }, []);
 
   const onRemarksStateChange = (remarkseditorState: any) => {
     setRemarkState(remarkseditorState);
-    console.log(remarkState);
+    // console.log("remarks", remarkState);
   };
 
-  const onTermsStateChange = (termseditorState:any) =>{
-    setTermsState(termseditorState)
-  }
+  const onTermsStateChange = (termseditorState: any) => {
+    setTermsState(termseditorState);
+  };
 
-const test = (e:any) => {
-console.log(e);
-
-}
+  const test = (e: any) => {
+    console.log("blocks", e);
+    addRemarks(data.id, e);
+  };
+  // useEffect(() => {
+  //   console.log("QUOTE in REMARKS", quote );
+  //   if(quote.remarks){
+  //     setRem(quote.remarks.text)
+  //   }
+  // });
 
   return (
     <>
       <span className="container">Remarks</span>
       <div className="container mb-6">
         <Editor
-        contentState={data?.remarks}
-        onContentStateChange={test}
+          contentState={rem}
+          onContentStateChange={test}
           editorState={remarkState}
           onEditorStateChange={onRemarksStateChange}
           editorStyle={{ height: "200px" }}
