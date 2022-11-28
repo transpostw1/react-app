@@ -8,204 +8,74 @@ import {
 import { useLocalStorage } from "hooks/useLocalStorage";
 
 import { IquoteList } from "../../new_component/Quotation/QuoteModal";
+import { UserDetailsProps } from "../../components/SectionHeroArchivePage/SectionHeroArchivePage";
 
-type QuoteListProviderProps = {
+type UserDetailsProviderProps = {
   children: ReactNode;
 };
 
+export interface IkycStatus {
+  KYC: boolean;
+  message: string;
+  status: string;
+}
+
 type quoteListContext = {
-  createUser: () => void;
+  userState: UserDetailsProps | null;
+  createUser: (userData: UserDetailsProps) => void;
+  updateKyc: (kycStatus: IkycStatus) => void;
 };
 
-// getLocalStorage
+// // getLocalStorage
 export const getLocalStorage = () => {
-  let quote_list = localStorage.getItem("quote_list");
-  if (quote_list) {
-    return (quote_list = JSON.parse(localStorage.getItem("quote_list") || ""));
+  let user_details = localStorage.getItem("user_details");
+  if (user_details) {
+    return (user_details = JSON.parse(
+      localStorage.getItem("user_details") || ""
+    ));
   } else {
-    return [];
+    return null;
   }
 };
 
 const userDetailsContext = createContext({} as quoteListContext);
 
-export const useQuoteList = () => {
+export const useUserDetails = () => {
   return useContext(userDetailsContext);
 };
 
-export const QuoteListProvider = ({ children }: QuoteListProviderProps) => {
-  const [quoteList, setQuoteList] = useState<IquoteList[]>(getLocalStorage);
-  const [quotes, setQuotes] = useLocalStorage<IquoteList[]>("quote_list", []);
+export const UserDetailsProvider = ({ children }: UserDetailsProviderProps) => {
+  const [userState, setUserState] = useState<UserDetailsProps | null>(
+    getLocalStorage()
+  );
+  const [userDetails, setUserDetails] =
+    useLocalStorage<UserDetailsProps | null>("user_details", null);
 
   useEffect(() => {
-    setQuotes(quoteList);
-    console.log("quoteList", quoteList);
-    console.log("quotes", quotes);
-  }, [quoteList]);
+    setUserDetails(userState);
+  }, [userState]);
 
-  const sum = (arr: number[], initialvalue: number) => {
-    return arr.reduce((pv: number, cv: number) => {
-      if (typeof pv == "number" && typeof cv == "number") {
-        return pv + cv;
-      } else {
-        return pv;
-      }
-    }, initialvalue);
+  // adding new user
+  const createUser = (userData: UserDetailsProps) => {
+    console.log("User Data", userData);
+    setUserState(userData);
   };
 
-  const calculatingTotal = () => {};
-
-  const createUser = () => {};
-
-  // adding new quote
-  const addQuote = (id: string, data: any) => {
-    setQuoteList((prevState: any) => {
-      if (prevState?.find((item: any) => item.id === id) == null) {
-        // console.log("prevState in", prevState);
-
-        return [
-          ...prevState,
-          {
-            quoteId: id,
-            sum_buy: data.total,
-            sum_sell: data.total,
-            isEditing: true,
-
-            ...data,
-          },
-        ];
-      } else {
-        // console.log("prevState out", prevState);
-
-        return prevState;
-      }
-    });
-  };
-
-  // add remarks and inclusions
-  const addRemarks = (id: string, remark: string) => {
-    setQuoteList(addRemarksHandler(id, remark));
-  };
-
-  const addRemarksHandler = (id: string, remark: string) => {
-    if (quoteList.length > 0) {
-      const result = quoteList.map((quote: any) => {
-        if (quote?.id === id) {
-          return {
-            ...quote,
-            remarks: remark,
-          };
-        } else {
-          return quote;
-        }
+  const updateKyc = (kycStatus: IkycStatus) => {
+    if (userState) {
+      setUserState({
+        ...userState,
+        KYC: kycStatus.KYC,
       });
-      console.log("Remarks reuslt", result);
-      return result;
-    } else {
-      return [];
     }
-  };
-
-  // function for adding charges
-  const addChargeHandler = (id: string) => {
-    if (quoteList.length > 0) {
-      const result = quoteList.map((quote: any) => {
-        if (quote?.id === id) {
-          if (quote?.additionalCosts) {
-            return {
-              ...quote,
-              additionalCosts: [
-                ...quote?.additionalCosts,
-                {
-                  id: new Date().getTime().toString(),
-                  name: "",
-                  code: "",
-                  amount: 0,
-                  currency: "USD",
-                },
-              ],
-            };
-          }
-        } else {
-          return quote;
-        }
-      });
-      console.log("result", result);
-
-      return result;
-    } else {
-      return [];
-    }
-  };
-
-  // add additional charge
-  const addCharge = (id: string) => {
-    setQuoteList(addChargeHandler(id));
-  };
-
-  // Edit Charge function
-  const editCharge = (
-    id: string,
-    chargeid: string,
-    basis: string,
-    chargeName: string,
-    buyRate: number,
-    sellRate: number,
-    netBuyRate: number,
-    netSellRate: number,
-    quantity: number
-  ) => {
-    setQuoteList(
-      quoteList.map((quote: any) => {
-        if (quote.quoteId === id) {
-          return {
-            ...quote,
-            additionalCosts: quote?.additionalCosts?.map((costItem: any) => {
-              if (costItem.id == chargeid) {
-                return {
-                  ...costItem,
-                  basis,
-                  chargeName,
-                  buyRate,
-                  sellRate,
-                  netBuyRate,
-                  netSellRate,
-                  quantity,
-                };
-              } else {
-                return costItem;
-              }
-            }),
-          };
-        } else {
-          return quote;
-        }
-      })
-    );
-  };
-
-  // Remover Charge
-  const removeCharge = (id: string, rateId: string) => {
-    setQuoteList(
-      quoteList?.map((quote: any) => {
-        if (quote?.id == rateId) {
-          return {
-            ...quote,
-            additionalCosts: quote?.additionalCosts?.filter(
-              (item: any) => item.id !== id
-            ),
-          };
-        } else {
-          return quote;
-        }
-      })
-    );
   };
 
   return (
     <userDetailsContext.Provider
       value={{
+        userState,
         createUser,
+        updateKyc,
       }}
     >
       {children}

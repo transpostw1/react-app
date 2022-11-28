@@ -1,6 +1,5 @@
 import React, { FC, ReactNode, useEffect, useState } from "react";
 import imagePng from "images/Hero-illustration-main-1.png";
-import { useLocation, RouteComponentProps } from "react-router-dom";
 
 import hero7 from "images/transpost images/heros/hero-7.png";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
@@ -11,6 +10,8 @@ import RecentSearches from "new_component/RecentSearches/RecentSearches";
 import VideoContainer from "new_component/VideoContainer/VideoContainer";
 import NcModal from "shared/NcModal/NcModal";
 import KycInfo from "new_component/KycInfo/KycInfo";
+import KycModal from "new_component/KycInfo/KycModal";
+import { useUserDetails } from "utils/contexts/userDetailsContext";
 
 export interface SectionHeroArchivePageProps {
   className?: string;
@@ -18,18 +19,16 @@ export interface SectionHeroArchivePageProps {
   currentPage: "Stays" | "Cargo Tracker" | "Cars" | "Ocean";
   currentTab: SearchTab;
   rightImage?: string;
-  fetchedData?: {};
 }
 
 export interface UserDetailsProps {
   KYC?: boolean;
-
   customer: {
     companyName?: string;
     created_at?: string;
     email?: string;
     gst_certificate?: string | null;
-    id?: number | string;
+    ID?: number | string;
     name?: string;
     pan_card?: string | null;
     phone?: string;
@@ -46,17 +45,16 @@ const SectionHeroArchivePage: FC<SectionHeroArchivePageProps> = ({
   currentTab,
   rightImage = hero7,
 }) => {
-  const [userDetails, setUserDetails] = useState<
-    RouteComponentProps | null | {} | string
-  >("");
-
-  const location = useLocation<UserDetailsProps>();
-  const { state } = location;
+  const { userState } = useUserDetails();
 
   useEffect(() => {
-    setUserDetails(state);
-    console.log("in section Hero", state);
-  },[]);
+    console.log("user State", userState);
+    // if (true) {
+    //   setShowKycModal(true)
+    // }else {
+    //   setShowKycModal(false)
+    // }
+  }, []);
 
   return (
     <div
@@ -64,14 +62,8 @@ const SectionHeroArchivePage: FC<SectionHeroArchivePageProps> = ({
       className={`nc-SectionHeroArchivePage flex flex-col relative pt-10 pb-10 lg:pb-1 lg:pt-16`}
       data-nc-id="SectionHeroArchivePage"
     >
-      <NcModal
-        renderTrigger={(openModal) => {
-          if (false) {
-            return openModal();
-          }
-        }}
-        renderContent={() => <KycInfo />}
-      />
+      <KycModal />
+      
       <div className="flex flex-col  lg:flex-row -mt-25 lg:items-center">
         <div className="flex-shrink-0 lg:w-1/2 flex flex-col items-start space-y-6 lg:space-y-10 pb-14 lg:pb-64 xl:pb-80 xl:pr-14 lg:mr-10 xl:mr-0">
           <h2 className="font-medium text-4xl md:text-5xl xl:text-7xl leading-[110%]">

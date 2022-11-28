@@ -14,6 +14,7 @@ import {
   auth,
 } from "utils/firebase/firebase-config";
 import axios from "axios";
+import { useUserDetails } from "utils/contexts/userDetailsContext";
 
 export interface PageSignUpProps {
   className?: string;
@@ -84,6 +85,8 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
     phoneNumber: false,
   });
 
+const {createUser} = useUserDetails();
+
   const history = useHistory();
 
   const authenticateUser = async (user: any) => {
@@ -112,14 +115,8 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
       .then((response) => {
         const fetchedData = response.data;
         console.log(fetchedData);
-        
-        history.push({
-          pathname: "./",
-          state: {
-             fetchedData,
-         
-          },
-        });
+        createUser(fetchedData);
+        history.push("./");
       })
       .catch((error) => {
         const errorMsg = error.message;
