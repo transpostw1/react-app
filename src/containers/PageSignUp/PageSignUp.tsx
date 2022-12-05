@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import facebookSvg from "images/Facebook.svg";
 import twitterSvg from "images/Twitter.svg";
 import googleSvg from "images/Google.svg";
@@ -19,6 +19,8 @@ import { useUserDetails } from "utils/contexts/userDetailsContext";
 export interface PageSignUpProps {
   className?: string;
 }
+
+//TODO set focused as true
 
 const loginSocials = [
   // {
@@ -51,7 +53,7 @@ const errors = {
 const defaultValue = {
   fullName: "",
   companyName: "",
-  password: "",
+  password: "Pass@123",
   gst: "",
   pan: "",
   email: "",
@@ -72,25 +74,27 @@ export interface IsignUpForm {
 
 const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
   const [signUpForm, setSignUpForm] = useState<IsignUpForm>(defaultValue);
-
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isAllFoucesed, setIsAllFocused] = useState(false);
 
   const [focused, setFocused] = useState({
     fullName: false,
     companyName: false,
-    password: false,
-    gst: false,
-    pan: false,
+    // password: false,
     email: false,
     phoneNumber: false,
   });
 
-const {createUser} = useUserDetails();
+  const { createUser } = useUserDetails();
 
   const history = useHistory();
 
   const authenticateUser = async (user: any) => {
     console.log("Inside authenticate ", user.email);
+  };
+
+  const checkAllFocused = () => {
+    return Object.values(focused).every((item) => item == true); // if some are false return true and vice versa
   };
 
   // Google SignUp
@@ -114,42 +118,47 @@ const {createUser} = useUserDetails();
       .post("https://apis.transpost.co/api/customer/store", signUpForm)
       .then((response) => {
         const fetchedData = response.data;
-        console.log(fetchedData);
+        console.log("fetchedData", fetchedData);
         createUser(fetchedData);
-        history.push("./");
+        window.location.href = "https://weship.transpost.co/login";
       })
       .catch((error) => {
         const errorMsg = error.message;
         alert(errorMsg);
       });
+    // history.push("./");
   };
 
   // Create user with form
   const submitHandler = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
-    try {
-      const { fullName, email, password, phoneNumber, gst, pan, companyName } =
-        signUpForm;
-      const response = await createAuthUserWithEmailAndPassword(
-        email,
-        password
-      );
+    // try {
+    //   const { fullName, email, password, phoneNumber, gst, pan, companyName } =
+    //     signUpForm;
+    //   const response = await createAuthUserWithEmailAndPassword(
+    //     email,
+    //     password
+    //   );
 
-      await createUserDocumentFromAuth(response?.user, {
-        fullName,
-        phoneNumber,
-        gst,
-        pan,
-        companyName,
-      });
+    //   await createUserDocumentFromAuth(response?.user, {
+    //     fullName,
+    //     phoneNumber,
+    //     gst,
+    //     pan,
+    //     companyName,
+    //   });
       registerUser();
       setIsSubmitted(true);
-    } catch (error) {
-      console.log("user creation encountered an error", error);
-      alert(error);
-    }
+    // } catch (error) {
+    //   console.log("user creation encountered an error", error);
+    //   alert(error);
+    // }
   };
+
+  useEffect(() => {
+    setIsAllFocused(checkAllFocused());
+  }, [focused]);
 
   return (
     <div className={`nc-PageSignUp  ${className}`} data-nc-id="PageSignUp">
@@ -191,13 +200,18 @@ const {createUser} = useUserDetails();
           <form className="grid grid-cols-1 gap-6" onSubmit={submitHandler}>
             <label className="block">
               <span className="text-neutral-800 dark:text-neutral-200">
-                Full Name
+                Full Name <span>*</span>
               </span>
               <Input
                 type="text"
+                placeholder="Enter your Full Name"
                 className="mt-1"
                 value={signUpForm.fullName}
                 onChange={(e) => {
+                  setFocused({
+                    ...focused,
+                    fullName: true,
+                  });
                   setSignUpForm({
                     ...signUpForm,
                     fullName: e.target.value,
@@ -220,14 +234,18 @@ const {createUser} = useUserDetails();
 
             <label className="block">
               <span className="text-neutral-800 dark:text-neutral-200">
-                Phone number
+                Phone number <span>*</span>
               </span>
               <Input
                 type="text"
-                // placeholder="example@example.com"
+                placeholder="Enter your Phone number"
                 className="mt-1"
                 value={signUpForm.phoneNumber}
                 onChange={(e) => {
+                  setFocused({
+                    ...focused,
+                    phoneNumber: true,
+                  });
                   setSignUpForm({
                     ...signUpForm,
                     phoneNumber: e.target.value,
@@ -249,10 +267,10 @@ const {createUser} = useUserDetails();
             </label>
             <label className="block">
               <span className="text-neutral-800 dark:text-neutral-200">
-                Business Type
+                Business Type <span>*</span>
               </span>
               <Select
-                className="mt-1.5"
+                className="mt-1.5 "
                 onChange={(e) => {
                   setSignUpForm({
                     ...signUpForm,
@@ -324,14 +342,19 @@ const {createUser} = useUserDetails();
             </label>
             <label className="block">
               <span className="text-neutral-800 dark:text-neutral-200">
-                Company Name
+                Company Name <span>*</span>
               </span>
               <Input
                 type="text"
                 // placeholder="example@example.com"
                 className="mt-1"
                 value={signUpForm.companyName}
+                placeholder="Enter your Compnay name"
                 onChange={(e) => {
+                  setFocused({
+                    ...focused,
+                    companyName: true,
+                  });
                   setSignUpForm({
                     ...signUpForm,
                     companyName: e.target.value,
@@ -353,7 +376,7 @@ const {createUser} = useUserDetails();
             </label>
             <label className="block">
               <span className="text-neutral-800 dark:text-neutral-200">
-                Email address
+                Email address <span>*</span>
               </span>
               <Input
                 type="email"
@@ -361,6 +384,10 @@ const {createUser} = useUserDetails();
                 className="mt-1"
                 value={signUpForm.email}
                 onChange={(e) => {
+                  setFocused({
+                    ...focused,
+                    email: true,
+                  });
                   setSignUpForm({
                     ...signUpForm,
                     email: e.target.value,
@@ -380,15 +407,21 @@ const {createUser} = useUserDetails();
                 </p>
               }
             </label>
-            <label className="block">
+            {/* disabled temporarily */}
+            {/* <label className="block">
               <span className="text-neutral-800 dark:text-neutral-200">
-                Password
+                Password <span>*</span>
               </span>
               <Input
                 type="password"
+                placeholder="Enter your Password"
                 className="mt-1"
                 value={signUpForm.password}
                 onChange={(e) => {
+                  setFocused({
+                    ...focused,
+                    password: true,
+                  });
                   setSignUpForm({
                     ...signUpForm,
                     password: e.target.value,
@@ -407,9 +440,15 @@ const {createUser} = useUserDetails();
                   {errors.password}
                 </p>
               }
-            </label>
+            </label> */}
 
-            <ButtonPrimary type="submit">Continue</ButtonPrimary>
+            <ButtonPrimary
+              type="submit"
+              className={`${isAllFoucesed ? "" : "cursor-not-allowed"} `}
+              disabled={!isAllFoucesed}
+            >
+              Continue
+            </ButtonPrimary>
           </form>
 
           {/* ==== */}

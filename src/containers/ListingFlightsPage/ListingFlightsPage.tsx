@@ -8,6 +8,7 @@ import SectionGridFilterCard from "./SectionGridFilterCard";
 import { Helmet } from "react-helmet";
 import VideoContainer from "new_component/VideoContainer/VideoContainer";
 import SectionSolutions from "new_component/SectionSolutions/SectionSolutions";
+import KycModal from "new_component/KycInfo/KycModal";
 
 export interface ListingFlightsPageProps {
   className?: string;
@@ -89,6 +90,8 @@ const ListingFlightsPage: FC<ListingFlightsPageProps> = ({
           }
           className="pt-10 pb-24 lg:pb-32 lg:pt-32 "
         />
+
+        <KycModal />
 
         {/* SECTION */}
         {/* <SectionGridFilterCard className="pb-24 lg:pb-32" from_port={""} to_port={""} sl_date={undefined} cargo_type={null} /> */}

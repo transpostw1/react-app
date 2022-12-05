@@ -24,6 +24,7 @@ ReactDOM.render(
     <Provider store={store}>
       <UserAuthContextProvider>
         {/* <UserProvider> */}
+        
         <App />
         {/* </UserProvider> */}
       </UserAuthContextProvider>

@@ -1,3 +1,4 @@
+import KycModal from "new_component/KycInfo/KycModal";
 import React, { useEffect, useState } from "react";
 import MyRouter from "routers/index";
 import { QuoteListProvider } from "utils/contexts/quoteListContext";

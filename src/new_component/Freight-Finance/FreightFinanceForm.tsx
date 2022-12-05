@@ -42,8 +42,8 @@ const defaultValue = {
   pan: "",
   product: "",
   annualTurnover: "",
-  isShipper:true,
-  isForwarder:false,
+  isShipper: true,
+  isForwarder: false,
 };
 
 const FreightFinanceForm = () => {
@@ -77,12 +77,14 @@ const FreightFinanceForm = () => {
       },
     };
 
-
     axios
-      .post("https://apis.transpost.co/api/freight-finance/store", financeFormDetails,config)
+      .post(
+        "https://apis.transpost.co/api/freight-finance/store",
+        financeFormDetails,
+        config
+      )
       .then((response) => {
         console.log(financeFormDetails);
-        
         const fetchedData = response.data;
         console.log(fetchedData);
       })
@@ -93,6 +95,7 @@ const FreightFinanceForm = () => {
   };
 
   useEffect(() => {
+    
     if (isShipper === false && isForwarder === false) {
       setIsShipper(true);
     }
@@ -104,16 +107,20 @@ const FreightFinanceForm = () => {
           <span>Please fill up the following details before proceeding!</span>
         </div> */}
       <form className=" md:w-[80%]">
-        <div className=" flex-col  md:grid grid-cols-2 gap-6 my-2">
+        <div className=" flex-col container md:grid grid-cols-2 space-y-4 sm:space-y-2 sm:gap-6 my-2">
           <label className="block">
             <span className="text-neutral-800 dark:text-neutral-200">
               Full Name <span className="text-red-600">*</span>
             </span>
             <Input
               type="text"
-              placeholder="Feild is Empty"
-              className="mt-1 mb-1"
+              placeholder="Enter your full name"
+              className="mt-1 mb-2"
               onChange={(e) => {
+                setFocused({
+                  ...focused,
+                  fullName: true,
+                });
                 setFinanceFormDetails({
                   ...financeFormDetails,
                   fullName: e.target.value,
@@ -144,6 +151,10 @@ const FreightFinanceForm = () => {
               placeholder="Enter your Commodity Name"
               className="mt-1 mb-2"
               onChange={(e) => {
+                setFocused({
+                  ...focused,
+                  companyName: true,
+                });
                 setFinanceFormDetails({
                   ...financeFormDetails,
                   commodity: e.target.value,
@@ -189,7 +200,6 @@ const FreightFinanceForm = () => {
               >
                 Shipper
               </label>
-
               <input
                 id="forwarder"
                 name="forwarder"
@@ -222,6 +232,10 @@ const FreightFinanceForm = () => {
               name="company_name"
               value={financeFormDetails.companyName}
               onChange={(e) => {
+                setFocused({
+                  ...focused,
+                  companyName: true,
+                });
                 setFinanceFormDetails({
                   ...financeFormDetails,
                   companyName: e.target.value,
@@ -254,6 +268,10 @@ const FreightFinanceForm = () => {
               name="gst"
               value={financeFormDetails.gst}
               onChange={(e) => {
+                setFocused({
+                  ...focused,
+                  gst: true,
+                });
                 setFinanceFormDetails({
                   ...financeFormDetails,
                   gst: e.target.value,
@@ -284,6 +302,10 @@ const FreightFinanceForm = () => {
               name="pan"
               value={financeFormDetails.pan}
               onChange={(e) => {
+                setFocused({
+                  ...focused,
+                  pan: true,
+                });
                 setFinanceFormDetails({
                   ...financeFormDetails,
                   pan: e.target.value,
@@ -315,6 +337,7 @@ const FreightFinanceForm = () => {
               name="iec"
               value={financeFormDetails.iec}
               onChange={(e) => {
+
                 setFinanceFormDetails({
                   ...financeFormDetails,
                   iec: e.target.value,
@@ -344,6 +367,10 @@ const FreightFinanceForm = () => {
               placeholder=""
               className="mt-1 mb-2"
               onChange={(e) => {
+                setFocused({
+                  ...focused,
+                  annualTurnover: true,
+                });
                 setFinanceFormDetails({
                   ...financeFormDetails,
                   annualTurnover: e.target.value,
@@ -410,7 +437,7 @@ const FreightFinanceForm = () => {
         </div>
 
         <button
-          className="h-12 w-full rounded-[2.5rem]  md:w-[9rem] my-5 bg-[#2AA996] my-6 hover:bg-[#218778] flex items-center justify-center text-neutral-50 focus:outline-none "
+          className="h-12  w-[95%]  mx-auto sm:ml-5 rounded-[2.5rem]  md:w-[9rem] my-5 bg-[#2AA996] my-6 hover:bg-[#218778] flex items-center justify-center text-neutral-50 focus:outline-none "
           type="button"
           onClick={(e) => submitHandler(e)}
         >

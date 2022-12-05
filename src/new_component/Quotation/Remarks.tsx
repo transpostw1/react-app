@@ -33,13 +33,7 @@ const Remarks = ({ data, quote }: any) => {
   };
 
   useEffect(() => {
-    // const contentBlock = htmlToDraft(data?.remarks);
-    // if (contentBlock) {
-    //   const contentState = ContentState.createFromBlockArray(
-    //     contentBlock.contentBlocks
-    //   );
-    //   const state = EditorState.createWithContent(contentState);
-    // }
+    
     const remarksblock = convertFromHTML(data?.remarks);
     const termsblock = convertFromHTML(data?.terms);
     setRemarkState(htmltodraftconvertor(remarksblock));

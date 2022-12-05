@@ -8,10 +8,10 @@ export interface SocialsListProps {
 }
 
 const socialsDemo: SocialType[] = [
-  { name: "Facebook", icon: "lab la-facebook-square", href: "#" },
-  { name: "Twitter", icon: "lab la-twitter", href: "#" },
-  { name: "Youtube", icon: "lab la-youtube", href: "#" },
-  { name: "Instagram", icon: "lab la-instagram", href: "#" },
+  // { name: "Facebook", icon: "lab la-facebook-square", href: "www.google.com" },
+  // { name: "Twitter", icon: "lab la-twitter", href: "#" },
+  // { name: "Youtube", icon: "lab la-youtube", href: "#" },
+  { name: "Instagram", icon: "lab la-linkedin", href: "https://www.linkedin.com/company/transpost2021" },
 ];
 
 const SocialsList: FC<SocialsListProps> = ({

@@ -12,6 +12,13 @@ export interface IkycForm {
   pan: string;
 }
 
+const errors = {
+  gst: "GST details invalid",
+  pan: "PAN details invalid",
+};
+
+//TODO set focused as true
+
 const KycModal = ({ onClose, showKycModal }: any) => {
   const [visible, setVisible] = useState(false);
   const [kycForm, setKycForm] = useState<IkycForm>({
@@ -19,6 +26,13 @@ const KycModal = ({ onClose, showKycModal }: any) => {
     gst: "",
     pan: "",
   });
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const [focused, setFocused] = useState({
+    gst: false,
+    pan: false,
+  });
+
   const { userState, updateKyc } = useUserDetails();
   const { isLogin } = useUserAuth();
 
@@ -33,6 +47,7 @@ const KycModal = ({ onClose, showKycModal }: any) => {
       console.log("userObject", userObject);
       if (userObject !== null && userObject.KYC === false && isLogin) {
         setVisible(true);
+        console.log("Inside ", userObject);
       }
     }
   }, []);
@@ -41,6 +56,7 @@ const KycModal = ({ onClose, showKycModal }: any) => {
     event.preventDefault();
 
     console.log(kycForm);
+    setIsSubmitted(true);
 
     axios
       .post("https://apis.transpost.co/api/customer/updatekyc", kycForm)
@@ -72,10 +88,6 @@ const KycModal = ({ onClose, showKycModal }: any) => {
       <div className="flex relative pb-8 h-auto  w-2/3 flex-col space-y-5 align-center justify-center  items-center bg-white border rounded-lg dark:border-neutral-600 dark:bg-neutral-700">
         {/* <div className="inline-block w- my-5 overflow-hidden text-left align-middle transition-all transform bg-white border border-black border-opacity-5 shadow-xl rounded-2xl sm:my-8 dark:bg-neutral-800 dark:border-neutral-700 text-neutral-900 dark:text-neutral-300"> */}
         <div className="py-4 px-6 text-center relative border-b border-neutral-100 dark:border-neutral-700 md:py-5">
-          <ButtonClose
-            onClick={handleClose}
-            className="absolute  top-5 transform -translate-y-1/2 sm:left-4"
-          />
           <span className="text-base px-8 font-semibold text-neutral-900 lg:text-xl dark:text-neutral-200 ">
             {`Hey ${userState?.customer.name}! Your Account is Created, Please complete your KYC to Access all features.`}
           </span>
@@ -83,7 +95,7 @@ const KycModal = ({ onClose, showKycModal }: any) => {
         <form className="grid grid-cols-1 gap-6 w-1/2" onSubmit={submitHandler}>
           <label className="block ">
             <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
-              GST Number
+              GST Number *
             </span>
             <Input
               type="text"
@@ -91,27 +103,31 @@ const KycModal = ({ onClose, showKycModal }: any) => {
               className="mt-1 "
               value={kycForm.gst}
               onChange={(e) => {
+                setFocused({
+                  ...focused,
+                  gst: true,
+                });
                 setKycForm({
                   ...kycForm,
                   gst: e.target.value,
                 });
               }}
             />
-            {/* {
-                <p
-                  className={`text-[red] ${
-                    kycForm.gst?.length === 0 && (focused.gst || isSubmitted)
-                      ? ""
-                      : "hidden"
-                  } `}
-                >
-                  {errors.gst}
-                </p>
-              } */}
+            {
+              <p
+                className={`text-[red] ${
+                  kycForm.gst?.length === 0 && (focused.gst || isSubmitted)
+                    ? ""
+                    : "hidden"
+                } `}
+              >
+                {errors.gst}
+              </p>
+            }
           </label>
           <label className="block ">
             <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
-              PAN Number
+              PAN Number *
             </span>
             <Input
               type="text"
@@ -119,6 +135,10 @@ const KycModal = ({ onClose, showKycModal }: any) => {
               className="mt-1"
               value={kycForm.pan}
               onChange={(e) => {
+                setFocused({
+                  ...focused,
+                  pan: true,
+                });
                 setKycForm({
                   ...kycForm,
                   pan: e.target.value,
@@ -126,20 +146,23 @@ const KycModal = ({ onClose, showKycModal }: any) => {
               }}
             />
             {
-              // <p
-              //   className={`text-[red] ${
-              //     kycForm.pan?.length === 0 && (focused.pan || isSubmitted)
-              //       ? ""
-              //       : "hidden"
-              //   } `}
-              // >
-              //   {errors.pan}
-              // </p>
+              <p
+                className={`text-[red] ${
+                  kycForm.pan?.length === 0 && (focused.pan || isSubmitted)
+                    ? ""
+                    : "hidden"
+                } `}
+              >
+                {errors.pan}
+              </p>
             }
           </label>
           <button
-            className="ttnc-ButtonPrimary p-2 rounded-xl disabled:bg-opacity-70 bg-[#2AA996] hover:bg-[#218778] text-neutral-50"
+            className={`ttnc-ButtonPrimary p-2 rounded-xl  disabled:bg-opacity-70 bg-[#2AA996] hover:bg-[#218778] text-neutral-50 ${
+              focused.gst && focused.pan ? "" : "cursor-not-allowed"
+            }  `}
             onClick={submitHandler}
+            disabled={(!focused.gst && !focused.pan)}
           >
             Proceed
           </button>

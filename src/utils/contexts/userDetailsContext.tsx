@@ -57,8 +57,12 @@ export const UserDetailsProvider = ({ children }: UserDetailsProviderProps) => {
 
   // adding new user
   const createUser = (userData: UserDetailsProps) => {
-    console.log("User Data", userData);
+    console.log("User Data in create User", userData);
     setUserState(userData);
+
+    setUserDetails(userData)
+    console.log("User Data in after creating User", userDetails);
+    
   };
 
   const updateKyc = (kycStatus: IkycStatus) => {
