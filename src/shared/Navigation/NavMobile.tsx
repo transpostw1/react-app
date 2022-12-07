@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ButtonClose from "shared/ButtonClose/ButtonClose";
 import Logo from "shared/Logo/Logo";
 import { Disclosure } from "@headlessui/react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { NavItemType } from "./NavigationItem";
 import { NAVIGATION_DEMO } from "data/navigation";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import SocialsList from "shared/SocialsList/SocialsList";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import SwitchDarkMode from "shared/SwitchDarkMode/SwitchDarkMode";
+import { useUserAuth } from "utils/contexts/userContext";
 
 export interface NavMobileProps {
   data?: NavItemType[];
@@ -19,6 +20,18 @@ const NavMobile: React.FC<NavMobileProps> = ({
   data = NAVIGATION_DEMO,
   onClickClose,
 }) => {
+  const { isLogin, user, logOut } = useUserAuth();
+  const history = useHistory();
+
+  useEffect(() => {
+    console.log("Render", isLogin);
+  }, [isLogin]);
+
+  const signOuthandler = () => {
+    logOut();
+    history.push("/login");
+  };
+
   const _renderMenuChild = (item: NavItemType) => {
     return (
       <ul className="nav-mobile-sub-menu pl-6 pb-1 text-base">
@@ -134,6 +147,37 @@ const NavMobile: React.FC<NavMobileProps> = ({
       </div>
       <ul className="flex flex-col py-6 px-2 space-y-1">
         {data.map(_renderItem)}
+
+        {!isLogin ? (
+          <li
+          >
+            <NavLink
+            className="flex w-full items-center py-2.5 px-4 font-medium uppercase tracking-wide text-sm hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg"
+            to="/login"
+            >
+            Sign In
+            </NavLink>
+          </li>
+        ) : (
+          <>
+            <li>
+              <NavLink
+                //   activeClassName="!border-primary-500"
+                to="/user/bookings"
+                className="flex w-full items-center py-2.5 px-4 font-medium uppercase tracking-wide text-sm hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg"
+                //   className="block py-1 md:py-2 border-b-2 border-transparent flex-shrink-0"
+              >
+                Dashboard
+              </NavLink>
+            </li>
+            <li
+              onClick={signOuthandler}
+              className="flex w-full items-center py-2.5 px-4 font-medium uppercase tracking-wide text-sm hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg"
+            >
+              Signout
+            </li>
+          </>
+        )}
       </ul>
       {/* <div className="flex items-center justify-between py-6 px-5 space-x-4">
         <a href="/#" target="_blank" rel="noopener noreferrer">
