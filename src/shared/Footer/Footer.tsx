@@ -59,12 +59,12 @@ const Footer: React.FC = () => {
         <h2 className="font-semibold text-neutral-700 dark:text-neutral-200">
           {menu.title}
         </h2>
-        <ul className="mt-5 space-y-4">
+        <ul className="mt-5 inline-block space-y-4">
           {menu.menus.map((item, index) => (
-            <li key={index}>
+            <li className="hover:translate-x-2 delay-150 transition-all ease-in-out" key={index}>
               <a
                 key={index}
-                className="text-neutral-6000 dark:text-neutral-300 hover:text-black dark:hover:text-white"
+                className="text-neutral-6000 dark:text-neutral-300 hover:text-black  dark:hover:text-white"
                 href={item.href}
               >
                 {item.label}
