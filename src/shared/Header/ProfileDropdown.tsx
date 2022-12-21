@@ -40,7 +40,7 @@ const ProfileDropdown = () => {
             <>
               <Popover.Button className="text-2xl bg-[#9e9e9e] md:text-[28px] w-10 h-10 rounded-full text-neutral-700 dark:text-neutral-300  hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none flex items-center justify-center">
                 {/* <EllipsisVerticalIcon/> */}
-                {!!user.displayName && user.displayName[0] || userState?.customer.name?.substring(0,1)}
+                {!!user.displayName && user.displayName[0] || userState?.customer.contact_person?.substring(0,1)}
                 {/* <i className="las la-search"></i> */}
               </Popover.Button>
 

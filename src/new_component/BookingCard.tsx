@@ -4,7 +4,7 @@ import moment from "moment";
 import { useHistory } from "react-router-dom";
 
 const BookingCard: FC<BookingCardProps> = ({ data }) => {
-  // TODO: Error Handling for all proper data
+  // TODO: Error Handling for all proper data and form validation
   const {
     DateOfBooking,
     name,

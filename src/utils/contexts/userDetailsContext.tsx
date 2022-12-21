@@ -18,10 +18,12 @@ export interface IkycStatus {
   KYC: boolean;
   message: string;
   status: string;
+  token?: string;
 }
 
 type quoteListContext = {
   userState: UserDetailsProps | null;
+  setUserState: React.Dispatch<React.SetStateAction<UserDetailsProps | null>>;
   createUser: (userData: UserDetailsProps) => void;
   updateKyc: (kycStatus: IkycStatus) => void;
 };
@@ -60,9 +62,8 @@ export const UserDetailsProvider = ({ children }: UserDetailsProviderProps) => {
     console.log("User Data in create User", userData);
     setUserState(userData);
 
-    setUserDetails(userData)
+    setUserDetails(userData);
     console.log("User Data in after creating User", userDetails);
-    
   };
 
   const updateKyc = (kycStatus: IkycStatus) => {
@@ -78,6 +79,7 @@ export const UserDetailsProvider = ({ children }: UserDetailsProviderProps) => {
     <userDetailsContext.Provider
       value={{
         userState,
+        setUserState,
         createUser,
         updateKyc,
       }}

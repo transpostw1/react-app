@@ -17,7 +17,6 @@ const errors = {
   pan: "PAN details invalid",
 };
 
-//TODO set focused as true
 
 const KycModal = ({ onClose, showKycModal }: any) => {
   const [visible, setVisible] = useState(false);

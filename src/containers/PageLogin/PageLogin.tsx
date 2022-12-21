@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import { useHistory, useLocation } from "react-router-dom";
 
+import axios from "axios";
 import {
   signInWithGooglePopup,
   createUserDocumentFromAuth,
@@ -49,10 +50,28 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
     history.push("./");
   };
 
+  const userLogin = () => {
+    console.log("loginForm", {email,password});
+
+    axios
+      .post("https://apis.transpost.co/api/login", {email,password})
+      .then((response) => {
+        const fetchedData = response.data;
+        console.log("fetchedData", fetchedData);
+        // window.location.href = "https://weship.transpost.co/login";
+      })
+      .catch((error) => {
+        const errorMsg = error.message;
+        alert(errorMsg);
+      });
+  };
+
   const submitHandler = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
+
     try {
       const response = await logIn(email, password);
+      await userLogin();
       console.log(response);
       history.push("./");
     } catch (error: any) {
@@ -129,6 +148,7 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
               </span>
               <Input
                 required
+                placeholder="Enter your Password"
                 type="password"
                 className="mt-1"
                 name="password"

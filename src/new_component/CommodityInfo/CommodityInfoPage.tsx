@@ -75,11 +75,7 @@ const CommodityInfoPage = ({ data, email, cargo }: any) => {
   };
 
   return (
-    // <div className="  p-10 fixed z-50 inset-0 bg-neutral-200 bg-opacity-10  backdrop-blur-sm border rounded dark:border-neutral-800 ">
     <div className=" flex container md:items-center relative h-full flex-col align-center  dark:border-neutral-600 dark:bg-neutral-700  transition-linear ease-in-out delay-150 ">
-      {/* <div className="text-[1.2rem] font-bold my-4 ">
-          <span>Please fill up the following details before proceeding!</span>
-        </div> */}
       <div
         className={` p-10 fixed flex z-50 items-center justify-center inset-0 bg-neutral-200 bg-opacity-10  backdrop-blur-sm border rounded dark:border-neutral-800  ${
           isLoading ? "" : "hidden"
@@ -90,7 +86,6 @@ const CommodityInfoPage = ({ data, email, cargo }: any) => {
 
       <form className=" md:w-[80%]">
         <div className="flex-col  md:grid grid-cols-2 gap-6 my-2">
-     
           <label className="block">
             <span className="text-neutral-800 dark:text-neutral-200">
               Commodity Name*

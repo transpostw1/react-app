@@ -43,23 +43,22 @@ const Dashboard = () => {
   const [pendingList, setPendingList] = useState([]);
   const [completedList, setCompletedList] = useState([]);
   const [activeTab, setActiveTab] = useState("All");
+  const [status, setStatus] = useState("");
 
   const { user } = useUserAuth();
 
   const fetchData = async () => {
     axios
-      .get(
-        `https://apis.transpost.co/api/bookings/user/?email=${user.email}`,
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            "Access-Control-Allow-Origin": "*",
-          },
-        }
-      )
+      .get(`https://apis.transpost.co/api/bookings/user/?email=${user.email}`, {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
       .then((response) => {
         const result = response.data;
-        console.log("Booking List", result.data);
+        console.log("Booking List", result);
+        setStatus(result.status);
 
         setBookingList(result.data);
         setAllList(result.data);
@@ -81,7 +80,6 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    
     if (user) {
       fetchData();
     }
@@ -90,7 +88,6 @@ const Dashboard = () => {
   if (!user) {
     return null;
   }
-
 
   // for count set all in initial rendering
 
@@ -134,7 +131,7 @@ const Dashboard = () => {
                   setBookingList(allList);
                   setActiveTab("All");
                 }}
-                className={`block py-1 md:py-2 border-b-2 border-transparent flex-shrink-0 ${
+                className={`block py-1 md:py-2 border-b-2 text-sm md:text-base border-transparent flex-shrink-0 ${
                   activeTab == "All" ? "border-b-2 border-primary-500" : ""
                 }`}
               >
@@ -143,7 +140,7 @@ const Dashboard = () => {
               </button>
               <button
                 onClick={pendingBookings}
-                className={`block py-1 md:py-2 border-b-2 border-transparent flex-shrink-0 ${
+                className={`block py-1 md:py-2 border-b-2 border-transparent text-sm md:text-base flex-shrink-0 ${
                   activeTab == "Pending" ? "border-b-2 border-primary-500" : ""
                 }`}
               >
@@ -152,7 +149,7 @@ const Dashboard = () => {
               </button>
               <button
                 onClick={completedBookings}
-                className={`block py-1 md:py-2 border-b-2 border-transparent flex-shrink-0 ${
+                className={`block py-1 md:py-2 text-sm md:text-base border-b-2 border-transparent flex-shrink-0 ${
                   activeTab == "Completed"
                     ? "border-b-2 border-primary-500"
                     : ""
@@ -170,7 +167,7 @@ const Dashboard = () => {
   };
 
   const renderSection2 = () => {
-    if (bookingList.length === 0) {
+    if (bookingList.length === 0 && status.length === 0) {
       return (
         <div className="mt-12">
           <Loading className="m-[100px] w-full h-[100px]"></Loading>
@@ -178,7 +175,7 @@ const Dashboard = () => {
       );
     }
     return (
-      <div className="listingSection__wrap bg-white dark:text-neutral-300  dark:bg-neutral-800 ">
+      <div className="listingSection__wrap w-full    bg-white dark:text-neutral-300  dark:bg-neutral-800 ">
         {/* HEADING */}
         {bookingList.length > 0 ? (
           <>
@@ -187,7 +184,7 @@ const Dashboard = () => {
             })}
           </>
         ) : (
-          <div className="h-screen flex flex-col justify-center items-center dark:bg-neutral-800 ">
+          <div className="h-screen  flex flex-col justify-center items-center dark:bg-neutral-800 ">
             <img src={emptyicon} className="h-[4rem] w-[4rem]" alt="" />
 
             <div className="text-2xl text-centre font-semibold">
@@ -205,7 +202,7 @@ const Dashboard = () => {
         <div className="block flex-grow mb-24 lg:mb-0">
           <div className="lg:sticky lg:top-24">{renderSidebar()}</div>
         </div>
-        <div className="w-full w-[70%] space-y-5 lg:pl-5 flex-shrink-0">
+        <div className="w-auto md:w-[70%] space-y-5 lg:pl-5 flex-shrink-0">
           {renderSection1()}
           {renderSection2()}
         </div>

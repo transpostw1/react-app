@@ -17,6 +17,7 @@ import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
 import axios from "axios";
 import { debounce } from "lodash";
+import { useUserDetails } from "utils/contexts/userDetailsContext";
 
 // DEFAULT DATA FOR ARCHIVE PAGE
 const defaultLocationValue = "Nhava Sheva";
@@ -38,6 +39,7 @@ export interface postDataProps {
   to_port: string;
   sl_date: moment.Moment | string | null | undefined;
   cargo_type: string | null;
+  token?: string;
 }
 
 export interface ExperiencesSearchFormProps {
@@ -141,13 +143,14 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({
   // >("roundTrip");
   // const [guests, setGuests] = useState(1);
   // const [flightClassState, setFlightClassState] = useState("Economy");
+  const { userState } = useUserDetails();
 
   const [postData, setPostData] = useState<postDataProps>({
     from_port: pickUpInputValue,
     to_port: dropOffInputValue,
     sl_date: convDate, // converted date in string format
     cargo_type: cargoSize(contDetails),
-    // user_email: currentUser ? currentUser.email : "",
+    token: userState?.token,
   });
 
   const submitHandler = () => {
@@ -184,10 +187,8 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({
 
   //find solution for following
   const fetchDropofflist = async (InputValue: string) => {
-  
-
     const response = await axios.get(
-      `https://apis.transpost.co/api/ajax-autocomplete-search?q=${InputValue}`,
+      `https://apis.transpost.co/api/ajax-autocomplete-search?q=${InputValue}`
     );
     console.log("droppOff", response.data);
 
@@ -207,7 +208,6 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({
   }, [dropOffInputValue]);
 
   const pickUpHandler = (e: string) => {
-    
     setPickUpInputValue(e);
   };
 
@@ -217,7 +217,6 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({
   };
 
   
-
   const renderForm = () => {
     return (
       <div className="w-full">

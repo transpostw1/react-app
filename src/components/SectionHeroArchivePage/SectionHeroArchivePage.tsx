@@ -9,8 +9,8 @@ import HeroSearchForm, {
 import RecentSearches from "new_component/RecentSearches/RecentSearches";
 import VideoContainer from "new_component/VideoContainer/VideoContainer";
 import NcModal from "shared/NcModal/NcModal";
-import KycModal from "new_component/KycInfo/KycModal";
 import { useUserDetails } from "utils/contexts/userDetailsContext";
+import CargoDetailsModal from "new_component/CargoDetailsModal/CargoDetailsModal";
 
 export interface SectionHeroArchivePageProps {
   className?: string;
@@ -24,6 +24,7 @@ export interface UserDetailsProps {
   KYC?: boolean;
   customer: {
     companyName?: string;
+    contact_person?: string;
     created_at?: string;
     email?: string;
     gst_certificate?: string | null;
@@ -35,6 +36,7 @@ export interface UserDetailsProps {
   };
   message?: string;
   status?: string;
+  token?: string;
 }
 
 const SectionHeroArchivePage: FC<SectionHeroArchivePageProps> = ({
@@ -61,7 +63,7 @@ const SectionHeroArchivePage: FC<SectionHeroArchivePageProps> = ({
       className={`nc-SectionHeroArchivePage flex flex-col relative pt-10 pb-10 lg:pb-1 lg:pt-16`}
       data-nc-id="SectionHeroArchivePage"
     >
-      
+      <CargoDetailsModal />
       <div className="flex flex-col  lg:flex-row -mt-25 lg:items-center">
         <div className="flex-shrink-0 lg:w-1/2 flex flex-col items-start space-y-6 lg:space-y-10 pb-14 lg:pb-64 xl:pb-80 xl:pr-14 lg:mr-10 xl:mr-0">
           <h2 className="font-medium text-4xl md:text-5xl xl:text-7xl leading-[110%]">

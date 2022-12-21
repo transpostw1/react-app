@@ -20,7 +20,6 @@ export interface PageSignUpProps {
   className?: string;
 }
 
-//TODO set focused as true
 
 const loginSocials = [
   // {
@@ -41,35 +40,35 @@ const loginSocials = [
 ];
 
 const errors = {
-  fullName: "Full Name field is Empty",
+  username: "Full Name field is Empty",
   companyName: "Company Name field is Empty",
   password: "Password Field is Empty",
-  gst: "GST details invalid",
-  pan: "PAN details invalid",
+  gst_certificate: "GST details invalid",
+  pan_card: "PAN details invalid",
   email: "Email field is empty",
-  phoneNumber: "Phone Number field is Empty",
+  phone: "Phone Number field is Empty",
 };
 
 const defaultValue = {
-  fullName: "",
+  username: "",
   companyName: "",
-  password: "Pass@123",
-  gst: "",
-  pan: "",
+  password: "",
+  gst_certificate: "",
+  pan_card: "",
   email: "",
-  phoneNumber: "",
-  businessType: "Shipper",
+  phone: "",
+  customer_type: "Shipper",
 };
 
 export interface IsignUpForm {
-  fullName?: string;
+  username?: string;
   companyName?: string;
   password?: string;
-  gst?: string;
-  pan?: string;
+  gst_certificate?: string;
+  pan_card?: string;
   email?: string;
-  phoneNumber?: string;
-  businessType?: string;
+  phone?: string;
+  customer_type?: string;
 }
 
 const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
@@ -78,11 +77,11 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
   const [isAllFoucesed, setIsAllFocused] = useState(false);
 
   const [focused, setFocused] = useState({
-    fullName: false,
+    username: false,
     companyName: false,
-    // password: false,
+    password: false,
     email: false,
-    phoneNumber: false,
+    phone: false,
   });
 
   const { createUser } = useUserDetails();
@@ -108,52 +107,58 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
       console.log("User Already Exist");
       return;
     }
-    // history.push("./");
   };
 
   const registerUser = () => {
     console.log("signupform", signUpForm);
 
     axios
-      .post("https://apis.transpost.co/api/customer/store", signUpForm)
+      .post("https://apis.transpost.co/api/register", signUpForm)
       .then((response) => {
         const fetchedData = response.data;
         console.log("fetchedData", fetchedData);
         createUser(fetchedData);
-        window.location.href = "https://weship.transpost.co/login";
+        history.push("./");
       })
       .catch((error) => {
         const errorMsg = error.message;
         alert(errorMsg);
       });
-    // history.push("./");
   };
 
   // Create user with form
   const submitHandler = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
-    // try {
-    //   const { fullName, email, password, phoneNumber, gst, pan, companyName } =
-    //     signUpForm;
-    //   const response = await createAuthUserWithEmailAndPassword(
-    //     email,
-    //     password
-    //   );
+    try {
+      const {
+        username,
+        email,
+        password,
+        phone,
+        gst_certificate,
+        pan_card,
+        companyName,
+      } = signUpForm;
+      const response = await createAuthUserWithEmailAndPassword(
+        email,
+        password
+      );
 
-    //   await createUserDocumentFromAuth(response?.user, {
-    //     fullName,
-    //     phoneNumber,
-    //     gst,
-    //     pan,
-    //     companyName,
-    //   });
-      registerUser();
+      await createUserDocumentFromAuth(response?.user, {
+        username,
+        phone,
+        gst_certificate,
+        pan_card,
+        companyName,
+      });
+     await registerUser();
+     
       setIsSubmitted(true);
-    // } catch (error) {
-    //   console.log("user creation encountered an error", error);
-    //   alert(error);
-    // }
+    } catch (error) {
+      console.log("user creation encountered an error", error);
+      alert(error);
+    }
   };
 
   useEffect(() => {
@@ -206,28 +211,28 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
                 type="text"
                 placeholder="Enter your Full Name"
                 className="mt-1"
-                value={signUpForm.fullName}
+                value={signUpForm.username}
                 onChange={(e) => {
                   setFocused({
                     ...focused,
-                    fullName: true,
+                    username: true,
                   });
                   setSignUpForm({
                     ...signUpForm,
-                    fullName: e.target.value,
+                    username: e.target.value,
                   });
                 }}
               />
               {
                 <p
                   className={`text-[red] ${
-                    signUpForm.fullName?.length === 0 &&
-                    (focused.fullName || isSubmitted)
+                    signUpForm.username?.length === 0 &&
+                    (focused.username || isSubmitted)
                       ? ""
                       : "hidden"
                   } `}
                 >
-                  {errors.fullName}
+                  {errors.username}
                 </p>
               }
             </label>
@@ -237,31 +242,31 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
                 Phone number <span>*</span>
               </span>
               <Input
-                type="text"
+                type="number"
                 placeholder="Enter your Phone number"
                 className="mt-1"
-                value={signUpForm.phoneNumber}
+                value={signUpForm.phone}
                 onChange={(e) => {
                   setFocused({
                     ...focused,
-                    phoneNumber: true,
+                    phone: true,
                   });
                   setSignUpForm({
                     ...signUpForm,
-                    phoneNumber: e.target.value,
+                    phone: e.target.value,
                   });
                 }}
               />
               {
                 <p
                   className={`text-[red] ${
-                    signUpForm.phoneNumber?.length === 0 &&
-                    (focused.phoneNumber || isSubmitted)
+                    signUpForm.phone?.length === 0 &&
+                    (focused.phone || isSubmitted)
                       ? ""
                       : "hidden"
                   } `}
                 >
-                  {errors.phoneNumber}
+                  {errors.phone}
                 </p>
               }
             </label>
@@ -274,7 +279,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
                 onChange={(e) => {
                   setSignUpForm({
                     ...signUpForm,
-                    businessType: e.target.value,
+                    customer_type: e.target.value,
                   });
                 }}
               >
@@ -292,23 +297,23 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
                 type="text"
                 placeholder="Enter your GST number"
                 className="mt-1"
-                value={signUpForm.gst}
+                value={signUpForm.gst_certificate}
                 onChange={(e) => {
                   setSignUpForm({
                     ...signUpForm,
-                    gst: e.target.value,
+                    gst_certificate: e.target.value,
                   });
                 }}
               />
               {/* {
                 <p
                   className={`text-[red] ${
-                    signUpForm.gst?.length === 0 && (focused.gst || isSubmitted)
+                    signUpForm.gst_certificate?.length === 0 && (focused.gst_certificate || isSubmitted)
                       ? ""
                       : "hidden"
                   } `}
                 >
-                  {errors.gst}
+                  {errors.gst_certificate}
                 </p>
               } */}
             </label>
@@ -320,23 +325,23 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
                 type="text"
                 placeholder="Enter your PAN number"
                 className="mt-1"
-                value={signUpForm.pan}
+                value={signUpForm.pan_card}
                 onChange={(e) => {
                   setSignUpForm({
                     ...signUpForm,
-                    pan: e.target.value,
+                    pan_card: e.target.value,
                   });
                 }}
               />
               {
                 // <p
                 //   className={`text-[red] ${
-                //     signUpForm.pan?.length === 0 && (focused.pan || isSubmitted)
+                //     signUpForm.pan_card?.length === 0 && (focused.pan_card || isSubmitted)
                 //       ? ""
                 //       : "hidden"
                 //   } `}
                 // >
-                //   {errors.pan}
+                //   {errors.pan_card}
                 // </p>
               }
             </label>
@@ -408,7 +413,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
               }
             </label>
             {/* disabled temporarily */}
-            {/* <label className="block">
+            <label className="block">
               <span className="text-neutral-800 dark:text-neutral-200">
                 Password <span>*</span>
               </span>
@@ -440,7 +445,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
                   {errors.password}
                 </p>
               }
-            </label> */}
+            </label>
 
             <ButtonPrimary
               type="submit"

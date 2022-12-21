@@ -49,9 +49,9 @@ export interface IquoteList {
   cargo_size?: string;
   sum_buy?: number;
   sum_sell: number;
-  isEditing?:boolean;
-  remarks?:string;
-  terms?:string;
+  isEditing?: boolean;
+  remarks?: string;
+  terms?: string;
   additionalCosts?: [
     {
       id: any;
@@ -67,7 +67,9 @@ const QuoteModal = ({ data, onclose, showQuoteModal }: any) => {
   const { quoteList, addCharge } = useQuoteList();
 
   const [freightBuyRate, setFreightBuyRate] = useState(data.base_rate);
-  const [freightSellRate, setFreightSellRate] = useState<number>(data.base_rate);
+  const [freightSellRate, setFreightSellRate] = useState<number>(
+    data.base_rate
+  );
   const [totalBuyRate, setTotalBuyRate] = useState(0);
   const [totalSellRate, setTotalSellRate] = useState(0);
   const [showRemarks, setShowRemarks] = useState(false);
@@ -152,35 +154,45 @@ const QuoteModal = ({ data, onclose, showQuoteModal }: any) => {
 
   // Create PDF
   const generateQuote = () => {
+    console.log("INDIVIDUAL QUOTE", quoteList[editID]);
 
-console.log("INDIVIDUAL QUOTE", quoteList[editID]);
+    // TESTING
 
+    axios
+      .post("https://apis.transpost.co/api/rates/pdf", quoteList[editID], {
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+          Accept: "application/pdf",
+        },
+      })
+      .then((response) => {
+        console.log(
+          "LINK",
+          `https://apis.transpost.co/storage/quotes/${response.data}`
+        );
+        const link = document.createElement("a");
 
-// TESTING
-
-
-axios.post("https://apis.transpost.co/api/rates/pdf",quoteList[editID],{
-  headers: { "Content-type": "application/json; charset=UTF-8","Accept": 'application/pdf' },
-}).then((response)=>{
-// console.log("LINK", `{https://apis.transpost.co/storageapp/files/${response.data}}`);
-console.log("LINK", `https://apis.transpost.co/storage/quotes/${response.data}`);
-// window.location.replace(`https://apis.transpost.co/storage/quotes/${response.data}`)
-  // const url = window.URL.createObjectURL(new Blob([`https://apis.transpost.co/storage/quotes/${response.data}`]));
-      const link = document.createElement('a');
-      
-      link.href = `https://apis.transpost.co/storage/quotes/${response.data}`;
-      link.setAttribute('download', `${link.href}`);
-      document.body.appendChild(link);
-      window.open(`https://apis.transpost.co/storage/quotes/${response.data}`)
-      // link.click();
-})
+        link.href = `https://apis.transpost.co/storage/quotes/${response.data}`;
+        link.setAttribute("download", `${link.href}`);
+        document.body.appendChild(link);
+        window.open(
+          `https://apis.transpost.co/storage/quotes/${response.data}`
+        );
+        // link.click();
+      });
     onclose();
-
   };
-const handleOnClose = () =>{
-  onclose();
-
-}
+  const handleOnClose = () => {
+    onclose();
+  };
+// hiding background scrollbar when modal open
+  useEffect(() => {
+    if (showQuoteModal === true) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "scroll";
+    }
+  });
 
   if (!showQuoteModal) {
     return null;
@@ -188,7 +200,7 @@ const handleOnClose = () =>{
 
   return (
     <div className=" p-10 fixed z-50 inset-0 bg-neutral-200 bg-opacity-10  backdrop-blur-sm border rounded dark:border-neutral-800 ">
-      <div className="flex relative h-full flex-col align-center bg-white border rounded-lg dark:border-neutral-600 dark:bg-neutral-700">
+      <div className="flex relative py-5 h-full flex-col text-xs sm:text-base  align-center bg-white border rounded-lg  dark:border-neutral-600 dark:bg-neutral-700">
         {/* <div className="flex relative h-full flex-col align-center bg-white border rounded-lg"> */}
         <div className="flex h[15%] order-first justify-between border-b p-4 text-2xl dark:bg-neutral-800 ">
           <span>Details</span>
@@ -209,8 +221,8 @@ const handleOnClose = () =>{
             </svg>
           </button>
         </div>
-        <div className="flex relative h-[75%] flex-col align-center bg-white overflow-y-auto dark:bg-neutral-700">
-          <div className="flex justify-center my-4 px-3 w-full">
+        <div className="flex relative h-[75%] flex-col align-center bg-white overflow-x-auto overflow-y-auto dark:bg-neutral-700">
+          <div className="flex justify-center  my-4 px-3 w-full">
             <button
               onClick={() => setShowRemarks(false)}
               className={`p-1 w-[200px] rounded-l-full border border-r-1 ${
@@ -231,8 +243,7 @@ const handleOnClose = () =>{
           {/* TODO translate animation */}
           {showRemarks ? (
             <div
-
-              className={`top-0 left-0 w-full transition-all duration-[600ms] ${
+              className={`top-0 left-0 w-full  transition-all duration-[600ms] ${
                 showRemarks ? "translate-x-0" : "translate-x-full "
               }`}
               data-taos-offset="400"
@@ -245,7 +256,7 @@ const handleOnClose = () =>{
                 showRemarks ? "translate-x-full " : "translate-x-0"
               }`}
             >
-              <div className="flex border rounded-2xl mx-5 my-3 mt-10 w-max">
+              <div className="flex border  rounded-2xl mx-5 my-3 mt-10 w-max">
                 <span className="flex px-4 items-center border-r-2">
                   Freight
                 </span>
@@ -277,15 +288,11 @@ const handleOnClose = () =>{
                 <div className="flex px-3 items-center bg-white">
                   Unit Price
                 </div>
-                <div className="flex px-3 items-center bg-white">
-                  Amount
-                </div>
+                <div className="flex px-3 items-center bg-white">Amount</div>
                 <div className="flex px-3 items-center bg-white">
                   Unit Price
                 </div>
-                <div className="flex px-3 items-center bg-white">
-                  Amount
-                </div>
+                <div className="flex px-3 items-center bg-white">Amount</div>
               </div>
               <div className="grid border border-zinc-500 gap-[1px] bg-zinc-500 mx-3 mt-0  grid-cols-10 font-light">
                 <div className="flex col-start-1 col-end-3 px-3 items-center bg-white">
@@ -294,12 +301,8 @@ const handleOnClose = () =>{
                 <div className="flex pl-3 items-center bg-white">
                   per equipnment
                 </div>
-                <div className="flex px-3 items-center bg-white">
-                  20GP
-                </div>
-                <div className="flex px-3 items-center bg-white">
-                  1.00
-                </div>
+                <div className="flex px-3 items-center bg-white">20GP</div>
+                <div className="flex px-3 items-center bg-white">1.00</div>
                 <div className="flex px-3 items-center bg-white">
                   USD {freightBuyRate}
                 </div>
@@ -356,7 +359,7 @@ const handleOnClose = () =>{
           )}
         </div>
 
-        <div className="absolute h-[15%] w-full flex border-t z-9999 inset-x-0 bottom-0 p-4 justify-between bg-white overscroll-none dark:bg-neutral-800">
+        <div className="absolute h-auto w-full flex border-t z-9999 inset-x-0 bottom-0 p-4 justify-between bg-white overscroll-none dark:bg-neutral-800">
           <div className="flex flex-col pl-2 ">
             <span>BUY RATE</span>
             <span>{totalBuyRate}</span>

@@ -9,6 +9,8 @@ import shipIcon from "../../images/ship-solid.svg";
 import Input from "shared/Input/Input";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import CargoDetailsModal from "new_component/CargoDetailsModal/CargoDetailsModal";
+import { useCargoDetails } from "utils/contexts/cargoContext";
 
 // DEFAULT DATA FOR ARCHIVE PAGE
 const defaultLocationValue = "Tokyo, Jappan";
@@ -36,9 +38,7 @@ const ExperiencesSearchForm: FC<ExperiencesSearchFormProps> = ({
   const [contDetail, setContainerDetail] = useState("");
   const [shippingLine, setShippingLine] = useState("");
 
-  useEffect(() => {
-
-  });
+  const { openModal } = useCargoDetails();
 
   useEffect(() => {
     if (haveDefaultValue) {
@@ -50,12 +50,17 @@ const ExperiencesSearchForm: FC<ExperiencesSearchFormProps> = ({
 
   const submitHandler = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    if (contDetail.length === 11) {
-      window.location.href = `https://backend.transpost.co/track/?container=${contDetail}`;
-    } else {
-      console.log("BL number should consist 11 Characters");
-
-    }
+    openModal(contDetail, shippingLine);
+    // axios
+    //   .post("https://apis.transpost.co/api/tracking")
+    //   .then((response) => {
+    //     const fetchedData = response.data;
+    //     console.log("fetchedData", fetchedData);
+    //   })
+    //   .catch((error) => {
+    //     const errorMsg = error.message;
+    //     alert(errorMsg);
+    //   });
   };
 
   const renderForm = () => {
@@ -156,7 +161,6 @@ const ExperiencesSearchForm: FC<ExperiencesSearchFormProps> = ({
           </div>
         </div>
         {/* <h1 className="px-5 pb-3">asdaskdh</h1> */}
-
       </form>
       // </form>
     );

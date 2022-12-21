@@ -24,7 +24,6 @@ const PageFreightFinance = () => {
       <BgGlassmorphism />
       <div className="container py-16 lg:py-16 ">
         {/* <div className="container py-16 lg:py-28 "> */}
-        {/* TODO: EDIT HEADING */}
         <SectionHero
           clickHandler={clickHandler}
           heading="Fuel your Freight finances"

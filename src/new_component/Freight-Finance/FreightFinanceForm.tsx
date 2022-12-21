@@ -6,44 +6,42 @@ import Select from "shared/Select/Select";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 
 import axios from "axios";
-import { IcommodityDetails } from "new_component/CommodityInfo/CommodityInfoPage";
-import { Label } from "@headlessui/react/dist/components/label/label";
 
 export interface IfinanceFormDetails {
-  fullName?: string;
-  companyName?: string;
-  commodity?: string;
+  name?: string;
+  company_name?: string;
+  commodity_name?: string;
   gst?: string;
-  iec?: string;
+  iec_code?: string;
   pan?: string;
   product?: string;
-  annualTurnover?: string;
+  annual_turnover?: string;
+  yoc?: string;
   isShipper?: boolean;
   isForwarder?: boolean;
 }
 
 const errors = {
-  fullName: "Full Name field is Empty",
-  companyName: "Company Name field is Empty",
-  commodity: "Commodity Field is Empty",
+  name: "Full Name field is Empty",
+  company_name: "Company Name field is Empty",
+  commodity_name: "Commodity Field is Empty",
   gst: "Please enter proper GST details",
-  iec: "Please enter proper IEC details",
+  iec_code: "Please enter proper IEC details",
   pan: "Please enter proper PAN details",
   product: "Product field is empty",
-  annualTurnover: "Annual turnover field is Empty",
+  annual_turnover: "Annual turnover field is Empty",
 };
 
 const defaultValue = {
-  fullName: "",
-  companyName: "",
-  commodity: "",
+  name: "",
+  company_name: "",
+  commodity_name: "",
   gst: "",
-  iec: "",
+  iec_code: "",
   pan: "",
   product: "",
-  annualTurnover: "",
-  isShipper: true,
-  isForwarder: false,
+  annual_turnover: "",
+  yoc: "0_1",
 };
 
 const FreightFinanceForm = () => {
@@ -51,13 +49,13 @@ const FreightFinanceForm = () => {
     useState<IfinanceFormDetails>(defaultValue);
 
   const [focused, setFocused] = useState({
-    fullName: false,
-    commodity: false,
-    companyName: false,
-    annualTurnover: false,
+    name: false,
+    commodity_name: false,
+    company_name: false,
+    annual_turnover: false,
     product: false,
     gst: false,
-    iec: false,
+    iec_code: false,
     pan: false,
   });
 
@@ -68,7 +66,7 @@ const FreightFinanceForm = () => {
   const submitHandler = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    // event.preventDefault();
+    event.preventDefault();
 
     setIsSubmitted(true);
     let config = {
@@ -77,16 +75,18 @@ const FreightFinanceForm = () => {
       },
     };
 
+    const formData = { ...financeFormDetails, isShipper, isForwarder };
+
     axios
-      .post(
-        "https://apis.transpost.co/api/freight-finance/store",
-        financeFormDetails,
-        config
-      )
+      .post("https://apis.transpost.co/api/freight-finance/store", formData)
       .then((response) => {
         console.log(financeFormDetails);
         const fetchedData = response.data;
         console.log(fetchedData);
+      })
+      .then(() => {
+
+        alert("Successfully created")
       })
       .catch((error) => {
         const errorMsg = error.message;
@@ -94,18 +94,27 @@ const FreightFinanceForm = () => {
       });
   };
 
-  useEffect(() => {
-    
-    if (isShipper === false && isForwarder === false) {
-      setIsShipper(true);
-    }
-  }, [isShipper, isForwarder]);
+  const onShipperSelect = () => {
+    setIsShipper(!isShipper);
+    setIsForwarder(!isForwarder);
+
+    console.log("forwarder ", isForwarder);
+    console.log("shipper ", isShipper);
+  };
+  const onForwarderSelect = () => {
+    setIsForwarder(!isForwarder);
+    setIsShipper(!isShipper);
+
+    console.log("forwarder ", isForwarder);
+    console.log("shipper ", isShipper);
+  };
+  // useEffect(() => {
+  //   const formData = { ...financeFormDetails, isShipper, isForwarder };
+  //   console.log("formData", formData);
+  // },[isShipper,isForwarder]);
 
   return (
     <div className=" flex border-t pt-24 md:items-center relative h-full  flex-col align-center  dark:border-neutral-600 dark:bg-neutral-700">
-      {/* <div className="text-[1.2rem] font-bold my-4 ">
-          <span>Please fill up the following details before proceeding!</span>
-        </div> */}
       <form className=" md:w-[80%]">
         <div className=" flex-col container md:grid grid-cols-2 space-y-4 sm:space-y-2 sm:gap-6 my-2">
           <label className="block">
@@ -119,26 +128,26 @@ const FreightFinanceForm = () => {
               onChange={(e) => {
                 setFocused({
                   ...focused,
-                  fullName: true,
+                  name: true,
                 });
                 setFinanceFormDetails({
                   ...financeFormDetails,
-                  fullName: e.target.value,
+                  name: e.target.value,
                 });
               }}
-              value={financeFormDetails.fullName}
+              value={financeFormDetails.name}
               required={true}
             />
             {
               <p
                 className={`text-[red] ${
-                  financeFormDetails.fullName?.length === 0 &&
-                  (focused.fullName || isSubmitted)
+                  financeFormDetails.name?.length === 0 &&
+                  (focused.name || isSubmitted)
                     ? ""
                     : "hidden"
                 } `}
               >
-                {errors.fullName}
+                {errors.name}
               </p>
             }
           </label>
@@ -153,26 +162,26 @@ const FreightFinanceForm = () => {
               onChange={(e) => {
                 setFocused({
                   ...focused,
-                  companyName: true,
+                  company_name: true,
                 });
                 setFinanceFormDetails({
                   ...financeFormDetails,
-                  commodity: e.target.value,
+                  commodity_name: e.target.value,
                 });
               }}
-              value={financeFormDetails.commodity}
+              value={financeFormDetails.commodity_name}
               required={true}
             />
             {
               <p
                 className={`text-[red] ${
-                  financeFormDetails.commodity?.length === 0 &&
-                  (focused.commodity || isSubmitted)
+                  financeFormDetails.commodity_name?.length === 0 &&
+                  (focused.commodity_name || isSubmitted)
                     ? ""
                     : "hidden"
                 } `}
               >
-                {errors.commodity}
+                {errors.commodity_name}
               </p>
             }
           </label>
@@ -188,10 +197,7 @@ const FreightFinanceForm = () => {
                 type="checkbox"
                 checked={isShipper}
                 className="focus:ring-action-primary h-6 w-6 text-primary-500 border-primary rounded border-neutral-500 bg-white dark:bg-neutral-700  dark:checked:bg-primary-500 focus:ring-primary-500"
-                onChange={(e) => {
-                  setIsShipper(e.target.checked);
-                  setIsForwarder(false);
-                }}
+                onClick={onShipperSelect}
               />
 
               <label
@@ -206,10 +212,7 @@ const FreightFinanceForm = () => {
                 type="checkbox"
                 checked={isForwarder}
                 className="focus:ring-action-primary h-6 w-6 text-primary-500 border-primary rounded border-neutral-500 bg-white dark:bg-neutral-700  dark:checked:bg-primary-500 focus:ring-primary-500"
-                onChange={(e) => {
-                  setIsForwarder(e.target.checked);
-                  setIsShipper(false);
-                }}
+                onClick={onForwarderSelect}
               />
               <label
                 className="text-neutral-900 dark:text-neutral-100"
@@ -230,15 +233,15 @@ const FreightFinanceForm = () => {
               placeholder="Enter your Company Name"
               className="mt-1"
               name="company_name"
-              value={financeFormDetails.companyName}
+              value={financeFormDetails.company_name}
               onChange={(e) => {
                 setFocused({
                   ...focused,
-                  companyName: true,
+                  company_name: true,
                 });
                 setFinanceFormDetails({
                   ...financeFormDetails,
-                  companyName: e.target.value,
+                  company_name: e.target.value,
                 });
               }}
               required={true}
@@ -246,18 +249,22 @@ const FreightFinanceForm = () => {
             {
               <p
                 className={`text-[red] ${
-                  financeFormDetails.companyName?.length === 0 &&
-                  (focused.companyName || isSubmitted)
+                  financeFormDetails.company_name?.length === 0 &&
+                  (focused.company_name || isSubmitted)
                     ? ""
                     : "hidden"
                 } `}
               >
-                {errors.companyName}
+                {errors.company_name}
               </p>
             }
           </label>
 
-          <label className={`block ${isForwarder ? "" : "hidden"}`}>
+          <label
+            className={`block ${
+              isForwarder ? "" : "hidden"
+            }`}
+          >
             <span className="text-neutral-800 dark:text-neutral-200">
               GST <span className="text-red-600">*</span>
             </span>
@@ -291,7 +298,11 @@ const FreightFinanceForm = () => {
               </p>
             }
           </label>
-          <label className={`block ${isForwarder ? "" : "hidden"}`}>
+          <label
+            className={`block ${
+              isForwarder ? "" : "hidden"
+            }`}
+          >
             <span className="text-neutral-800 dark:text-neutral-200">
               PAN <span className="text-red-600">*</span>
             </span>
@@ -326,7 +337,9 @@ const FreightFinanceForm = () => {
             }
           </label>
 
-          <label className={`block ${isShipper ? "" : "hidden"}`}>
+          <label
+            className={`block ${isShipper ? "" : "hidden"}`}
+          >
             <span className="text-neutral-800 dark:text-neutral-200">
               IEC Code <span className="text-red-600">*</span>
             </span>
@@ -334,26 +347,25 @@ const FreightFinanceForm = () => {
               type="text"
               placeholder="Enter your IEC number"
               className="mt-1"
-              name="iec"
-              value={financeFormDetails.iec}
+              name="iec_code"
+              value={financeFormDetails.iec_code}
               onChange={(e) => {
-
                 setFinanceFormDetails({
                   ...financeFormDetails,
-                  iec: e.target.value,
+                  iec_code: e.target.value,
                 });
               }}
             />
             {
               <p
                 className={`text-[red] ${
-                  financeFormDetails.iec?.length === 0 &&
-                  (focused.iec || isSubmitted)
+                  financeFormDetails.iec_code?.length === 0 &&
+                  (focused.iec_code || isSubmitted)
                     ? ""
                     : "hidden"
                 } `}
               >
-                {errors.iec}
+                {errors.iec_code}
               </p>
             }
           </label>
@@ -369,25 +381,25 @@ const FreightFinanceForm = () => {
               onChange={(e) => {
                 setFocused({
                   ...focused,
-                  annualTurnover: true,
+                  annual_turnover: true,
                 });
                 setFinanceFormDetails({
                   ...financeFormDetails,
-                  annualTurnover: e.target.value,
+                  annual_turnover: e.target.value,
                 });
               }}
-              value={financeFormDetails.annualTurnover}
+              value={financeFormDetails.annual_turnover}
             />
             {
               <p
                 className={`text-[red] ${
-                  financeFormDetails.annualTurnover?.length === 0 &&
-                  (focused.annualTurnover || isSubmitted)
+                  financeFormDetails.annual_turnover?.length === 0 &&
+                  (focused.annual_turnover || isSubmitted)
                     ? ""
                     : "hidden"
                 } `}
               >
-                {errors.annualTurnover}
+                {errors.annual_turnover}
               </p>
             }
           </label>
@@ -425,7 +437,14 @@ const FreightFinanceForm = () => {
             <span className="text-neutral-800 dark:text-neutral-200">
               How old is your Company? <span className="text-red-600">*</span>
             </span>
-            <Select placeholder="Years">
+            <Select
+              onChange={(e) =>
+                setFinanceFormDetails({
+                  ...financeFormDetails,
+                  yoc: e.target.value,
+                })
+              }
+            >
               <option value="0_1">0-1 Years</option>
               <option value="1_2">1-2 Years</option>
               <option value="2_3">2-3 Years</option>

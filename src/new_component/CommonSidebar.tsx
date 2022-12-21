@@ -5,7 +5,7 @@ import {faBriefcase,faQuoteLeftAlt,faComment} from "@fortawesome/free-solid-svg-
 
 const CommonSidebar = () => {
   return (
-    <div className="bg-white  w-full flex flex-col  sm:rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 dark:bg-neutral-800 space-y-6 sm:space-y-7 px-0 sm:p-6 xl:p-8 xl:h-screen">
+    <div className="bg-white w-full flex flex-col  sm:rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 dark:bg-neutral-800 space-y-6 sm:space-y-7 px-0 sm:p-6 xl:p-8 xl:h-screen">
       {/* ---- */}
       <div className="space-y-3 flex flex-col ">
         <h2 className="text-2xl font-semibold">Overview</h2>
