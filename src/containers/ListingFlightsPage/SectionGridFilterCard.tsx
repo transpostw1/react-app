@@ -8,8 +8,10 @@ import { fetchData } from "../../redux";
 import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
 import QuickRequest from "new_component/QuickRequest";
-import Loading from "new_component/Loading";
 import { postDataProps } from "components/HeroSearchForm/FlightSearchForm";
+
+import __rates from "../../data/jsons/__rates.json";
+import TestRate from "new_component/Test/TestRate";
 
 export interface SectionGridFilterCardProps {
   className?: string;
@@ -28,11 +30,11 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
   const myRef = useRef<null | HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!Array.isArray(shippingData.data)) {
-      setShow(true);
-    } else {
-      setShow(false);
-    }
+    // if (!Array.isArray(shippingData.data)) {
+    //   setShow(true);
+    // } else {
+    //   setShow(false);
+    // }
     console.log("Loading", shippingData.loading);
 
     if (
@@ -82,26 +84,35 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
   return (
     <div
       ref={myRef}
+      className={`nc-SectionGridFilterCard`}
+      data-nc-id="SectionGridFilterCard"
+    >
+      {/* <div
+      ref={myRef}
       className={`nc-SectionGridFilterCard   ${
         Array.isArray(shippingData.data) && shippingData.data.length > 0
           ? className
           : "hidden"
       }`}
       data-nc-id="SectionGridFilterCard"
-    >
+    > */}
       <div
         className={`lg:p-14 lg:mt-14 lg:bg-neutral-50 lg:dark:bg-black/20 grid grid-cols-1 gap-6 rounded-3xl
         `}
       >
-        {Array.isArray(shippingData.data) &&
-        shippingData.data.length > 0 &&
-        !shippingData.loading ? (
-          shippingData?.data?.map((item, index) => {
-            return <RateCard key={index} data={item} />;
-          })
-        ) : (
-          <QuickRequest />
-        )}
+        {__rates.map((item: any, index: any) => {
+          // return <RateCard key={index} data={item} />;
+          return <TestRate data={item} key={index} />;
+        })}
+        {/* {Array.isArray(shippingData.data) &&
+          shippingData.data.length > 0 &&
+          !shippingData.loading ? (
+            shippingData?.data?.map((item, index) => {
+              return <RateCard key={index} data={item} />;
+            })
+            ) : (
+              <QuickRequest />
+            )} */}
       </div>
     </div>
   );

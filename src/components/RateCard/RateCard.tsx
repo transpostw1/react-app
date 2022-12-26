@@ -174,7 +174,6 @@ const RateCard: FC<RateCardProps> = ({ className = "", data }) => {
                       />
                     )}
                   />
-
                   <ButtonPrimary
                     className="ml-2"
                     onClick={() => createQuoteHandler(data.id)}
